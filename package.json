@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "@google/genai": "^0.7.0",
+    "type": "2.7.3"
+  }
+}

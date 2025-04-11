@@ -1,0 +1,205 @@
+/* Base Styles */
+body {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    line-height: 1.6;
+    background: #f8fafc;
+  }
+  
+  .header {
+    text-align: center;
+    padding: 4rem 2rem;
+    background: linear-gradient(135deg, #5680e9 0%, #5680e9 100%);
+    color: white;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .header-content {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .divider {
+    width: 60px;
+    height: 3px;
+    background: rgba(255,255,255,0.3);
+    margin: 1.5rem auto;
+  }
+  
+  /* Project Intro */
+  .project-intro {
+    padding: 3rem 2rem;
+  }
+  
+  .intro-card {
+    background: white;
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+    max-width: 800px;
+    margin: 0 auto;
+    position: relative;
+    top: -4rem;
+  }
+  
+  .intro-icon {
+    font-size: 2.5rem;
+    color: #5680e9;
+    margin-bottom: 1rem;
+  }
+  
+  .features-list {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .features-list li {
+    padding: 0.8rem 0;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  /* Team Section */
+  .team-section {
+    padding: 2rem;
+  }
+  
+  .team-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Two items per row */
+    gap: 2rem; /* Space between grid items */
+    max-width: 800px; /* Make the grid narrower for better alignment */
+    margin: 0 auto; /* Center the grid */
+    justify-items: center; /* Center each collaborator card */
+  }
+  
+  
+  .member-card {
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    transition: transform 0.3s ease;
+    cursor: pointer;
+    position: relative;
+  }
+  
+  .member-card:hover {
+    transform: translateY(-5px);
+  }
+  
+  .member-image {
+    height: 300px;
+    overflow: hidden;
+    position: relative;
+  }
+  
+  .member-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+  
+  .member-card:hover .member-image img {
+    transform: scale(1.05);
+  }
+  
+  .member-info {
+    padding: 1.5rem;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(transparent 0%, rgba(0,0,0,0.8) 100%);
+    color: white;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  
+  .member-card:hover .member-info {
+    opacity: 1;
+  }
+  
+  .linkedin-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: white;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 50px;
+    margin-top: 1rem;
+    transition: all 0.3s ease;
+  }
+  
+  .linkedin-btn:hover {
+    background: rgba(255,255,255,0.1);
+  }
+  
+  /* Overlay Effect */
+  .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.5);
+    backdrop-filter: blur(5px);
+    z-index: 100;
+    display: none;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .member-card {
+      margin-bottom: 1.5rem;
+    }
+    
+    .member-info {
+      opacity: 1;
+      position: static;
+      background: #f8fafc;
+      color: #333;
+    }
+    
+    .linkedin-btn {
+      color: #0A66C2;
+      border-color: #0A66C2;
+    }
+  }
+  .section-title {
+    text-align: center; /* Centers the text horizontally */
+    font-size: 2.5rem; /* Makes the text larger */
+    font-weight: bold; /* Makes the font bold for emphasis */
+    margin: 2rem 0; /* Adds spacing above and below the text */
+    color: #333; /* Choose a color like black or dark gray */
+  }
+    
+  /* Back to Top Button */
+.back-to-top {
+    position: fixed;
+    bottom: 20px; /* Position it above the page bottom */
+    right: 20px; /* Position it near the right edge */
+    width: 50px; /* Set width */
+    height: 50px; /* Set height */
+    background-color: #5680e9; /* Choose a calm color */
+    color: white; /* Icon color */
+    border-radius: 50%; /* Make it circular */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); /* Add slight shadow */
+    display: none; /* Initially hidden */
+    justify-content: center; /* Center align icon horizontally */
+    align-items: center; /* Center align icon vertically */
+    cursor: pointer; /* Add pointer cursor */
+    font-size: 1.5rem; /* Icon size */
+    z-index: 1000; /* Ensure visibility above other elements */
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+  
+  .back-to-top:hover {
+    transform: scale(1.1); /* Slightly enlarge on hover */
+    background-color: #5AB9EA; /* Darken the color on hover */
+  }
+  

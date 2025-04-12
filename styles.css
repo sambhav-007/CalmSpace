@@ -214,3 +214,21 @@ body {
     background-color: #5AB9EA; /* Darken the color on hover */
   }
   
+  footer {
+    text-align: center;
+    padding: 1rem;
+    background: #0A66C2; /* Match the CalmSpace theme color */
+    color: white; /* Make text readable */
+    font-size: 0.9rem;
+  }
+  
+  footer a {
+    color: white; /* Make links white for consistency */
+    text-decoration: none; /* Remove underline from links */
+    margin: 0 0.5rem; /* Add space between links */
+  }
+  
+  footer a:hover {
+    text-decoration: underline; /* Add underline on hover */
+  }
+  

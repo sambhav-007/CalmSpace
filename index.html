@@ -1,185 +1,214 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.min.js"
-      integrity="sha512-wC/cunGGDjXSl9OHUH0RuqSyW4YNLlsPwhcLxwWW1CR4OeC2E1xpcdZz2DeQkEmums41laI+eGMw95IJ15SS3g=="
-      crossorigin="anonymous" referrerpolicy="no-referrer">
-    </script>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login page | CalmSpace</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Poppins", sans-serif;
+      }
 
-        body {
-            font-family: Arial, Helvetica, sans-serif;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-image: url("");
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-        }
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        color: white;
+        background: linear-gradient(#063349 0%, #090979 35%, #00d4ff 100%);
+      }
 
-        .box {
-            position: relative;
-            width: 100%;
-            max-width: 400px;
-            transform-style: preserve-3d;
-            perspective: 1000px;
-        }
+      .box {
+        position: relative;
+        border-radius: 20px;
+        transform-style: preserve-3d;
+      }
 
-        .container {
-            background: rgba(0, 0, 0, 0.4);
-            padding: 30px;
-            border-radius: 20px;
-            width: 90%;
-            max-width: 400px;
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-top: 1px solid rgba(255, 255, 255, 0.3);
-            border-left: 1px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.5);
-            color: #fff;
-            text-shadow: 0 1px 2px rgba(0,0,0,0.5);
-            transform-style: preserve-3d;
-            transform: translateZ(30px);
-        }
+      .box .card {
+        position: relative;
+        background: rgba(255, 255, 255, 0.1);
+        width: 400px;
+        height: 600px;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgb(255, 255, 255, 0.5);
+        border-top: 1px solid rgb(255, 255, 255, 0.75);
+        border-left: 1px solid rgb(255, 255, 255, 0.75);
+        border-radius: 20px;
+        box-shadow: 0 25px 45px rgb(0, 0, 0, 0.5);
+        transform-style: preserve-3d;
+      }
 
-        .elements {
-            position: absolute;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-top: 1px solid rgba(255, 255, 255, 0.5);
-            border-left: 1px solid rgba(255, 255, 255, 0.5);
-            border-radius: 20px;
-            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.5);
-        }
+      .elements {
+        position: absolute;
+        top: 190px;
+        left: 50px;
+        width: 120px;
+        height: 120px;
+        background: rgba(255, 255, 255, 0.1);
+        transform: translateZ(80px);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        border-top: 1px solid rgba(255, 255, 255, 0.75);
+        border-left: 1px solid rgba(255, 255, 255, 0.75);
+        border-radius: 20px;
+        box-shadow: 0 25px 45px rgba(0, 0, 0, 0.5);
+      }
 
-        .elements.logo {
-            top: 30px;
-            left: -30px;
-            width: 100px;
-            height: 100px;
-            transform: translateZ(40px);
-        }
+      .elements.name {
+        top: 60px;
+        left: 50%;
+        transform: translateX(-50%) translateZ(100px);
+        width: 150px;
+        padding: 15px;
+        text-align: center;
+        background: transparent;
+        backdrop-filter: blur(10px);
+        border: none;
+        box-shadow: none;
+        opacity: 1;
+        color: white;
+      }
+      .elements.name h2 {
+        font-size: 2.2rem;
+        margin: 0;
+      }
 
-        .elements.title {
-            top: 80px;
-            right: 40px;
-            width: 200px;
-            height: 60px;
-            transform: translateZ(60px);
-            background: transparent;
-            border: none;
-            box-shadow: none;
-            text-align: center;
-        }
+      .elements.content {
+        position: absolute;
+        bottom: 50px;
+        left: 50%;
+        transform: translateX(-50%) translateZ(180px);
+        width: 70%;
+        height: 250px;
+        padding: 15px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
 
-        .elements.title h1 {
-            margin: 0;
-            font-size: 2rem;
-        }
+      form {
+        width: 100%;
+      }
 
-        h1 {
-            margin-bottom: 20px;
-            font-size: 2.5rem;
-        }
+      .form-group {
+        margin-bottom: 15px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+      }
 
-        .form-group {
-            margin-bottom: 20px;
-        }
+      label {
+        font-size: 12px;
+        margin-bottom: 4px;
+      }
 
-        label {
-            font-size: 1rem;
-            display: block;
-            margin-bottom: 8px;
-        }
+      input {
+        background: transparent;
+        padding: 6px 10px;
+        font-size: 0.9em;
+        outline: none;
+        border: none;
+        width: 100%;
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        border-top: 1px solid rgba(255, 255, 255, 0.75);
+        border-left: 1px solid rgba(255, 255, 255, 0.75);
+        border-radius: 10px;
+        color: white;
+      }
 
-        input[type="text"],
-        input[type="password"] {
-            width: 100%;
-            padding: 10px;
-            border-radius: 5px;
-            border: none;
-            background-color: #f9f9f9;
-            color: #333;
-            font-size: 1rem;
-        }
+      button {
+        width: 100%;
+        background-color: transparent;
+        color: white;
+        padding: 10px 0;
+        font-size: 12px;
+        font-weight: 600;
+        border-radius: 10px;
+        cursor: pointer;
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        border-top: 1px solid rgba(255, 255, 255, 0.75);
+        border-left: 1px solid rgba(255, 255, 255, 0.75);
+      }
 
-        button {
-            width: 100%;
-            padding: 12px;
-            background-color: #fd052f;
-            color: white;
-            font-size: 1.2rem;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
+      button:hover {
+        background-color: #090979;
+      }
 
-        button:hover {
-            background-color: #e00428;
-        }
+      ::placeholder {
+        color: rgb(181, 177, 177);
+        font-size: 10px;
+        padding-left: 5px;
+      }
+
+      .register-link {
+        text-align: center;
+        margin-top: 20px;
+        color: white;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+        font-size: 12px;
+      }
+
+      .register-link a {
+        color: white;
+        text-decoration: underline;
+      }
     </style>
-</head>
-<body>
-    <div class="container">
-        <h1>Login</h1>
+  </head>
+  <body>
+    <div class="box">
+      <div class="elements name">
+        <h2>Login</h2>
+      </div>
+      <div class="elements content">
         <form id="login-form" onsubmit="handleLogin(event)">
-            <div class="form-group">
-                <label for="username">Username:</label>
-                <input type="text" id="username" name="username" required>
-            </div>
-            <div class="form-group">
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password" required>
-            </div>
-            <div class="form-group">
-                <button type="submit">Login</button>
-            </div>
-            <p style="text-align: center; margin-top: 20px; color: white; text-shadow: 0 1px 2px rgba(0,0,0,0.5);">
-                New to our website? <a href="register.html" style="color: white; text-decoration: underline;">Register here</a>
-            </p>
+          <div class="form-group">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required />
+          </div>
+          <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required />
+          </div>
+          <div class="form-group">
+            <button type="submit">Login</button>
+          </div>
+          <p class="register-link">
+            New to our website?
+            <a href="register.html">Register here</a>
+          </p>
         </form>
-        </div>
+      </div>
+      <div class="card"></div>
     </div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.min.js"></script>
     <script>
-        // Initialize tilt effect
-        VanillaTilt.init(document.querySelector(".container"), {
-            max: 15,
-            speed: 400,
-            glare: true,
-            "max-glare": 0.2
-        });
+      VanillaTilt.init(document.querySelector(".box"), {
+        max: 25,
+        speed: 400,
+        glare: true,
+        "max-glare": 0.2,
+      });
 
-        function handleLogin(event) {
-            event.preventDefault(); 
+      function handleLogin(event) {
+        event.preventDefault();
 
-            const username = document.getElementById("username").value;
-            const password = document.getElementById("password").value;
+        const username = document.getElementById("username").value;
+        const password = document.getElementById("password").value;
 
-            // NOTE: This is for demo purposes only
-            // In production, you should use server-side authentication
-            const storedUsername = localStorage.getItem("username");
-            const storedPassword = localStorage.getItem("password");
+        const storedUsername = localStorage.getItem("username");
+        const storedPassword = localStorage.getItem("password");
 
-            if (username === storedUsername && password === storedPassword) {
-                alert("Login successful!");
-                window.location.href = "home.html"; 
-            } else {
-                alert("Invalid username or password");
-            }
+        if (username === storedUsername && password === storedPassword) {
+          alert("Login successful!");
+          window.location.href = "home.html";
+        } else {
+          alert("Invalid username or password");
         }
+      }
     </script>
-</body>
+  </body>
 </html>

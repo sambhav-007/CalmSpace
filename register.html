@@ -3,12 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<<<<<<< HEAD
     <title>Register | CalmSpace</title>
+=======
+    <title>Register Page | CalmSpace</title>
+>>>>>>> fa6e522babc655f351ea828771198aca8b3d4ef8
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.min.js"
       integrity="sha512-wC/cunGGDjXSl9OHUH0RuqSyW4YNLlsPwhcLxwWW1CR4OeC2E1xpcdZz2DeQkEmums41laI+eGMw95IJ15SS3g=="
       crossorigin="anonymous" referrerpolicy="no-referrer">
     </script>
     <style>
+<<<<<<< HEAD
         * {
             box-sizing: border-box;
         }
@@ -243,3 +248,275 @@
     </script>
 </body>
 </html>
+=======
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Poppins", sans-serif;
+      }
+
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        color: white;
+        background: linear-gradient(#063349 0%, #090979 35%, #00d4ff 100%);
+      }
+
+      .box {
+        position: relative;
+        border-radius: 20px;
+        transform-style: preserve-3d;
+      }
+
+      .box .card {
+        position: relative;
+        background: rgba(255, 255, 255, 0.1);
+        width: 400px;
+        height: 700px;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgb(255, 255, 255, 0.5);
+        border-top: 1px solid rgb(255, 255, 255, 0.75);
+        border-left: 1px solid rgb(255, 255, 255, 0.75);
+        border-radius: 20px;
+        box-shadow: 0 25px 45px rgb(0, 0, 0, 0.5);
+        transform-style: preserve-3d;
+      }
+
+      .elements {
+        position: absolute;
+        top: 160px;
+        left: 50px;
+        width: 120px;
+        height: 120px;
+        background: rgba(255, 255, 255, 0.1);
+        transform: translateZ(80px);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        border-top: 1px solid rgba(255, 255, 255, 0.75);
+        border-left: 1px solid rgba(255, 255, 255, 0.75);
+        border-radius: 20px;
+        box-shadow: 0 25px 45px rgba(0, 0, 0, 0.5);
+      }
+
+      .elements.name {
+        top: 60px;
+        left: 50%;
+        transform: translateX(-50%) translateZ(100px);
+        width: 150px;
+        padding: 15px;
+        text-align: center;
+        background: transparent;
+        backdrop-filter: blur(10px);
+        border: none;
+        box-shadow: none;
+        opacity: 1;
+        color: white;
+      }
+      .elements.name h2 {
+        font-size: 2.2rem;
+        margin: 0;
+      }
+
+      .elements.content {
+        position: absolute;
+        bottom: 50px;
+        left: 50%;
+        transform: translateX(-50%) translateZ(180px);
+        width: 70%;
+        height: 450px;
+        padding: 15px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      form {
+        width: 100%;
+      }
+
+      .form-group {
+        margin-bottom: 15px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      label {
+        font-size: 12px;
+        margin-bottom: 4px;
+      }
+
+      input, select {
+        background: transparent;
+        padding: 6px 10px;
+        font-size: 0.9em;
+        outline: none;
+        border: none;
+        width: 100%;
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        border-top: 1px solid rgba(255, 255, 255, 0.75);
+        border-left: 1px solid rgba(255, 255, 255, 0.75);
+        border-radius: 10px;
+        color: white;
+      }
+
+      button {
+        width: 100%;
+        background-color: transparent;
+        color: white;
+        padding: 10px 0;
+        font-size: 12px;
+        font-weight: 600;
+        border-radius: 10px;
+        cursor: pointer;
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        border-top: 1px solid rgba(255, 255, 255, 0.75);
+        border-left: 1px solid rgba(255, 255, 255, 0.75);
+      }
+
+      button:hover {
+        background-color: #090979;
+      }
+
+      ::placeholder {
+        color: rgb(181, 177, 177);
+        font-size: 10px;
+        padding-left: 5px;
+      }
+
+      .login-link {
+        text-align: center;
+        margin-top: 20px;
+        color: white;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+        font-size: 12px;
+      }
+
+      .login-link a {
+        color: white;
+        text-decoration: underline;
+      }
+
+      .password-strength-bar {
+        height: 3px;
+        border-radius: 3px;
+        margin-top: 5px;
+        width: 100%;
+      }
+
+      .password-strength-weak {
+        background-color: rgba(255, 0, 0, 0.5);
+      }
+
+      .password-strength-medium {
+        background-color: rgba(255, 165, 0, 0.5);
+      }
+
+      .password-strength-strong {
+        background-color: rgba(0, 128, 0, 0.5);
+      }
+    </style>
+</head>
+<body>
+    <div class="box">
+      <div class="elements name">
+        <h2>Register</h2>
+      </div>
+      <div class="elements content">
+        <form id="register-form" onsubmit="handleRegister(event)">
+          <div class="form-group">
+            <label for="name">Username:</label>
+            <input type="text" id="name" name="name" required placeholder="Enter your username">
+          </div>
+          <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required placeholder="@gmail.com">
+          </div>
+          <div class="form-group">
+            <label for="phone">Phone Number:</label>
+            <input type="text" id="phone" name="phone" required placeholder="+91-">
+          </div>
+          <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required placeholder="Enter your password">
+            <div id="password-strength-bar" class="password-strength-bar"></div>
+          </div>
+          <div class="form-group">
+            <label for="confirm-password">Confirm Password:</label>
+            <input type="password" id="confirm-password" name="confirm-password" required placeholder="Confirm your password">
+          </div>
+          <div class="form-group">
+            <button type="submit">Register</button>
+          </div>
+          <p class="login-link">
+            Already registered?
+            <a href="index.html">Login here</a>
+          </p>
+        </form>
+      </div>
+      <div class="card"></div>
+    </div>
+
+    <script>
+      // Initialize tilt effect
+      VanillaTilt.init(document.querySelector(".box"), {
+        max: 25,
+        speed: 400,
+        glare: true,
+        "max-glare": 0.2,
+      });
+
+      // Check password strength
+      const passwordInput = document.getElementById('password');
+      const passwordStrengthBar = document.getElementById('password-strength-bar');
+
+      passwordInput.addEventListener('input', function () {
+        const password = passwordInput.value;
+        let strength = 0;
+
+        if (password.length >= 8) strength += 1;
+        if (/[A-Z]/.test(password)) strength += 1;
+        if (/[0-9]/.test(password)) strength += 1;
+        if (/[!@#$%^&*()_+]/.test(password)) strength += 1;
+
+        if (strength === 1) {
+          passwordStrengthBar.className = 'password-strength-bar password-strength-weak';
+        } else if (strength === 2) {
+          passwordStrengthBar.className = 'password-strength-bar password-strength-medium';
+        } else if (strength === 3 || strength === 4) {
+          passwordStrengthBar.className = 'password-strength-bar password-strength-strong';
+        } else {
+          passwordStrengthBar.className = 'password-strength-bar';
+        }
+      });
+
+      // Form submission handler
+      function handleRegister(event) {
+        event.preventDefault();
+
+        const form = document.getElementById('register-form');
+        const username = form.name.value;
+        const email = form.email.value;
+        const phone = form.phone.value;
+        const password = form.password.value;
+        const confirmPassword = form['confirm-password'].value;
+
+        if (password !== confirmPassword) {
+          alert("Passwords do not match!");
+          return;
+        }
+        
+        localStorage.setItem("username", username);
+        localStorage.setItem("password", password);
+
+        alert(`Successfully registered!\nUsername: ${username}\nEmail: ${email}`);            
+
+        window.location.href = "index.html";
+      }
+    </script>
+</body>
+</html>
+>>>>>>> fa6e522babc655f351ea828771198aca8b3d4ef8

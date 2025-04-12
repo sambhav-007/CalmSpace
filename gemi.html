@@ -3,6 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" href="gemi.css" />
     <title>CalmSpace - AI Journaling</title>
   </head>
   <body>
@@ -15,5 +17,89 @@
     ></textarea>
     <button onclick="askGemini()">Reflect</button>
     <pre id="output">Your AI-assisted reflections will appear here...</pre>
+
+    <script>
+      const API_KEY = "AIzaSyCh63Ww9HJy5itbB7Qm3niTrOa6PNNNyIA"; // ⚠️ Don't use this in production
+
+      let conversationHistory = []; // To maintain conversation context
+
+      async function askGemini() {
+        const userInput = document.getElementById("prompt").value;
+        const output = document.getElementById("output");
+
+        if (!userInput.trim()) {
+          output.textContent = "Please write something to reflect on.";
+          return;
+        }
+
+        output.textContent = "Thinking...";
+
+        // Add the user's input to the conversation history
+        conversationHistory.push({
+          role: "user",
+          parts: [
+            {
+              text: `You are a compassionate and empathetic therapist. Your role is to help users reflect on their thoughts, provide emotional support, and guide them toward personal growth. Respond thoughtfully and kindly to the following journaling entry: "${userInput}"`,
+            },
+          ],
+        });
+
+        try {
+          const response = await fetch(
+            "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=" +
+              API_KEY,
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                contents: conversationHistory, // Send the conversation history
+              }),
+            }
+          );
+
+          const data = await response.json();
+          console.log(data); // DEBUG: full response
+
+          if (
+            data.candidates &&
+            data.candidates[0]?.content?.parts?.[0]?.text
+          ) {
+            const reply = data.candidates[0].content.parts[0].text;
+
+            // Add the AI's reply to the conversation history
+            conversationHistory.push({
+              role: "assistant",
+              parts: [{ text: reply }],
+            });
+
+            displayWordByWord(reply, output);
+          } else if (data.error) {
+            output.textContent = `Error: ${data.error.message}`;
+          } else {
+            output.textContent = "No response from Gemini.";
+          }
+        } catch (err) {
+          output.textContent = "Request failed: " + err.message;
+          console.error(err);
+        }
+      }
+
+      function displayWordByWord(text, outputElement) {
+        outputElement.textContent = ""; // Clear previous content
+        const words = text.split(" ");
+        let index = 0;
+
+        const interval = setInterval(() => {
+          if (index < words.length) {
+            outputElement.textContent += words[index] + " ";
+            index++;
+          } else {
+            clearInterval(interval);
+          }
+        }, 100); // Adjust the speed (in milliseconds) as needed
+      }
+    </script>
   </body>
 </html>

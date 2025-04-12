@@ -32,15 +32,23 @@ body {
   }
   
   .intro-card {
-    background: white;
-    border-radius: 16px;
-    padding: 2rem;
-    box-shadow: 0 8px 30px rgba(0,0,0,0.08);
-    max-width: 800px;
-    margin: 0 auto;
-    position: relative;
-    top: -4rem;
-  }
+    background: white; /* Sets the background color */
+    border-radius: 16px; /* Smooth rounded corners */
+    padding: 2rem; /* Adds space inside the card */
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    max-width: 800px; /* Limits the card width */
+    margin: 0 auto; /* Centers the card */
+    position: relative; /* Used for positioning */
+    transform: translateY(0); /* Default transform state */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth hover effect */
+}
+
+.intro-card:hover {
+    transform: translateY(-10px); /* Moves the card up slightly */
+    box-shadow: 0px 12px 40px rgba(30, 7, 233, 0.2); /* Enhances shadow on hover */
+}
+
+  
   
   .intro-icon {
     font-size: 2.5rem;
@@ -86,8 +94,11 @@ body {
   }
   
   .member-card:hover {
-    transform: translateY(-5px);
+    transform: scale(1.03);
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
   }
+  
   
   .member-image {
     height: 300px;

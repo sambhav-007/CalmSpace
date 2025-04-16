@@ -1,234 +1,228 @@
-/* Base Styles */
+/* Core Color Palette */
+:root {
+  --primary-blue: #5680E9;
+  --light-blue: #84CEEB;
+  --muted-blue: #5AB9EA;
+  --soft-purple: #C1C8E4;
+  --vivid-purple: #8860D0;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body {
-    font-family: 'Segoe UI', system-ui, sans-serif;
-    line-height: 1.6;
-    background: #f8fafc;
-  }
-  
-  .header {
-    text-align: center;
-    padding: 4rem 2rem;
-    background: linear-gradient(135deg, #5680e9 0%, #5680e9 100%);
-    color: white;
-    position: relative;
-    overflow: hidden;
-  }
-  
-  .header-content {
-    max-width: 800px;
-    margin: 0 auto;
-  }
-  
-  .divider {
-    width: 60px;
-    height: 3px;
-    background: rgba(255,255,255,0.3);
-    margin: 1.5rem auto;
-  }
-  
-  /* Project Intro */
-  .project-intro {
-    padding: 3rem 2rem;
-  }
-  
-  .intro-card {
-    background: white; /* Sets the background color */
-    border-radius: 16px; /* Smooth rounded corners */
-    padding: 2rem; /* Adds space inside the card */
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-    max-width: 800px; /* Limits the card width */
-    margin: 0 auto; /* Centers the card */
-    position: relative; /* Used for positioning */
-    transform: translateY(0); /* Default transform state */
-    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth hover effect */
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, var(--primary-blue), var(--light-blue), var(--muted-blue), var(--soft-purple), var(--vivid-purple));
+  background-size: 400% 400%;
+  animation: gradientBG 20s ease-in-out infinite;
+  color: #333;
+  line-height: 1.6;
+}
+
+@keyframes gradientBG {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 1rem 2rem;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--primary-blue);
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 1.5rem;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #444;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+.nav-links a:hover,
+.nav-links .active {
+  color: var(--vivid-purple);
+}
+
+/* Header */
+header {
+  padding: 6rem 2rem 3rem;
+  text-align: center;
+  background-color: var(--soft-purple);
+}
+
+.header-text h1 {
+  color: var(--primary-blue);
+  font-size: 2.8rem;
+  margin-bottom: 1rem;
+}
+
+.divider {
+  width: 80px;
+  height: 4px;
+  background-color: var(--vivid-purple);
+  margin: 0 auto 1rem;
+}
+
+.tagline {
+  font-size: 1.2rem;
+  color: #666;
+}
+
+/* Intro Card */
+.project-intro {
+  padding: 3rem 2rem;
+}
+
+.intro-card {
+  background: white;
+  border-radius: 16px;
+  padding: 2rem;
+  max-width: 900px;
+  margin: 0 auto;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s;
 }
 
 .intro-card:hover {
-    transform: translateY(-10px); /* Moves the card up slightly */
-    box-shadow: 0px 12px 40px rgba(30, 7, 233, 0.2); /* Enhances shadow on hover */
+  transform: translateY(-5px);
 }
 
-  
-  
-  .intro-icon {
-    font-size: 2.5rem;
-    color: #5680e9;
-    margin-bottom: 1rem;
-  }
-  
-  .features-list {
-    list-style: none;
-    padding: 0;
-  }
-  
-  .features-list li {
-    padding: 0.8rem 0;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-  }
-  
-  /* Team Section */
-  .team-section {
-    padding: 2rem;
-  }
-  
-  .team-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr); /* Two items per row */
-    gap: 2rem; /* Space between grid items */
-    max-width: 800px; /* Make the grid narrower for better alignment */
-    margin: 0 auto; /* Center the grid */
-    justify-items: center; /* Center each collaborator card */
-  }
-  
-  
-  .member-card {
-    background: white;
-    border-radius: 16px;
-    overflow: hidden;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-    transition: transform 0.3s ease;
-    cursor: pointer;
-    position: relative;
-  }
-  
-  .member-card:hover {
-    transform: scale(1.03);
-    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
-  
-  
-  .member-image {
-    height: 300px;
-    overflow: hidden;
-    position: relative;
-  }
-  
-  .member-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.3s ease;
-  }
-  
-  .member-card:hover .member-image img {
-    transform: scale(1.05);
-  }
-  
-  .member-info {
-    padding: 1.5rem;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: linear-gradient(transparent 0%, rgba(0,0,0,0.8) 100%);
-    color: white;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-  }
-  
-  .member-card:hover .member-info {
-    opacity: 1;
-  }
-  
-  .linkedin-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    color: white;
-    text-decoration: none;
-    padding: 0.5rem 1rem;
-    border: 1px solid rgba(255,255,255,0.3);
-    border-radius: 50px;
-    margin-top: 1rem;
-    transition: all 0.3s ease;
-  }
-  
-  .linkedin-btn:hover {
-    background: rgba(255,255,255,0.1);
-  }
-  
-  /* Overlay Effect */
-  .overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0,0,0,0.5);
-    backdrop-filter: blur(5px);
-    z-index: 100;
-    display: none;
-  }
-  
-  /* Responsive Design */
-  @media (max-width: 768px) {
-    .member-card {
-      margin-bottom: 1.5rem;
-    }
-    
-    .member-info {
-      opacity: 1;
-      position: static;
-      background: #f8fafc;
-      color: #333;
-    }
-    
-    .linkedin-btn {
-      color: #0A66C2;
-      border-color: #0A66C2;
-    }
-  }
-  .section-title {
-    text-align: center; /* Centers the text horizontally */
-    font-size: 2.5rem; /* Makes the text larger */
-    font-weight: bold; /* Makes the font bold for emphasis */
-    margin: 2rem 0; /* Adds spacing above and below the text */
-    color: #333; /* Choose a color like black or dark gray */
-  }
-    
-  /* Back to Top Button */
-.back-to-top {
-    position: fixed;
-    bottom: 20px; /* Position it above the page bottom */
-    right: 20px; /* Position it near the right edge */
-    width: 50px; /* Set width */
-    height: 50px; /* Set height */
-    background-color: #5680e9; /* Choose a calm color */
-    color: white; /* Icon color */
-    border-radius: 50%; /* Make it circular */
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); /* Add slight shadow */
-    display: none; /* Initially hidden */
-    justify-content: center; /* Center align icon horizontally */
-    align-items: center; /* Center align icon vertically */
-    cursor: pointer; /* Add pointer cursor */
-    font-size: 1.5rem; /* Icon size */
-    z-index: 1000; /* Ensure visibility above other elements */
-    transition: opacity 0.3s ease, transform 0.3s ease;
-  }
-  
-  .back-to-top:hover {
-    transform: scale(1.1); /* Slightly enlarge on hover */
-    background-color: #5AB9EA; /* Darken the color on hover */
-  }
-  
-  footer {
-    text-align: center;
-    padding: 1rem;
-    background: #0A66C2; /* Match the CalmSpace theme color */
-    color: white; /* Make text readable */
-    font-size: 0.9rem;
-  }
-  
-  footer a {
-    color: white; /* Make links white for consistency */
-    text-decoration: none; /* Remove underline from links */
-    margin: 0 0.5rem; /* Add space between links */
-  }
-  
-  footer a:hover {
-    text-decoration: underline; /* Add underline on hover */
-  }
-  
+.intro-icon {
+  font-size: 2.5rem;
+  color: var(--primary-blue);
+  margin-bottom: 1rem;
+}
+
+.intro-card h2 {
+  font-size: 2rem;
+  color: var(--primary-blue);
+  margin-bottom: 1rem;
+}
+
+.intro-card p {
+  color: #444;
+}
+
+/* Team Section */
+.team-section {
+  padding: 3rem 2rem;
+}
+
+.section-title {
+  text-align: center;
+  font-size: 2.5rem;
+  color: var(--vivid-purple);
+  margin-bottom: 2rem;
+}
+
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 2rem;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.member-card {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  overflow: hidden;
+  transition: transform 0.3s;
+  position: relative;
+  cursor: pointer;
+}
+
+.member-card:hover {
+  transform: scale(1.03);
+}
+
+.member-image img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+}
+
+.member-info {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.75);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 1.5rem;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.member-card:hover .member-info {
+  opacity: 1;
+}
+
+.member-info h3 {
+  font-size: 1.4rem;
+  margin-bottom: 0.5rem;
+}
+
+.member-info p {
+  font-size: 0.95rem;
+  margin-bottom: 0.3rem;
+}
+
+.linkedin-btn {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid white;
+  padding: 0.4rem 1rem;
+  border-radius: 50px;
+  color: white;
+  text-decoration: none;
+  margin-top: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.linkedin-btn:hover {
+  background-color: white;
+  color: var(--primary-blue);
+}
+
+/* Footer */
+footer {
+  background: var(--primary-blue);
+  color: white;
+  text-align: center;
+  padding: 1rem;
+}
+
+footer a {
+  color: white;
+  text-decoration: underline;
+}

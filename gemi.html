@@ -5,41 +5,252 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <link rel="stylesheet" href="gemi.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
     <title>CalmSpace - AI Journaling</title>
   </head>
   <body>
-    <h2>Welcome to CalmSpace</h2>
-    <p>Write your thoughts below, and let AI help you reflect and grow.</p>
-    <textarea
-      id="prompt"
-      rows="6"
-      placeholder="Start journaling here..."
-    ></textarea>
-    <button onclick="askGemini()">Reflect</button>
-    <pre id="output">Your AI-assisted reflections will appear here...</pre>
+    <div class="app-container">
+      <!-- Navigation -->
+      <nav class="navbar">
+        <div class="logo">
+          <i class="fas fa-brain pulse"></i>
+          <span>CalmSpace</span>
+        </div>
+        <div class="nav-links">
+          <a href="#" class="active">Journal</a>
+          <a href="#">Insights</a>
+          <a href="#">Progress</a>
+        </div>
+        <div class="theme-toggle">
+          <i class="fas fa-moon"></i>
+        </div>
+      </nav>
+
+      <!-- Main Content -->
+      <main>
+        <div class="content-container">
+          <div class="journal-section">
+            <h1 class="gradient-text">Reflect & Grow</h1>
+            <p class="subtitle">
+              Express your thoughts freely and let AI guide your self-discovery
+              journey
+            </p>
+
+            <div class="journal-input glass-morphism">
+              <textarea
+                id="prompt"
+                rows="6"
+                placeholder="Start journaling here... How are you feeling today?"
+                class="glass-input"
+              ></textarea>
+
+              <div class="emotion-selector">
+                <div class="emotion" data-emotion="happy">
+                  <i class="far fa-smile"></i>
+                </div>
+                <div class="emotion" data-emotion="sad">
+                  <i class="far fa-frown"></i>
+                </div>
+                <div class="emotion" data-emotion="neutral">
+                  <i class="far fa-meh"></i>
+                </div>
+                <div class="emotion" data-emotion="excited">
+                  <i class="far fa-grin-stars"></i>
+                </div>
+                <div class="emotion" data-emotion="anxious">
+                  <i class="far fa-grimace"></i>
+                </div>
+              </div>
+
+              <button
+                id="reflect-btn"
+                onclick="askGemini()"
+                class="gradient-btn"
+              >
+                <span class="btn-text">Reflect with AI</span>
+                <i class="fas fa-sparkles"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="response-section glass-morphism">
+            <div class="response-header">
+              <h3><i class="fas fa-robot"></i> AI Reflection</h3>
+              <div class="controls">
+                <button
+                  class="icon-btn"
+                  id="save-btn"
+                  title="Save this reflection"
+                >
+                  <i class="far fa-bookmark"></i>
+                </button>
+                <button
+                  class="icon-btn"
+                  id="copy-btn"
+                  title="Copy to clipboard"
+                >
+                  <i class="far fa-copy"></i>
+                </button>
+              </div>
+            </div>
+
+            <div class="typing-indicator">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+
+            <div id="output" class="response-content">
+              Your AI-assisted reflections will appear here...
+            </div>
+
+            <div class="response-footer">
+              <div class="mood-analysis">
+                <div class="mood-label">Mood Analysis:</div>
+                <div class="mood-meter">
+                  <div class="mood-level" style="width: 0%"></div>
+                </div>
+              </div>
+              <button id="continue-btn" class="outline-btn">
+                Continue Conversation
+              </button>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <!-- Visual Elements -->
+      <div class="floating-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+        <div class="shape shape-4"></div>
+      </div>
+    </div>
 
     <script>
       const API_KEY = "AIzaSyCh63Ww9HJy5itbB7Qm3niTrOa6PNNNyIA"; // ⚠️ Don't use this in production
 
       let conversationHistory = []; // To maintain conversation context
+      let selectedEmotion = null;
+
+      // Initialize elements and event handlers
+      document.addEventListener("DOMContentLoaded", () => {
+        // Setup emotion selectors
+        const emotions = document.querySelectorAll(".emotion");
+        emotions.forEach((emotion) => {
+          emotion.addEventListener("click", () => {
+            // Remove active class from all emotions
+            emotions.forEach((e) => e.classList.remove("active"));
+            // Add active class to selected emotion
+            emotion.classList.add("active");
+            selectedEmotion = emotion.dataset.emotion;
+
+            // Add animation to selected emotion
+            emotion.classList.add("pulse");
+            setTimeout(() => {
+              emotion.classList.remove("pulse");
+            }, 500);
+          });
+        });
+
+        // Setup copy button
+        const copyBtn = document.getElementById("copy-btn");
+        copyBtn.addEventListener("click", () => {
+          const output = document.getElementById("output");
+          navigator.clipboard.writeText(output.textContent);
+
+          copyBtn.innerHTML = '<i class="fas fa-check"></i>';
+          setTimeout(() => {
+            copyBtn.innerHTML = '<i class="far fa-copy"></i>';
+          }, 2000);
+        });
+
+        // Setup save button
+        const saveBtn = document.getElementById("save-btn");
+        saveBtn.addEventListener("click", () => {
+          saveBtn.innerHTML = '<i class="fas fa-bookmark"></i>';
+          saveBtn.classList.add("saved");
+
+          // Create and show notification
+          const notification = document.createElement("div");
+          notification.classList.add("notification");
+          notification.textContent = "Reflection saved!";
+          document.body.appendChild(notification);
+
+          setTimeout(() => {
+            notification.classList.add("show");
+          }, 100);
+
+          setTimeout(() => {
+            notification.classList.remove("show");
+            setTimeout(() => {
+              notification.remove();
+            }, 300);
+          }, 3000);
+        });
+
+        // Theme toggle
+        const themeToggle = document.querySelector(".theme-toggle");
+        themeToggle.addEventListener("click", () => {
+          document.body.classList.toggle("dark-mode");
+          const icon = themeToggle.querySelector("i");
+          if (document.body.classList.contains("dark-mode")) {
+            icon.classList.remove("fa-moon");
+            icon.classList.add("fa-sun");
+          } else {
+            icon.classList.remove("fa-sun");
+            icon.classList.add("fa-moon");
+          }
+        });
+
+        // Continue conversation button
+        const continueBtn = document.getElementById("continue-btn");
+        continueBtn.addEventListener("click", () => {
+          document.getElementById("prompt").focus();
+        });
+
+        // Focus animation for textarea
+        const textarea = document.getElementById("prompt");
+        textarea.addEventListener("focus", () => {
+          document.querySelector(".journal-input").classList.add("focused");
+        });
+
+        textarea.addEventListener("blur", () => {
+          document.querySelector(".journal-input").classList.remove("focused");
+        });
+      });
 
       async function askGemini() {
         const userInput = document.getElementById("prompt").value;
         const output = document.getElementById("output");
+        const typingIndicator = document.querySelector(".typing-indicator");
+        const moodLevel = document.querySelector(".mood-level");
 
         if (!userInput.trim()) {
           output.textContent = "Please write something to reflect on.";
           return;
         }
 
-        output.textContent = "Thinking...";
+        // Show typing indicator
+        typingIndicator.style.display = "flex";
+        output.textContent = "";
+
+        // Add emotion context if selected
+        let promptWithEmotion = userInput;
+        if (selectedEmotion) {
+          promptWithEmotion = `I'm feeling ${selectedEmotion} today. ${userInput}`;
+        }
 
         // Add the user's input to the conversation history
         conversationHistory.push({
           role: "user",
           parts: [
             {
-              text: `You are a compassionate and empathetic therapist. Your role is to help users reflect on their thoughts, provide emotional support, and guide them toward personal growth. Respond thoughtfully and kindly to the following journaling entry: "${userInput}"`,
+              text: `You are a compassionate and empathetic therapist. Your role is to help users reflect on their thoughts, provide emotional support, and guide them toward personal growth. Respond thoughtfully and kindly to the following journaling entry: "${promptWithEmotion}"`,
             },
           ],
         });
@@ -54,7 +265,7 @@
                 "Content-Type": "application/json",
               },
               body: JSON.stringify({
-                contents: conversationHistory, // Send the conversation history
+                contents: conversationHistory,
               }),
             }
           );
@@ -74,13 +285,46 @@
               parts: [{ text: reply }],
             });
 
+            // Hide typing indicator before displaying text
+            typingIndicator.style.display = "none";
+
+            // Display text with typewriter effect
             displayWordByWord(reply, output);
+
+            // Animate the mood meter based on the selected emotion
+            let moodPercentage = 50; // Default neutral
+
+            if (selectedEmotion) {
+              switch (selectedEmotion) {
+                case "happy":
+                  moodPercentage = 80;
+                  break;
+                case "excited":
+                  moodPercentage = 90;
+                  break;
+                case "neutral":
+                  moodPercentage = 50;
+                  break;
+                case "anxious":
+                  moodPercentage = 30;
+                  break;
+                case "sad":
+                  moodPercentage = 20;
+                  break;
+              }
+            }
+
+            // Animate the mood meter
+            animateMoodMeter(moodPercentage);
           } else if (data.error) {
+            typingIndicator.style.display = "none";
             output.textContent = `Error: ${data.error.message}`;
           } else {
+            typingIndicator.style.display = "none";
             output.textContent = "No response from Gemini.";
           }
         } catch (err) {
+          typingIndicator.style.display = "none";
           output.textContent = "Request failed: " + err.message;
           console.error(err);
         }
@@ -95,10 +339,43 @@
           if (index < words.length) {
             outputElement.textContent += words[index] + " ";
             index++;
+
+            // Auto-scroll to show latest content
+            outputElement.parentNode.scrollTop =
+              outputElement.parentNode.scrollHeight;
           } else {
             clearInterval(interval);
           }
-        }, 100); // Adjust the speed (in milliseconds) as needed
+        }, 80); // Slightly faster text display
+      }
+
+      function animateMoodMeter(percentage) {
+        const moodLevel = document.querySelector(".mood-level");
+
+        // Set the color based on the percentage
+        let color;
+        if (percentage < 30) {
+          color = "rgb(235, 87, 87)"; // Red for sad/anxious
+        } else if (percentage < 50) {
+          color = "rgb(242, 153, 74)"; // Orange for slightly negative
+        } else if (percentage < 70) {
+          color = "rgb(76, 207, 211)"; // Teal for neutral/calm
+        } else {
+          color = "rgb(68, 190, 135)"; // Green for happy/positive
+        }
+
+        moodLevel.style.backgroundColor = color;
+
+        // Animate width from 0 to the target percentage
+        let currentWidth = 0;
+        const animationInterval = setInterval(() => {
+          if (currentWidth < percentage) {
+            currentWidth += 1;
+            moodLevel.style.width = `${currentWidth}%`;
+          } else {
+            clearInterval(animationInterval);
+          }
+        }, 10);
       }
     </script>
   </body>

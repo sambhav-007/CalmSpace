@@ -3,212 +3,124 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login page | CalmSpace</title>
+    <title>CalmSpace – Your AI Therapist</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
     <style>
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        font-family: "Poppins", sans-serif;
-      }
-
       body {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        min-height: 100vh;
-        color: white;
-        background: linear-gradient(#063349 0%, #090979 35%, #00d4ff 100%);
-      }
-
-      .box {
-        position: relative;
-        border-radius: 20px;
-        transform-style: preserve-3d;
-      }
-
-      .box .card {
-        position: relative;
-        background: rgba(255, 255, 255, 0.1);
-        width: 400px;
-        height: 600px;
-        backdrop-filter: blur(10px);
-        border: 1px solid rgb(255, 255, 255, 0.5);
-        border-top: 1px solid rgb(255, 255, 255, 0.75);
-        border-left: 1px solid rgb(255, 255, 255, 0.75);
-        border-radius: 20px;
-        box-shadow: 0 25px 45px rgb(0, 0, 0, 0.5);
-        transform-style: preserve-3d;
-      }
-
-      .elements {
-        position: absolute;
-        top: 190px;
-        left: 50px;
-        width: 120px;
-        height: 120px;
-        background: rgba(255, 255, 255, 0.1);
-        transform: translateZ(80px);
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.5);
-        border-top: 1px solid rgba(255, 255, 255, 0.75);
-        border-left: 1px solid rgba(255, 255, 255, 0.75);
-        border-radius: 20px;
-        box-shadow: 0 25px 45px rgba(0, 0, 0, 0.5);
-      }
-
-      .elements.name {
-        top: 60px;
-        left: 50%;
-        transform: translateX(-50%) translateZ(100px);
-        width: 150px;
-        padding: 15px;
-        text-align: center;
-        background: transparent;
-        backdrop-filter: blur(10px);
-        border: none;
-        box-shadow: none;
-        opacity: 1;
-        color: white;
-      }
-      .elements.name h2 {
-        font-size: 2.2rem;
-        margin: 0;
-      }
-
-      .elements.content {
-        position: absolute;
-        bottom: 50px;
-        left: 50%;
-        transform: translateX(-50%) translateZ(180px);
-        width: 70%;
-        height: 250px;
-        padding: 15px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-
-      form {
-        width: 100%;
-      }
-
-      .form-group {
-        margin-bottom: 15px;
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-      }
-
-      label {
-        font-size: 12px;
-        margin-bottom: 4px;
-      }
-
-      input {
-        background: transparent;
-        padding: 6px 10px;
-        font-size: 0.9em;
-        outline: none;
-        border: none;
-        width: 100%;
-        border: 1px solid rgba(255, 255, 255, 0.5);
-        border-top: 1px solid rgba(255, 255, 255, 0.75);
-        border-left: 1px solid rgba(255, 255, 255, 0.75);
-        border-radius: 10px;
-        color: white;
-      }
-
-      button {
-        width: 100%;
-        background-color: transparent;
-        color: white;
-        padding: 10px 0;
-        font-size: 12px;
-        font-weight: 600;
-        border-radius: 10px;
-        cursor: pointer;
-        border: 1px solid rgba(255, 255, 255, 0.5);
-        border-top: 1px solid rgba(255, 255, 255, 0.75);
-        border-left: 1px solid rgba(255, 255, 255, 0.75);
-      }
-
-      button:hover {
-        background-color: #090979;
-      }
-
-      ::placeholder {
-        color: rgb(181, 177, 177);
-        font-size: 10px;
-        padding-left: 5px;
-      }
-
-      .register-link {
-        text-align: center;
-        margin-top: 20px;
-        color: white;
-        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
-        font-size: 12px;
-      }
-
-      .register-link a {
-        color: white;
-        text-decoration: underline;
+        font-family: 'Inter', sans-serif;
       }
     </style>
   </head>
-  <body>
-    <div class="box">
-      <div class="elements name">
-        <h2>Login</h2>
+  <body class="bg-[#C1C8E4] text-gray-800">
+    <!-- Hero -->
+    <section class="bg-gradient-to-br from-[#5680E9] to-[#8860D0] text-white py-20 px-6 text-center">
+      <h1 class="text-4xl md:text-6xl font-bold mb-4">Your AI Therapy & Journaling Companion</h1>
+      <p class="text-lg md:text-xl mb-8">Talk freely. Reflect deeply. Heal gently.</p>
+      <div class="space-x-4">
+        <button class="bg-[#84CEEB] text-[#232946] font-semibold px-6 py-3 rounded-full shadow-lg hover:bg-[#5AB9EA] transition">Start Journaling</button>
+        <button class="border border-white px-6 py-3 rounded-full hover:bg-white hover:text-[#8860D0] transition">Meet Your AI Therapist</button>
       </div>
-      <div class="elements content">
-        <form id="login-form" onsubmit="handleLogin(event)">
-          <div class="form-group">
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="username" required />
-          </div>
-          <div class="form-group">
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required />
-          </div>
-          <div class="form-group">
-            <button type="submit">Login</button>
-          </div>
-          <p class="register-link">
-            New to our website?
-            <a href="register.html">Register here</a>
-          </p>
-        </form>
+    </section>
+
+    <!-- How It Works -->
+    <section class="py-16 px-6 max-w-5xl mx-auto">
+      <h2 class="text-3xl font-bold text-center mb-10">How It Works</h2>
+      <div class="grid md:grid-cols-3 gap-10 text-center">
+        <div>
+          <div class="text-5xl mb-4">💬</div>
+          <h3 class="text-xl font-semibold mb-2">Chat with CalmSpace</h3>
+          <p>Get support anytime, anywhere. Your AI companion is always here.</p>
+        </div>
+        <div>
+          <div class="text-5xl mb-4">📝</div>
+          <h3 class="text-xl font-semibold mb-2">Daily Journaling</h3>
+          <p>Express your thoughts in a private and calming space.</p>
+        </div>
+        <div>
+          <div class="text-5xl mb-4">🔍</div>
+          <h3 class="text-xl font-semibold mb-2">AI Insights</h3>
+          <p>Discover patterns, emotions, and clarity through AI-powered reflections.</p>
+        </div>
       </div>
-      <div class="card"></div>
-    </div>
+    </section>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.min.js"></script>
-    <script>
-      VanillaTilt.init(document.querySelector(".box"), {
-        max: 25,
-        speed: 400,
-        glare: true,
-        "max-glare": 0.2,
-      });
+    <!-- Features -->
+    <section class="py-16 bg-[#84CEEB] bg-opacity-20 px-6">
+      <h2 class="text-3xl font-bold text-center mb-10">Features</h2>
+      <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        <div class="bg-white rounded-xl shadow-md p-6">
+          <h3 class="font-semibold text-lg mb-2">Emotion Tracking</h3>
+          <p>Visualize your emotional journey over time.</p>
+        </div>
+        <div class="bg-white rounded-xl shadow-md p-6">
+          <h3 class="font-semibold text-lg mb-2">Guided Prompts</h3>
+          <p>Structured prompts to help you go deeper with your journaling.</p>
+        </div>
+        <div class="bg-white rounded-xl shadow-md p-6">
+          <h3 class="font-semibold text-lg mb-2">Private & Secure</h3>
+          <p>Your data is yours. Always encrypted and never shared.</p>
+        </div>
+      </div>
+    </section>
 
-      function handleLogin(event) {
-        event.preventDefault();
+    <!-- Testimonials -->
+    <section class="py-16 px-6 max-w-4xl mx-auto text-center">
+      <h2 class="text-3xl font-bold mb-10">What People Say</h2>
+      <blockquote class="bg-white p-6 rounded-lg shadow-md mb-6">
+        <p class="italic">“CalmSpace feels like a friend who listens. It’s changed the way I journal.”</p>
+        <span class="block mt-4 font-semibold">– Emily M.</span>
+      </blockquote>
+      <blockquote class="bg-white p-6 rounded-lg shadow-md">
+        <p class="italic">“A daily safe space that understands me. So grateful.”</p>
+        <span class="block mt-4 font-semibold">– Jordan R.</span>
+      </blockquote>
+    </section>
 
-        const username = document.getElementById("username").value;
-        const password = document.getElementById("password").value;
+    <!-- Pricing -->
+    <section class="py-16 bg-[#5AB9EA] bg-opacity-20 px-6">
+      <h2 class="text-3xl font-bold text-center mb-10">Choose Your Plan</h2>
+      <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        <div class="bg-white p-6 rounded-xl shadow-lg text-center">
+          <h3 class="text-xl font-bold mb-2">Free</h3>
+          <p class="mb-4">Basic journaling, limited prompts</p>
+          <p class="text-2xl font-bold mb-4">$0/month</p>
+          <button class="bg-[#5680E9] text-white px-4 py-2 rounded-full">Get Started</button>
+        </div>
+        <div class="bg-[#8860D0] text-white p-6 rounded-xl shadow-lg text-center">
+          <h3 class="text-xl font-bold mb-2">Premium</h3>
+          <p class="mb-4">AI therapy, unlimited journaling</p>
+          <p class="text-2xl font-bold mb-4">$9.99/month</p>
+          <button class="bg-white text-[#8860D0] px-4 py-2 rounded-full">Subscribe</button>
+        </div>
+        <div class="bg-white p-6 rounded-xl shadow-lg text-center">
+          <h3 class="text-xl font-bold mb-2">Pro</h3>
+          <p class="mb-4">Insights, goals tracking, advanced tools</p>
+          <p class="text-2xl font-bold mb-4">$19.99/month</p>
+          <button class="bg-[#5680E9] text-white px-4 py-2 rounded-full">Go Pro</button>
+        </div>
+      </div>
+    </section>
 
-        const storedUsername = localStorage.getItem("username");
-        const storedPassword = localStorage.getItem("password");
+    <!-- CTA -->
+    <section class="bg-[#8860D0] text-white text-center py-20 px-6">
+      <h2 class="text-3xl md:text-4xl font-bold mb-4">Start your wellness journey today</h2>
+      <button class="bg-white text-[#8860D0] font-semibold px-6 py-3 mt-4 rounded-full shadow-md hover:bg-[#C1C8E4] transition">Join CalmSpace</button>
+    </section>
 
-        if (username === storedUsername && password === storedPassword) {
-          alert("Login successful!");
-          window.location.href = "home.html";
-        } else {
-          alert("Invalid username or password");
-        }
-      }
-    </script>
+    <!-- Footer -->
+    <footer class="bg-[#C1C8E4] py-6 text-center text-gray-600 text-sm">
+      <p>&copy; 2025 CalmSpace. All rights reserved.</p>
+      <div class="mt-2 space-x-4">
+        <a href="#" class="hover:underline">About</a>
+        <a href="#" class="hover:underline">Contact</a>
+        <a href="#" class="hover:underline">Privacy</a>
+        <a href="#" class="hover:underline">FAQ</a>
+      </div>
+    </footer>
   </body>
 </html>
+

@@ -1,214 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login page | CalmSpace</title>
-    <style>
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        font-family: "Poppins", sans-serif;
-      }
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CalmSpace – AI Therapist</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
 
-      body {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        min-height: 100vh;
-        color: white;
-        background: linear-gradient(#063349 0%, #090979 35%, #00d4ff 100%);
-      }
+  <!-- Navbar -->
+  <header>
+    <nav>
+      <div class="logo">CalmSpace</div>
+      <ul class="nav-links">
+        <li><a href="#features">Features</a></li>
+        <li><a href="#therapy">Therapy</a></li>
+        <li><a href="#journal">Journal</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a href="#login" class="btn-login">Login</a></li>
+      </ul>
+      <button class="menu-btn" id="menuBtn">
+        &#9776;
+      </button>
+    </nav>
+  </header>
 
-      .box {
-        position: relative;
-        border-radius: 20px;
-        transform-style: preserve-3d;
-      }
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <ul>
+      <li><a href="#features">Features</a></li>
+      <li><a href="#therapy">Therapy</a></li>
+      <li><a href="#journal">Journal</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a href="#login" class="btn-login">Login</a></li>
+    </ul>
+  </div>
 
-      .box .card {
-        position: relative;
-        background: rgba(255, 255, 255, 0.1);
-        width: 400px;
-        height: 600px;
-        backdrop-filter: blur(10px);
-        border: 1px solid rgb(255, 255, 255, 0.5);
-        border-top: 1px solid rgb(255, 255, 255, 0.75);
-        border-left: 1px solid rgb(255, 255, 255, 0.75);
-        border-radius: 20px;
-        box-shadow: 0 25px 45px rgb(0, 0, 0, 0.5);
-        transform-style: preserve-3d;
-      }
-
-      .elements {
-        position: absolute;
-        top: 190px;
-        left: 50px;
-        width: 120px;
-        height: 120px;
-        background: rgba(255, 255, 255, 0.1);
-        transform: translateZ(80px);
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.5);
-        border-top: 1px solid rgba(255, 255, 255, 0.75);
-        border-left: 1px solid rgba(255, 255, 255, 0.75);
-        border-radius: 20px;
-        box-shadow: 0 25px 45px rgba(0, 0, 0, 0.5);
-      }
-
-      .elements.name {
-        top: 60px;
-        left: 50%;
-        transform: translateX(-50%) translateZ(100px);
-        width: 150px;
-        padding: 15px;
-        text-align: center;
-        background: transparent;
-        backdrop-filter: blur(10px);
-        border: none;
-        box-shadow: none;
-        opacity: 1;
-        color: white;
-      }
-      .elements.name h2 {
-        font-size: 2.2rem;
-        margin: 0;
-      }
-
-      .elements.content {
-        position: absolute;
-        bottom: 50px;
-        left: 50%;
-        transform: translateX(-50%) translateZ(180px);
-        width: 70%;
-        height: 250px;
-        padding: 15px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-
-      form {
-        width: 100%;
-      }
-
-      .form-group {
-        margin-bottom: 15px;
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-      }
-
-      label {
-        font-size: 12px;
-        margin-bottom: 4px;
-      }
-
-      input {
-        background: transparent;
-        padding: 6px 10px;
-        font-size: 0.9em;
-        outline: none;
-        border: none;
-        width: 100%;
-        border: 1px solid rgba(255, 255, 255, 0.5);
-        border-top: 1px solid rgba(255, 255, 255, 0.75);
-        border-left: 1px solid rgba(255, 255, 255, 0.75);
-        border-radius: 10px;
-        color: white;
-      }
-
-      button {
-        width: 100%;
-        background-color: transparent;
-        color: white;
-        padding: 10px 0;
-        font-size: 12px;
-        font-weight: 600;
-        border-radius: 10px;
-        cursor: pointer;
-        border: 1px solid rgba(255, 255, 255, 0.5);
-        border-top: 1px solid rgba(255, 255, 255, 0.75);
-        border-left: 1px solid rgba(255, 255, 255, 0.75);
-      }
-
-      button:hover {
-        background-color: #090979;
-      }
-
-      ::placeholder {
-        color: rgb(181, 177, 177);
-        font-size: 10px;
-        padding-left: 5px;
-      }
-
-      .register-link {
-        text-align: center;
-        margin-top: 20px;
-        color: white;
-        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
-        font-size: 12px;
-      }
-
-      .register-link a {
-        color: white;
-        text-decoration: underline;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="box">
-      <div class="elements name">
-        <h2>Login</h2>
-      </div>
-      <div class="elements content">
-        <form id="login-form" onsubmit="handleLogin(event)">
-          <div class="form-group">
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="username" required />
-          </div>
-          <div class="form-group">
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required />
-          </div>
-          <div class="form-group">
-            <button type="submit">Login</button>
-          </div>
-          <p class="register-link">
-            New to our website?
-            <a href="register.html">Register here</a>
-          </p>
-        </form>
-      </div>
-      <div class="card"></div>
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Your AI Therapist & Journaling Companion</h1>
+      <p>Talk. Reflect. Heal. CalmSpace supports your mental wellness—anytime, anywhere.</p>
+      <a href="#therapy" class="cta-btn">Start Talking</a>
     </div>
+    <div class="hero-image">
+      <img src="https://illustrations.popsy.co/gray/relaxing.svg" alt="AI Therapy">
+    </div>
+  </section>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.min.js"></script>
-    <script>
-      VanillaTilt.init(document.querySelector(".box"), {
-        max: 25,
-        speed: 400,
-        glare: true,
-        "max-glare": 0.2,
-      });
+  <script>
+    const menuBtn = document.getElementById("menuBtn");
+    const mobileMenu = document.getElementById("mobileMenu");
+    menuBtn.addEventListener("click", () => {
+      mobileMenu.classList.toggle("active");
+    });
+  </script>
 
-      function handleLogin(event) {
-        event.preventDefault();
-
-        const username = document.getElementById("username").value;
-        const password = document.getElementById("password").value;
-
-        const storedUsername = localStorage.getItem("username");
-        const storedPassword = localStorage.getItem("password");
-
-        if (username === storedUsername && password === storedPassword) {
-          alert("Login successful!");
-          window.location.href = "home.html";
-        } else {
-          alert("Invalid username or password");
-        }
-      }
-    </script>
-  </body>
+</body>
 </html>

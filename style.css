@@ -1,67 +1,106 @@
-/* General Reset */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 body {
-  font-family: Arial, sans-serif;
-  line-height: 1.6;
+  background: linear-gradient(135deg, #2e1d5b 0%, #3d2a7d 50%, #453291 100%);
+  color: #fff;
+  min-height: 100vh;
 }
 
-/* Navbar Styles */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
 header {
-  background-color: #ffffff;
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  padding: 15px 30px;
+  padding: 20px 0;
 }
 
 nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 10px 0;
 }
 
-nav .logo {
-  font-size: 1.8rem;
-  font-weight: bold;
-  color: #4F46E5;
-}
-
-nav ul {
+.logo {
   display: flex;
-  gap: 20px;
+  align-items: center;
+  font-size: 24px;
+  font-weight: bold;
 }
 
-nav ul li a {
+.logo-icon {
+  width: 30px;
+  height: 30px;
+  background: linear-gradient(135deg, #4a9eff 0%, #6b5fff 100%);
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 30px;
+}
+
+.nav-links a {
+  color: #fff;
   text-decoration: none;
-  color: #333;
-  font-size: 1.1rem;
-  transition: color 0.3s ease;
+  opacity: 0.8;
+  transition: opacity 0.3s;
 }
 
-nav ul li a:hover {
-  color: #4F46E5;
+.nav-links a:hover {
+  opacity: 1;
 }
 
-.btn-login {
-  background-color: #4F46E5;
-  color: white;
-  padding: 8px 15px;
-  border-radius: 5px;
+.auth-buttons {
+  display: flex;
+  gap: 15px;
+}
+
+.btn-auth {
+  padding: 8px 18px;
+  border-radius: 30px;
+  font-weight: 600;
+  font-size: 14px;
   text-decoration: none;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: #fff;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(6px);
 }
 
-nav .menu-btn {
-  display: none;
-  font-size: 2rem;
-  background: none;
+.btn-auth:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.login-btn {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.register-btn {
+  background: linear-gradient(135deg, #4a9eff 0%, #6b5fff 100%);
   border: none;
-  color: #333;
+}
+
+.theme-toggle {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
   cursor: pointer;
 }
 

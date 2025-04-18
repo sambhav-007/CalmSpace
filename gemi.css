@@ -558,6 +558,7 @@ main {
   display: flex;
   align-items: center;
   gap: var(--spacing-sm);
+  color: #ffffff; /* Ensure the "AI Reflection" title is always white */
 }
 
 .response-header h3 i {
@@ -579,7 +580,7 @@ main {
   flex: 1;
   padding: var(--spacing-xl);
   overflow-y: auto;
-  color: rgba(255, 255, 255, 0.9);
+  color: #ffffff; /* Pure white text for better visibility in dark mode */
   line-height: 1.7;
   font-size: 1rem;
   letter-spacing: 0.01em;

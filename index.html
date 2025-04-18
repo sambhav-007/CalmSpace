@@ -32,36 +32,30 @@
             </nav>
         </header>
 
-  <!-- Mobile Menu -->
-  <div class="mobile-menu" id="mobileMenu">
-    <ul>
-      <li><a href="#features">Features</a></li>
-      <li><a href="#therapy">Therapy</a></li>
-      <li><a href="#journal">Journal</a></li>
-      <li><a href="#contact">Contact</a></li>
-      <li><a href="#login" class="btn-login">Login</a></li>
-    </ul>
-  </div>
-
-  <!-- Hero Section -->
-  <section class="hero">
-    <div class="hero-content">
-      <h1>Your AI Therapist & Journaling Companion</h1>
-      <p>Talk. Reflect. Heal. CalmSpace supports your mental wellness—anytime, anywhere.</p>
-      <a href="#therapy" class="cta-btn">Start Talking</a>
-    </div>
-    <div class="hero-image">
-      <img src="https://illustrations.popsy.co/gray/relaxing.svg" alt="AI Therapy">
-    </div>
-  </section>
-
-  <script>
-    const menuBtn = document.getElementById("menuBtn");
-    const mobileMenu = document.getElementById("mobileMenu");
-    menuBtn.addEventListener("click", () => {
-      mobileMenu.classList.toggle("active");
-    });
-  </script>
-
+        <section class="hero">
+          <div class="hero-content">
+              <h1 class="hero-title">Reflect & Grow with CalmSpace</h1>
+              <p class="hero-subtitle">Express your thoughts freely and let AI guide your self-discovery journey. Find peace, clarity, and personal growth through mindful journaling.</p>
+              <div class="cta-buttons">
+                  <a href="#" class="btn btn-primary">Get Started Free</a>
+                  <a href="#" class="btn btn-secondary">How It Works</a>
+              </div>
+          </div>
+          <div class="hero-image">
+              <div class="app-preview">
+                  <div class="app-preview-inner">
+                      <div class="journal-box" id="journal-box"></div>
+                      <div class="mood-icons">
+                          <div class="mood-icon" data-mood="happy" onclick="selectMood('😊', 'Happy')">😊</div>
+                          <div class="mood-icon" data-mood="neutral" onclick="selectMood('😐', 'Neutral')">😐</div>
+                          <div class="mood-icon" data-mood="content" onclick="selectMood('🙂', 'Content')">🙂</div>
+                          <div class="mood-icon" data-mood="sad" onclick="selectMood('😢', 'Sad')">😢</div>
+                          <div class="mood-icon" data-mood="angry" onclick="selectMood('😡', 'Angry')">😡</div>
+                      </div>
+                      <button class="journal-button">Reflect with AI</button>
+                  </div>
+              </div>
+          </div>
+      </section>
 </body>
 </html>

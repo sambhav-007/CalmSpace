@@ -5,6 +5,9 @@ let selectedEmotion = null;
 
 // Initialize elements and event handlers
 document.addEventListener("DOMContentLoaded", () => {
+  // Add subtle entrance animation to elements
+  animateEntranceEffects();
+
   // Setup emotion selectors
   const emotions = document.querySelectorAll(".emotion");
   emotions.forEach((emotion) => {
@@ -35,74 +38,189 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 2000);
   });
 
-  // Setup save button
+  // Setup save button with improved animation
   const saveBtn = document.getElementById("save-btn");
   saveBtn.addEventListener("click", () => {
     saveBtn.innerHTML = '<i class="fas fa-bookmark"></i>';
     saveBtn.classList.add("saved");
 
     // Create and show notification
-    const notification = document.createElement("div");
-    notification.classList.add("notification");
-    notification.textContent = "Reflection saved!";
-    document.body.appendChild(notification);
-
-    setTimeout(() => {
-      notification.classList.add("show");
-    }, 100);
-
-    setTimeout(() => {
-      notification.classList.remove("show");
-      setTimeout(() => {
-        notification.remove();
-      }, 300);
-    }, 3000);
+    showNotification("Reflection saved!");
   });
 
-  // Theme toggle
+  // Theme toggle with enhanced animation
   const themeToggle = document.querySelector(".theme-toggle");
   themeToggle.addEventListener("click", () => {
     document.body.classList.toggle("dark-mode");
     const icon = themeToggle.querySelector("i");
-    if (document.body.classList.contains("dark-mode")) {
-      icon.classList.remove("fa-moon");
-      icon.classList.add("fa-sun");
-    } else {
-      icon.classList.remove("fa-sun");
-      icon.classList.add("fa-moon");
-    }
+
+    // Add rotation animation for smooth transition
+    icon.style.transition =
+      "transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)";
+    icon.style.transform = "rotate(360deg)";
+
+    setTimeout(() => {
+      if (document.body.classList.contains("dark-mode")) {
+        icon.classList.remove("fa-moon");
+        icon.classList.add("fa-sun");
+      } else {
+        icon.classList.remove("fa-sun");
+        icon.classList.add("fa-moon");
+      }
+      // Reset transform after icon change
+      setTimeout(() => {
+        icon.style.transition = "none";
+        icon.style.transform = "rotate(0deg)";
+
+        setTimeout(() => {
+          icon.style.transition =
+            "transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)";
+        }, 50);
+      }, 500);
+    }, 250);
   });
 
-  // Continue conversation button
+  // Continue conversation button with hover effect
   const continueBtn = document.getElementById("continue-btn");
   continueBtn.addEventListener("click", () => {
-    document.getElementById("prompt").focus();
+    const prompt = document.getElementById("prompt");
+    prompt.focus();
+
+    // Subtle bounce animation on the textarea
+    const journalInput = document.querySelector(".journal-input");
+    journalInput.classList.add("focused");
+
+    // Scroll to textarea smoothly
+    journalInput.scrollIntoView({ behavior: "smooth", block: "center" });
   });
 
-  // Focus animation for textarea
+  // Focus animation for textarea with enhanced effects
   const textarea = document.getElementById("prompt");
   textarea.addEventListener("focus", () => {
     document.querySelector(".journal-input").classList.add("focused");
+
+    // Subtle particles or highlight effect around the focused area
+    addFocusParticles();
   });
 
   textarea.addEventListener("blur", () => {
     document.querySelector(".journal-input").classList.remove("focused");
+
+    // Remove particles
+    removeFocusParticles();
   });
+
+  // Connect reflect button to the askGemini function
+  document.getElementById("reflect-btn").addEventListener("click", askGemini);
+
+  // Add hover animation to floating shapes
+  animateBackgroundShapes();
 });
+
+// Function to show notifications with smoother animation
+function showNotification(message) {
+  const notification = document.createElement("div");
+  notification.classList.add("notification");
+  notification.textContent = message;
+  document.body.appendChild(notification);
+
+  // Delayed addition of show class for smooth entrance
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      notification.classList.add("show");
+    });
+  });
+
+  setTimeout(() => {
+    notification.classList.remove("show");
+    notification.addEventListener("transitionend", () => {
+      notification.remove();
+    });
+  }, 3000);
+}
+
+// Function to add entrance animations to elements
+function animateEntranceEffects() {
+  const elements = [
+    { selector: ".navbar", delay: 0 },
+    { selector: ".gradient-text", delay: 200 },
+    { selector: ".subtitle", delay: 400 },
+    { selector: ".journal-input", delay: 600 },
+    { selector: ".response-section", delay: 800 },
+  ];
+
+  elements.forEach((item) => {
+    const element = document.querySelector(item.selector);
+    if (element) {
+      element.style.opacity = "0";
+      element.style.transform = "translateY(20px)";
+      element.style.transition = "opacity 0.5s ease, transform 0.5s ease";
+
+      setTimeout(() => {
+        element.style.opacity = "1";
+        element.style.transform = "translateY(0)";
+      }, item.delay);
+    }
+  });
+}
+
+// Function to add subtle particle effect around the focused textarea
+function addFocusParticles() {
+  // This is a placeholder for a more complex particle effect
+  // Simple solution: add a subtle glow effect
+  const journalInput = document.querySelector(".journal-input");
+  journalInput.style.boxShadow =
+    "0 0 20px rgba(106, 90, 205, 0.3), 0 0 40px rgba(106, 90, 205, 0.1)";
+}
+
+function removeFocusParticles() {
+  const journalInput = document.querySelector(".journal-input");
+  journalInput.style.boxShadow = "";
+}
+
+// Function to animate background shapes with more dynamic movement
+function animateBackgroundShapes() {
+  const shapes = document.querySelectorAll(".shape");
+  shapes.forEach((shape) => {
+    shape.addEventListener("mouseover", () => {
+      // Subtle grow effect when user hovers near a shape
+      shape.style.transform = "scale(1.1)";
+      shape.style.opacity = "0.4";
+      shape.style.transition = "transform 1s ease, opacity 1s ease";
+    });
+
+    shape.addEventListener("mouseout", () => {
+      shape.style.transform = "";
+      shape.style.opacity = "";
+    });
+  });
+}
 
 async function askGemini() {
   const userInput = document.getElementById("prompt").value;
   const output = document.getElementById("output");
   const typingIndicator = document.querySelector(".typing-indicator");
-  const moodLevel = document.querySelector(".mood-level");
+  const reflectBtn = document.getElementById("reflect-btn");
 
   if (!userInput.trim()) {
-    output.textContent = "Please write something to reflect on.";
+    // Show an elegant error notification instead of changing the output text
+    showNotification("Please write something to reflect on");
     return;
   }
 
-  // Show typing indicator
+  // Disable button and show thinking state
+  reflectBtn.disabled = true;
+  reflectBtn.innerHTML =
+    '<span class="btn-text">Thinking...</span><i class="fas fa-spinner fa-spin"></i>';
+
+  // Show typing indicator with fade-in effect
+  typingIndicator.style.opacity = "0";
   typingIndicator.style.display = "flex";
+  setTimeout(() => {
+    typingIndicator.style.opacity = "1";
+    typingIndicator.style.transition = "opacity 0.3s ease";
+  }, 10);
+
   output.textContent = "";
 
   // Add emotion context if selected
@@ -148,11 +266,15 @@ async function askGemini() {
         parts: [{ text: reply }],
       });
 
-      // Hide typing indicator before displaying text
-      typingIndicator.style.display = "none";
+      // Fade out typing indicator before displaying text
+      typingIndicator.style.opacity = "0";
+      typingIndicator.addEventListener("transitionend", function handler() {
+        typingIndicator.style.display = "none";
+        typingIndicator.removeEventListener("transitionend", handler);
 
-      // Display text with typewriter effect
-      displayWordByWord(reply, output);
+        // Display text with typewriter effect
+        displayWordByWord(reply, output);
+      });
 
       // Animate the mood meter based on the selected emotion
       let moodPercentage = 50; // Default neutral
@@ -177,24 +299,48 @@ async function askGemini() {
         }
       }
 
-      // Animate the mood meter
+      // Animate the mood meter with enhanced animation
       animateMoodMeter(moodPercentage);
+
+      // Reset button state
+      setTimeout(() => {
+        reflectBtn.disabled = false;
+        reflectBtn.innerHTML =
+          '<span class="btn-text">Reflect with AI</span><i class="fas fa-sparkles"></i>';
+      }, 1000);
     } else if (data.error) {
       typingIndicator.style.display = "none";
-      output.textContent = `Error: ${data.error.message}`;
+      showNotification(`Error: ${data.error.message}`);
+      reflectBtn.disabled = false;
+      reflectBtn.innerHTML =
+        '<span class="btn-text">Reflect with AI</span><i class="fas fa-sparkles"></i>';
     } else {
       typingIndicator.style.display = "none";
-      output.textContent = "No response from Gemini.";
+      showNotification("No response from Gemini");
+      reflectBtn.disabled = false;
+      reflectBtn.innerHTML =
+        '<span class="btn-text">Reflect with AI</span><i class="fas fa-sparkles"></i>';
     }
   } catch (err) {
     typingIndicator.style.display = "none";
-    output.textContent = "Request failed: " + err.message;
+    showNotification("Request failed: " + err.message);
     console.error(err);
+    reflectBtn.disabled = false;
+    reflectBtn.innerHTML =
+      '<span class="btn-text">Reflect with AI</span><i class="fas fa-sparkles"></i>';
   }
 }
 
 function displayWordByWord(text, outputElement) {
   outputElement.textContent = ""; // Clear previous content
+
+  // Fade in the output container first
+  outputElement.style.opacity = "0";
+  setTimeout(() => {
+    outputElement.style.opacity = "1";
+    outputElement.style.transition = "opacity 0.5s ease";
+  }, 100);
+
   const words = text.split(" ");
   let index = 0;
 
@@ -203,19 +349,34 @@ function displayWordByWord(text, outputElement) {
       outputElement.textContent += words[index] + " ";
       index++;
 
-      // Auto-scroll to show latest content
-      outputElement.parentNode.scrollTop =
-        outputElement.parentNode.scrollHeight;
+      // Auto-scroll to show latest content with smooth behavior
+      outputElement.parentNode.scrollTo({
+        top: outputElement.parentNode.scrollHeight,
+        behavior: "smooth",
+      });
     } else {
       clearInterval(interval);
+
+      // Add subtle highlight to the finished text
+      outputElement.style.animation = "subtle-pulse 2s ease-in-out";
+      setTimeout(() => {
+        outputElement.style.animation = "";
+      }, 2000);
     }
   }, 80); // Slightly faster text display
 }
 
 function animateMoodMeter(percentage) {
   const moodLevel = document.querySelector(".mood-level");
+  const moodMeter = document.querySelector(".mood-meter");
 
-  // Set the color based on the percentage
+  // Add pulse animation to the mood meter
+  moodMeter.style.animation = "pulse 1s ease-in-out";
+  setTimeout(() => {
+    moodMeter.style.animation = "";
+  }, 1000);
+
+  // Set the color based on the percentage with smoother gradient transitions
   let color;
   if (percentage < 30) {
     color = "rgb(235, 87, 87)"; // Red for sad/anxious
@@ -229,11 +390,13 @@ function animateMoodMeter(percentage) {
 
   moodLevel.style.backgroundColor = color;
 
-  // Animate width from 0 to the target percentage
+  // Animate width from 0 to the target percentage with easing
   let currentWidth = 0;
   const animationInterval = setInterval(() => {
     if (currentWidth < percentage) {
-      currentWidth += 1;
+      // Accelerate at beginning, decelerate at end (ease in-out)
+      const step = 1 + 0.1 * Math.sin((currentWidth * Math.PI) / percentage);
+      currentWidth = Math.min(currentWidth + step, percentage);
       moodLevel.style.width = `${currentWidth}%`;
     } else {
       clearInterval(animationInterval);

@@ -1,234 +1,292 @@
+:root {
+  --primary: #5680E9;
+  --secondary: #84CEEB;
+  --accent: #5AB9EA;
+  --light: #C1C8E4;
+  --dark: #8860D0;
+}
+
 /* Base Styles */
 body {
-    font-family: 'Segoe UI', system-ui, sans-serif;
-    line-height: 1.6;
-    background: #f8fafc;
-  }
-  
-  .header {
-    text-align: center;
-    padding: 4rem 2rem;
-    background: linear-gradient(135deg, #5680e9 0%, #5680e9 100%);
-    color: white;
-    position: relative;
-    overflow: hidden;
-  }
-  
-  .header-content {
-    max-width: 800px;
-    margin: 0 auto;
-  }
-  
-  .divider {
-    width: 60px;
-    height: 3px;
-    background: rgba(255,255,255,0.3);
-    margin: 1.5rem auto;
-  }
-  
-  /* Project Intro */
-  .project-intro {
-    padding: 3rem 2rem;
-  }
-  
-  .intro-card {
-    background: white; /* Sets the background color */
-    border-radius: 16px; /* Smooth rounded corners */
-    padding: 2rem; /* Adds space inside the card */
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-    max-width: 800px; /* Limits the card width */
-    margin: 0 auto; /* Centers the card */
-    position: relative; /* Used for positioning */
-    transform: translateY(0); /* Default transform state */
-    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth hover effect */
+  font-family: 'Poppins', sans-serif;
+  line-height: 1.6;
+  background: #f8fafc;
+  margin: 0;
+  padding: 0;
+}
+
+/* Header with Gradient */
+header {
+  text-align: center;
+  padding: 6rem 2rem;
+  background: linear-gradient(135deg, var(--primary), var(--dark));
+  color: white;
+  position: relative;
+  overflow: hidden;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: white;
+}
+
+.nav-links {
+  display: flex;
+  list-style: none;
+  gap: 2rem;
+}
+
+.nav-links a {
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.nav-links a:hover {
+  color: var(--light);
+}
+
+.nav-links a.active {
+  color: var(--accent);
+  border-bottom: 2px solid var(--accent);
+}
+
+.header-text {
+  max-width: 800px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+}
+
+.divider {
+  width: 60px;
+  height: 3px;
+  background: rgba(255,255,255,0.5);
+  margin: 1.5rem auto;
+}
+
+.tagline {
+  font-size: 1.2rem;
+  font-weight: 400;
+}
+
+/* Project Intro */
+.project-intro {
+  padding: 4rem 2rem;
+  background: linear-gradient(to bottom, var(--light), white);
+}
+
+.intro-card {
+  background: white;
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+  max-width: 800px;
+  margin: 0 auto;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .intro-card:hover {
-    transform: translateY(-10px); /* Moves the card up slightly */
-    box-shadow: 0px 12px 40px rgba(30, 7, 233, 0.2); /* Enhances shadow on hover */
+  transform: translateY(-10px);
+  box-shadow: 0 12px 40px rgba(86, 128, 233, 0.2);
 }
 
-  
-  
-  .intro-icon {
-    font-size: 2.5rem;
-    color: #5680e9;
-    margin-bottom: 1rem;
+.intro-icon {
+  font-size: 2.5rem;
+  color: var(--primary);
+  margin-bottom: 1rem;
+}
+
+/* Team Section */
+.team-section {
+  padding: 4rem 2rem;
+  background: white;
+}
+
+.section-title {
+  text-align: center;
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin: 0 auto 3rem;
+  color: var(--dark);
+  position: relative;
+}
+
+.section-title::after {
+  content: '';
+  display: block;
+  width: 80px;
+  height: 4px;
+  background: linear-gradient(to right, var(--primary), var(--dark));
+  margin: 1rem auto 0;
+}
+
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.member-card {
+  background: white;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  position: relative;
+}
+
+.member-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 12px 20px rgba(136, 96, 208, 0.2);
+}
+
+.member-image {
+  height: 300px;
+  overflow: hidden;
+}
+
+.member-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.member-card:hover .member-image img {
+  transform: scale(1.1);
+}
+
+.member-info {
+  padding: 1.5rem;
+  background: linear-gradient(transparent, rgba(86, 128, 233, 0.9));
+  color: white;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  transform: translateY(100%);
+  transition: transform 0.3s ease;
+}
+
+.member-card:hover .member-info {
+  transform: translateY(0);
+}
+
+.linkedin-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: white;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border: 1px solid rgba(255,255,255,0.5);
+  border-radius: 50px;
+  margin-top: 1rem;
+  transition: all 0.3s ease;
+}
+
+.linkedin-btn:hover {
+  background: rgba(255,255,255,0.2);
+}
+
+/* Back to Top Button */
+.back-to-top {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 50px;
+  height: 50px;
+  background: linear-gradient(135deg, var(--primary), var(--dark));
+  color: white;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.2rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  z-index: 99;
+  transition: all 0.3s ease;
+}
+
+.back-to-top:hover {
+  transform: scale(1.1);
+}
+
+/* Overlay Effect */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.5);
+  backdrop-filter: blur(5px);
+  z-index: 100;
+  display: none;
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 2rem;
+  background: linear-gradient(135deg, var(--dark), var(--primary));
+  color: white;
+}
+
+footer a {
+  color: white;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+footer a:hover {
+  text-decoration: underline;
+  color: var(--light);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    padding: 1rem;
   }
   
-  .features-list {
-    list-style: none;
-    padding: 0;
-  }
-  
-  .features-list li {
-    padding: 0.8rem 0;
-    display: flex;
-    align-items: center;
+  .nav-links {
+    margin-top: 1rem;
     gap: 1rem;
   }
   
-  /* Team Section */
-  .team-section {
-    padding: 2rem;
-  }
-  
   .team-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr); /* Two items per row */
-    gap: 2rem; /* Space between grid items */
-    max-width: 800px; /* Make the grid narrower for better alignment */
-    margin: 0 auto; /* Center the grid */
-    justify-items: center; /* Center each collaborator card */
-  }
-  
-  
-  .member-card {
-    background: white;
-    border-radius: 16px;
-    overflow: hidden;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-    transition: transform 0.3s ease;
-    cursor: pointer;
-    position: relative;
-  }
-  
-  .member-card:hover {
-    transform: scale(1.03);
-    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
-  
-  
-  .member-image {
-    height: 300px;
-    overflow: hidden;
-    position: relative;
-  }
-  
-  .member-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.3s ease;
-  }
-  
-  .member-card:hover .member-image img {
-    transform: scale(1.05);
+    grid-template-columns: 1fr;
   }
   
   .member-info {
-    padding: 1.5rem;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: linear-gradient(transparent 0%, rgba(0,0,0,0.8) 100%);
-    color: white;
-    opacity: 0;
-    transition: opacity 0.3s ease;
+    position: static;
+    transform: none;
+    background: var(--primary);
   }
   
   .member-card:hover .member-info {
-    opacity: 1;
+    transform: none;
   }
-  
-  .linkedin-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    color: white;
-    text-decoration: none;
-    padding: 0.5rem 1rem;
-    border: 1px solid rgba(255,255,255,0.3);
-    border-radius: 50px;
-    margin-top: 1rem;
-    transition: all 0.3s ease;
-  }
-  
-  .linkedin-btn:hover {
-    background: rgba(255,255,255,0.1);
-  }
-  
-  /* Overlay Effect */
-  .overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0,0,0,0.5);
-    backdrop-filter: blur(5px);
-    z-index: 100;
-    display: none;
-  }
-  
-  /* Responsive Design */
-  @media (max-width: 768px) {
-    .member-card {
-      margin-bottom: 1.5rem;
-    }
-    
-    .member-info {
-      opacity: 1;
-      position: static;
-      background: #f8fafc;
-      color: #333;
-    }
-    
-    .linkedin-btn {
-      color: #0A66C2;
-      border-color: #0A66C2;
-    }
-  }
-  .section-title {
-    text-align: center; /* Centers the text horizontally */
-    font-size: 2.5rem; /* Makes the text larger */
-    font-weight: bold; /* Makes the font bold for emphasis */
-    margin: 2rem 0; /* Adds spacing above and below the text */
-    color: #333; /* Choose a color like black or dark gray */
-  }
-    
-  /* Back to Top Button */
-.back-to-top {
-    position: fixed;
-    bottom: 20px; /* Position it above the page bottom */
-    right: 20px; /* Position it near the right edge */
-    width: 50px; /* Set width */
-    height: 50px; /* Set height */
-    background-color: #5680e9; /* Choose a calm color */
-    color: white; /* Icon color */
-    border-radius: 50%; /* Make it circular */
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); /* Add slight shadow */
-    display: none; /* Initially hidden */
-    justify-content: center; /* Center align icon horizontally */
-    align-items: center; /* Center align icon vertically */
-    cursor: pointer; /* Add pointer cursor */
-    font-size: 1.5rem; /* Icon size */
-    z-index: 1000; /* Ensure visibility above other elements */
-    transition: opacity 0.3s ease, transform 0.3s ease;
-  }
-  
-  .back-to-top:hover {
-    transform: scale(1.1); /* Slightly enlarge on hover */
-    background-color: #5AB9EA; /* Darken the color on hover */
-  }
-  
-  footer {
-    text-align: center;
-    padding: 1rem;
-    background: #0A66C2; /* Match the CalmSpace theme color */
-    color: white; /* Make text readable */
-    font-size: 0.9rem;
-  }
-  
-  footer a {
-    color: white; /* Make links white for consistency */
-    text-decoration: none; /* Remove underline from links */
-    margin: 0 0.5rem; /* Add space between links */
-  }
-  
-  footer a:hover {
-    text-decoration: underline; /* Add underline on hover */
-  }
-  
+}

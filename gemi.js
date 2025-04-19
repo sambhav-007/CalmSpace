@@ -67,6 +67,19 @@ function getEmotionIcon(emotion) {
   }
 }
 
+// Utility function for debouncing inputs
+function debounce(func, wait) {
+  let timeout;
+  return function () {
+    const context = this;
+    const args = arguments;
+    clearTimeout(timeout);
+    timeout = setTimeout(() => {
+      func.apply(context, args);
+    }, wait);
+  };
+}
+
 // Function to render all entries in the sidebar
 function renderEntries() {
   const entriesList = document.getElementById("entries-list");
@@ -114,6 +127,70 @@ function renderEntries() {
 
     entriesList.appendChild(entryElement);
   });
+}
+
+// Function to render filtered entries with highlighted search text
+function renderFilteredEntries(filteredEntries, query) {
+  const entriesList = document.getElementById("entries-list");
+
+  // Clear current entries
+  entriesList.innerHTML = "";
+
+  if (filteredEntries.length === 0) {
+    // Show empty search state
+    entriesList.innerHTML = `
+      <div class="empty-state">
+        <i class="fas fa-search"></i>
+        <p>No entries match your search</p>
+      </div>
+    `;
+    return;
+  }
+
+  // Add each filtered entry to the list
+  filteredEntries.forEach((entry) => {
+    const entryElement = document.createElement("div");
+    entryElement.classList.add("entry-item");
+    entryElement.dataset.entryId = entry.id;
+
+    // Prepare preview text with highlighted search term
+    const previewText =
+      entry.userInput.length > 60
+        ? entry.userInput.substring(0, 60) + "..."
+        : entry.userInput;
+
+    // Highlight the search term in preview
+    const highlightedPreview = highlightText(previewText, query);
+
+    entryElement.innerHTML = `
+      <div class="entry-date">${formatDate(entry.date)}</div>
+      <div class="entry-preview">
+        <span class="entry-emotion-indicator entry-emotion-${
+          entry.emotion
+        }"></span>
+        ${highlightedPreview}
+      </div>
+    `;
+
+    // Add click event to show entry details
+    entryElement.addEventListener("click", () => {
+      showEntryDetail(entry);
+    });
+
+    entriesList.appendChild(entryElement);
+  });
+}
+
+// Function to highlight search text in preview
+function highlightText(text, query) {
+  if (!query) return text;
+
+  // Use regex to replace all occurrences of the query with highlighted version
+  const regex = new RegExp(query, "gi");
+  return text.replace(
+    regex,
+    (match) => `<span class="highlight">${match}</span>`
+  );
 }
 
 // Function to show entry detail in modal

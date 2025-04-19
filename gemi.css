@@ -1405,3 +1405,219 @@ body {
     font-size: 1rem;
   }
 }
+
+/* Journaling Prompts */
+.prompt-btn {
+  color: var(--accent);
+  background: rgba(0, 212, 255, 0.1);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--radius-full);
+  font-size: 0.85rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: all var(--transition-fast);
+}
+
+.prompt-btn i {
+  color: #ffcc00;
+  transition: transform var(--transition-fast);
+}
+
+.prompt-btn:hover {
+  background: rgba(0, 212, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+.prompt-btn:hover i {
+  transform: rotate(15deg);
+}
+
+.prompts-container {
+  display: none;
+  background: var(--glass-bg-light);
+  border: 1px solid var(--glass-border-light);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--spacing-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-soft);
+}
+
+.prompts-container.active {
+  display: block;
+  animation: fade-in 0.3s ease-in-out;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.prompts-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-md) var(--spacing-lg);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.prompts-header h4 {
+  font-size: 1rem;
+  font-weight: 500;
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.close-prompts {
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.7);
+  cursor: pointer;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-fast);
+}
+
+.close-prompts:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
+.prompts-list {
+  padding: var(--spacing-md);
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: var(--spacing-md);
+}
+
+.prompt-item {
+  padding: var(--spacing-md);
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.9);
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  font-size: 0.9rem;
+}
+
+.prompt-item i {
+  color: var(--accent);
+  width: 20px;
+  text-align: center;
+}
+
+.prompt-item:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-soft);
+}
+
+.prompt-item:active {
+  transform: translateY(0) scale(0.98);
+}
+
+/* Journal controls and fullscreen mode */
+.journal-controls {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.fullscreen-btn {
+  color: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.1);
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.fullscreen-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.1);
+}
+
+.fullscreen-mode {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+  background: var(--gradient-full-screen);
+  padding: var(--spacing-xl);
+  display: flex;
+  flex-direction: column;
+}
+
+.fullscreen-mode .journal-input {
+  flex: 1;
+  height: auto;
+  max-width: 900px;
+  margin: 0 auto;
+  width: 100%;
+  box-shadow: var(--shadow-strong);
+}
+
+.fullscreen-mode .glass-input {
+  height: 100%;
+  flex: 1;
+  font-size: 1.2rem;
+}
+
+.fullscreen-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 900px;
+  margin: 0 auto var(--spacing-lg) auto;
+  width: 100%;
+  padding: var(--spacing-sm) 0;
+}
+
+.fullscreen-title {
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: white;
+}
+
+.exit-fullscreen {
+  color: white;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: var(--radius-full);
+  padding: var(--spacing-xs) var(--spacing-md);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all var(--transition-fast);
+}
+
+.exit-fullscreen:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}

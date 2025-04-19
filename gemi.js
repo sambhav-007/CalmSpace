@@ -416,6 +416,50 @@ function loadDraft() {
   }
 }
 
+// Setup journaling prompts functionality
+function setupJournalingPrompts() {
+  const promptBtn = document.querySelector(".prompt-btn");
+  const promptsContainer = document.querySelector(".prompts-container");
+  const closePrompts = document.querySelector(".close-prompts");
+  const promptItems = document.querySelectorAll(".prompt-item");
+
+  promptBtn.addEventListener("click", () => {
+    promptsContainer.classList.toggle("active");
+  });
+
+  closePrompts.addEventListener("click", () => {
+    promptsContainer.classList.remove("active");
+  });
+
+  promptItems.forEach((item) => {
+    item.addEventListener("click", () => {
+      const promptText = item.dataset.prompt;
+      const textarea = document.getElementById("prompt");
+
+      // Insert the prompt text
+      textarea.value = promptText;
+
+      // Update word count
+      updateWordCount();
+
+      // Focus the textarea
+      textarea.focus();
+
+      // Close the prompts container
+      promptsContainer.classList.remove("active");
+
+      // Animation effect
+      item.classList.add("pulse");
+      setTimeout(() => {
+        item.classList.remove("pulse");
+      }, 500);
+
+      // Show a notification
+      showNotification("Prompt added to journal");
+    });
+  });
+}
+
 // Initialize elements and event handlers
 document.addEventListener("DOMContentLoaded", () => {
   // Check for first time users
@@ -658,6 +702,9 @@ document.addEventListener("DOMContentLoaded", () => {
     // Toggle filter dialog
     filterDialog.classList.toggle("show");
   });
+
+  // Setup journaling prompts
+  setupJournalingPrompts();
 });
 
 // Function to show notifications with smoother animation

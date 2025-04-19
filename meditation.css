@@ -43,7 +43,7 @@
 }
 
 .meditation-header h3 i {
-  color: #64DFDF;
+  color: #64dfdf;
 }
 
 .meditation-content {
@@ -101,12 +101,14 @@
   transform: translateY(-3px);
 }
 
-.ambient-sounds, .ending-sound {
+.ambient-sounds,
+.ending-sound {
   width: 100%;
   margin-top: var(--spacing-md);
 }
 
-.ambient-sounds h4, .ending-sound h4 {
+.ambient-sounds h4,
+.ending-sound h4 {
   font-size: 0.9rem;
   font-weight: 500;
   color: rgba(255, 255, 255, 0.8);
@@ -121,7 +123,8 @@
   margin-bottom: var(--spacing-md);
 }
 
-.sound-option, .end-sound-option {
+.sound-option,
+.end-sound-option {
   background: rgba(255, 255, 255, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.2);
   color: rgba(255, 255, 255, 0.7);
@@ -135,15 +138,17 @@
   transition: all var(--transition-fast);
 }
 
-.sound-option:hover, .end-sound-option:hover {
+.sound-option:hover,
+.end-sound-option:hover {
   background: rgba(255, 255, 255, 0.2);
   color: white;
   transform: translateY(-2px);
 }
 
-.sound-option.active, .end-sound-option.active {
+.sound-option.active,
+.end-sound-option.active {
   background: rgba(100, 223, 223, 0.3);
-  border-color: #64DFDF;
+  border-color: #64dfdf;
   color: white;
 }
 
@@ -220,7 +225,7 @@
 
 .meditation-complete-content i {
   font-size: 3rem;
-  color: #64DFDF;
+  color: #64dfdf;
   margin-bottom: var(--spacing-md);
 }
 
@@ -257,7 +262,7 @@
 }
 
 .meditation-launcher i {
-  color: #64DFDF;
+  color: #64dfdf;
 }
 
 /* Responsive styles */

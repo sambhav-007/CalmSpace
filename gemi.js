@@ -2,9 +2,32 @@ const API_KEY = "AIzaSyCh63Ww9HJy5itbB7Qm3niTrOa6PNNNyIA"; // ⚠️ Don't use t
 
 let conversationHistory = []; // To maintain conversation context
 let selectedEmotion = null;
+let entries = []; // Array to store journal entries
+
+// Load saved entries from local storage
+function loadSavedEntries() {
+  const savedEntries = localStorage.getItem("calmspace_entries");
+  if (savedEntries) {
+    entries = JSON.parse(savedEntries);
+  }
+}
+
+// Save entries to local storage
+function saveEntriesToStorage() {
+  localStorage.setItem("calmspace_entries", JSON.stringify(entries));
+}
+
+// Save a journal entry
+function saveEntry(entry) {
+  entries.unshift(entry); // Add to beginning of array (newest first)
+  saveEntriesToStorage();
+}
 
 // Initialize elements and event handlers
 document.addEventListener("DOMContentLoaded", () => {
+  // Load saved entries
+  loadSavedEntries();
+
   // Add subtle entrance animation to elements
   animateEntranceEffects();
 
@@ -46,6 +69,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Create and show notification
     showNotification("Reflection saved!");
+
+    // Save the current journal entry
+    const output = document.getElementById("output").textContent;
+    if (output.trim()) {
+      saveEntry(output);
+    }
   });
 
   // Theme toggle with enhanced animation

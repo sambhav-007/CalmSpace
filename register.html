@@ -5,209 +5,124 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <title>Register Page | CalmSpace</title>
+    <link rel="stylesheet" href="style.css" />
     <style>
-
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        font-family: "Poppins", sans-serif;
-      }
-
-      body {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        min-height: 100vh;
-        color: white;
-        background: linear-gradient(#063349 0%, #090979 35%, #00d4ff 100%);
-      }
-
-      .box {
-        position: relative;
-        border-radius: 20px;
-        transform-style: preserve-3d;
-      }
-
-      .box .card {
-        position: relative;
+      /* Glassmorphism box style */
+      .glass-box {
         background: rgba(255, 255, 255, 0.1);
-        width: 400px;
-        height: 700px;
-        backdrop-filter: blur(10px);
-        border: 1px solid rgb(255, 255, 255, 0.5);
-        border-top: 1px solid rgb(255, 255, 255, 0.75);
-        border-left: 1px solid rgb(255, 255, 255, 0.75);
         border-radius: 20px;
-        box-shadow: 0 25px 45px rgb(0, 0, 0, 0.5);
-        transform-style: preserve-3d;
-      }
-
-      .elements {
-        position: absolute;
-        top: 160px;
-        left: 50px;
-        width: 120px;
-        height: 120px;
-        background: rgba(255, 255, 255, 0.1);
-        transform: translateZ(80px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
         backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.5);
-        border-top: 1px solid rgba(255, 255, 255, 0.75);
-        border-left: 1px solid rgba(255, 255, 255, 0.75);
-        border-radius: 20px;
-        box-shadow: 0 25px 45px rgba(0, 0, 0, 0.5);
+        padding: 40px 30px;
+        max-width: 480px;
+        margin: 60px auto;
       }
-
-      .elements.name {
-        top: 60px;
-        left: 50%;
-        transform: translateX(-50%) translateZ(100px);
-        width: 150px;
-        padding: 15px;
+      .glass-box h2 {
+        font-size: 2.5rem;
         text-align: center;
-        background: transparent;
-        backdrop-filter: blur(10px);
-        border: none;
-        box-shadow: none;
-        opacity: 1;
-        color: white;
+        margin-bottom: 30px;
       }
-      .elements.name h2 {
-        font-size: 2.2rem;
-        margin: 0;
-      }
-
-      .elements.content {
-        position: absolute;
-        bottom: 50px;
-        left: 50%;
-        transform: translateX(-50%) translateZ(180px);
-        width: 70%;
-        height: 450px;
-        padding: 15px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-
-      form {
-        width: 100%;
-      }
-
+      /* Form element styles for register.html */
       .form-group {
-        margin-bottom: 15px;
+        margin-bottom: 20px;
         display: flex;
         flex-direction: column;
-        align-items: flex-start;
       }
-
       label {
-        font-size: 12px;
-        margin-bottom: 4px;
-      }
-
-      input, select {
-        background: transparent;
-        padding: 6px 10px;
-        font-size: 0.9em;
-        outline: none;
-        border: none;
-        width: 100%;
-        border: 1px solid rgba(255, 255, 255, 0.5);
-        border-top: 1px solid rgba(255, 255, 255, 0.75);
-        border-left: 1px solid rgba(255, 255, 255, 0.75);
-        border-radius: 10px;
-        color: white;
-      }
-
-      button {
-        width: 100%;
-        background-color: transparent;
-        color: white;
-        padding: 10px 0;
-        font-size: 12px;
+        font-size: 14px;
+        margin-bottom: 6px;
+        color: #ddd;
         font-weight: 600;
-        border-radius: 10px;
+      }
+      input[type="text"],
+      input[type="email"],
+      input[type="password"],
+      input[type="tel"],
+      select {
+        padding: 10px 12px;
+        font-size: 16px;
+        border-radius: 8px;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        background-color: rgba(255, 255, 255, 0.1);
+        color: #fff;
+        outline: none;
+        transition: border-color 0.3s ease;
+      }
+      input[type="text"]:focus,
+      input[type="email"]:focus,
+      input[type="password"]:focus,
+      input[type="tel"]:focus,
+      select:focus {
+        border-color: #4a9eff;
+        background-color: rgba(255, 255, 255, 0.15);
+      }
+      button.btn {
+        padding: 12px 0;
+        font-size: 16px;
+        font-weight: 700;
+        border-radius: 30px;
         cursor: pointer;
-        border: 1px solid rgba(255, 255, 255, 0.5);
-        border-top: 1px solid rgba(255, 255, 255, 0.75);
-        border-left: 1px solid rgba(255, 255, 255, 0.75);
+        border: none;
+        background: linear-gradient(135deg, #4a9eff 0%, #6b5fff 100%);
+        color: #fff;
+        transition: box-shadow 0.3s ease;
       }
-
-      button:hover {
-        background-color: #090979;
+      button.btn:hover {
+        box-shadow: 0 8px 20px rgba(74, 158, 255, 0.7);
       }
-
-      ::placeholder {
-        color: rgb(181, 177, 177);
-        font-size: 10px;
-        padding-left: 5px;
-      }
-
       .login-link {
         text-align: center;
         margin-top: 20px;
-        color: white;
-        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
-        font-size: 12px;
+        color: #ccc;
+        font-size: 14px;
       }
-
       .login-link a {
-        color: white;
+        color: #4a9eff;
+        text-decoration: none;
+        font-weight: 600;
+      }
+      .login-link a:hover {
         text-decoration: underline;
-      }
-
-      .password-strength-bar {
-        height: 3px;
-        border-radius: 3px;
-        margin-top: 5px;
-        width: 100%;
-      }
-
-      .password-strength-weak {
-        background-color: rgba(255, 0, 0, 0.5);
-      }
-
-      .password-strength-medium {
-        background-color: rgba(255, 165, 0, 0.5);
-      }
-
-      .password-strength-strong {
-        background-color: rgba(0, 128, 0, 0.5);
       }
     </style>
 </head>
 <body>
-    <div class="box">
-      <div class="elements name">
+    <header>
+      <nav class="container" style="display:flex; justify-content:space-between; align-items:center; padding:20px 0;">
+        <div class="logo" style="font-weight:bold; font-size:24px; color:#4a9eff;">CalmSpace</div>
+        <div class="nav-links" style="display:flex; gap:20px;">
+          <a href="index.html" style="color:#4a9eff; text-decoration:none; font-weight:600;">Home</a>
+          <a href="login.html" style="color:#4a9eff; text-decoration:none; font-weight:600;">Login</a>
+        </div>
+      </nav>
+    </header>
+    <div class="container">
+      <div class="glass-box">
         <h2>Register</h2>
-      </div>
-      <div class="elements content">
         <form id="register-form" onsubmit="handleRegister(event)">
           <div class="form-group">
             <label for="name">Username:</label>
-            <input type="text" id="name" name="name" required placeholder="Enter your username">
+            <input type="text" id="name" name="name" required placeholder="Enter your username" />
           </div>
           <div class="form-group">
             <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required placeholder="@gmail.com">
+            <input type="email" id="email" name="email" required placeholder="@gmail.com" />
           </div>
           <div class="form-group">
             <label for="phone">Phone Number:</label>
-            <input type="text" id="phone" name="phone" required placeholder="+91-">
+            <input type="text" id="phone" name="phone" required placeholder="+91-" />
           </div>
           <div class="form-group">
             <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required placeholder="Enter your password">
+            <input type="password" id="password" name="password" required placeholder="Enter your password" />
             <div id="password-strength-bar" class="password-strength-bar"></div>
           </div>
           <div class="form-group">
             <label for="confirm-password">Confirm Password:</label>
-            <input type="password" id="confirm-password" name="confirm-password" required placeholder="Confirm your password">
+            <input type="password" id="confirm-password" name="confirm-password" required placeholder="Confirm your password" />
           </div>
           <div class="form-group">
-            <button type="submit">Register</button>
+            <button type="submit" class="btn btn-primary">Register</button>
           </div>
           <p class="login-link">
             Already registered?
@@ -215,7 +130,6 @@
           </p>
         </form>
       </div>
-      <div class="card"></div>
     </div>
 
     <script>

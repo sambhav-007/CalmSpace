@@ -98,5 +98,38 @@
             </div>
         </section>
     </div>
+    <section class="ai-companion-section">
+        <div class="container ai-companion-content">
+          <div class="ai-text-content">
+            <h2>Meet Your AI Companion - Calmi!</h2>
+            <p>Your personal journaling assistant is here to listen, guide, and help you grow. With empathy and intelligence, Calmi is always ready to support your journey.</p>
+          </div>
+          <div class="ai-avatar-box">
+            <div class="ai-avatar-glow">
+              <img src="https://cdn-icons-png.flaticon.com/512/4712/4712027.png" alt="AI Avatar" class="ai-avatar" />
+            </div>
+            <div class="ai-bubble" id="aiGreeting">
+              <span class="typing-text"></span>
+            </div>
+            <button class="chat-toggle-btn" onclick="toggleChat()">Talk to Calmi</button>
+
+            <div class="chat-popup" id="chatPopup">
+            <div class="chat-header">
+                <span>Calmi</span>
+                <button onclick="toggleChat()">✕</button>
+            </div>
+            <div class="chat-messages" id="chatMessages">
+                <div class="message ai">Hey there! How are you feeling today? 😊</div>
+            </div>
+            <form class="chat-input" onsubmit="sendMessage(event)">
+                <input type="text" id="userInput" placeholder="Type your thoughts..." required />
+                <button type="submit">Send</button>
+            </form>
+            </div>
+
+          </div>
+        </div>
+    </section>
+    <script src="main.js"></script>
 </body>
 </html>

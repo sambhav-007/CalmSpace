@@ -421,3 +421,146 @@ nav {
   margin-right: 6px;
   opacity: 0.7;
 }
+
+/* Checkout page styles */
+.checkout-hero {
+  text-align: center;
+  padding: 60px 20px 40px;
+}
+
+.checkout-hero h1 {
+  font-size: 36px;
+  margin-bottom: 15px;
+  color: #fff;
+}
+
+.checkout-hero p {
+  font-size: 18px;
+  opacity: 0.85;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.premium-details {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 30px 40px;
+  max-width: 600px;
+  margin: 0 auto 40px;
+  color: #fff;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.premium-details h2 {
+  font-size: 28px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.premium-details ul {
+  list-style: none;
+  padding-left: 0;
+  font-size: 18px;
+  line-height: 1.6;
+  opacity: 0.9;
+}
+
+.premium-details ul li {
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.premium-details .pricing-price {
+  font-size: 24px;
+  font-weight: 700;
+  text-align: center;
+  margin-top: 20px;
+  opacity: 0.95;
+}
+
+.purchase-form {
+  max-width: 600px;
+  margin: 0 auto 40px;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 30px 40px;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.purchase-form h2 {
+  font-size: 28px;
+  margin-bottom: 25px;
+  text-align: center;
+  color: #fff;
+}
+
+.purchase-form label {
+  display: block;
+  font-size: 16px;
+  margin-bottom: 8px;
+  color: #ddd;
+}
+
+.purchase-form input[type="text"],
+.purchase-form input[type="email"] {
+  width: 100%;
+  padding: 12px 15px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  outline: none;
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  transition: background 0.3s;
+}
+
+.purchase-form input[type="text"]::placeholder,
+.purchase-form input[type="email"]::placeholder {
+  color: #ccc;
+}
+
+.purchase-form input[type="text"]:focus,
+.purchase-form input[type="email"]:focus {
+  background: rgba(255, 255, 255, 0.35);
+}
+
+.purchase-form button {
+  width: 100%;
+  padding: 14px 0;
+  border-radius: 30px;
+  border: none;
+  background: linear-gradient(135deg, #4a9eff 0%, #6b5fff 100%);
+  color: #fff;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.purchase-form button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
+}
+
+.back-link {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.back-link .btn {
+  display: inline-block;
+  padding: 12px 30px;
+  border-radius: 30px;
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.3s;
+}
+
+.back-link .btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+}

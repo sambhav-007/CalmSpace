@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Checkout - CalmSpace Premium Plan</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <div class="container">
+        <header>
+            <nav>
+                <div class="logo">
+                    <div class="logo-icon"></div>
+                    CalmSpace
+                </div>
+                <div class="nav-links">
+                    <a href="index.html">Home</a>
+                    <a href="#">Journal</a>
+                    <a href="#">Insights</a>
+                    <a href="#">Progress</a>
+                </div>
+            </nav>
+        </header>
+
+        <section class="checkout-hero">
+            <h1>Buy Premium Plan</h1>
+            <p>Unlock all premium features and enjoy advanced AI insights, custom themes, growth & emotion tracking, and priority support.</p>
+        </section>
+
+        <section class="premium-details">
+            <h2>Premium Plan Details</h2>
+            <ul>
+                <li>✨ All Free features</li>
+                <li>📈 Advanced AI insights</li>
+                <li>🎨 Custom themes</li>
+                <li>📅 Growth & emotion tracking</li>
+                <li>💬 Priority support</li>
+            </ul>
+            <p class="pricing-price"><span class="original-price">$5</span> $2/month</p>
+        </section>
+
+        <section class="purchase-form">
+            <h2>Complete Your Purchase</h2>
+            <form id="purchase-form">
+                <label for="name">Full Name</label><br />
+                <input type="text" id="name" name="name" /><br />
+
+                <label for="email">Email Address</label><br />
+                <input type="email" id="email" name="email" /><br />
+
+            <button type="button" id="paytm-pay-btn" class="btn btn-primary">Pay with Paytm</button>
+            </form>
+        </section>
+
+        <section class="back-link">
+            <a href="index.html" class="btn">Back to Home</a>
+        </section>
+    </div>
+
+    <script>
+        document.getElementById('paytm-pay-btn').addEventListener('click', function() {
+            const amount = 2.00; // INR amount
+            const paytmUrl = `https://secure.paytm.in/oltp-web/processTransaction?ORDER_ID=CalmSpacePremium${Date.now()}&CUST_ID=CalmSpaceUser&TXN_AMOUNT=${amount.toFixed(2)}&CHANNEL_ID=WEB&INDUSTRY_TYPE_ID=Retail&WEBSITE=WEBSTAGING&CALLBACK_URL=https://yourdomain.com/callback`;
+
+            // Redirect to Paytm payment page
+            window.location.href = paytmUrl;
+        });
+    </script>
+</body>
+</html>

@@ -295,8 +295,53 @@ function filterByEmotion(emotion) {
   renderFilteredEntries(filteredEntries, ""); // No search highlight needed
 }
 
+// Check if it's the user's first visit and show welcome modal
+function checkFirstTimeUser() {
+  const hasVisitedBefore = localStorage.getItem("calmspace_visited");
+
+  if (!hasVisitedBefore) {
+    // Show welcome modal
+    const welcomeModal = document.getElementById("welcome-modal");
+    setTimeout(() => {
+      welcomeModal.classList.add("active");
+    }, 1000);
+
+    // Setup button actions
+    const skipBtn = document.getElementById("skip-tour-btn");
+    const startBtn = document.getElementById("start-journey-btn");
+    const closeBtn = welcomeModal.querySelector(".close-modal");
+
+    skipBtn.addEventListener("click", () => {
+      closeWelcomeModal();
+    });
+
+    startBtn.addEventListener("click", () => {
+      closeWelcomeModal();
+      // Could start a guided tour here in the future
+      showNotification(
+        "Welcome to CalmSpace! Start by writing in your journal."
+      );
+    });
+
+    closeBtn.addEventListener("click", () => {
+      closeWelcomeModal();
+    });
+
+    // Mark as visited
+    localStorage.setItem("calmspace_visited", "true");
+  }
+}
+
+function closeWelcomeModal() {
+  const welcomeModal = document.getElementById("welcome-modal");
+  welcomeModal.classList.remove("active");
+}
+
 // Initialize elements and event handlers
 document.addEventListener("DOMContentLoaded", () => {
+  // Check for first time users
+  checkFirstTimeUser();
+
   // Load saved entries
   loadSavedEntries();
 

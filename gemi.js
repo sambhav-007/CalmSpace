@@ -284,6 +284,17 @@ ${entry.aiReflection}
   showNotification("Entry exported");
 }
 
+// Filter entries by emotion
+function filterByEmotion(emotion) {
+  if (!emotion || emotion === "all") {
+    renderEntries(); // Show all entries if no filter
+    return;
+  }
+
+  const filteredEntries = entries.filter((entry) => entry.emotion === emotion);
+  renderFilteredEntries(filteredEntries, ""); // No search highlight needed
+}
+
 // Initialize elements and event handlers
 document.addEventListener("DOMContentLoaded", () => {
   // Load saved entries
@@ -454,6 +465,68 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Add hover animation to floating shapes
   animateBackgroundShapes();
+
+  // Setup filter button
+  const filterBtn = document.getElementById("filter-btn");
+  filterBtn.addEventListener("click", () => {
+    // Create filter dialog if it doesn't exist
+    let filterDialog = document.querySelector(".filter-dialog");
+
+    if (!filterDialog) {
+      filterDialog = document.createElement("div");
+      filterDialog.classList.add("filter-dialog");
+      filterDialog.innerHTML = `
+        <div class="filter-header">Filter by Emotion</div>
+        <div class="filter-options">
+          <div class="filter-option" data-emotion="all">
+            <i class="fas fa-border-all"></i> All Entries
+          </div>
+          <div class="filter-option" data-emotion="happy">
+            <span class="entry-emotion-indicator entry-emotion-happy"></span>
+            <i class="far fa-smile"></i> Happy
+          </div>
+          <div class="filter-option" data-emotion="sad">
+            <span class="entry-emotion-indicator entry-emotion-sad"></span>
+            <i class="far fa-frown"></i> Sad
+          </div>
+          <div class="filter-option" data-emotion="neutral">
+            <span class="entry-emotion-indicator entry-emotion-neutral"></span>
+            <i class="far fa-meh"></i> Neutral
+          </div>
+          <div class="filter-option" data-emotion="excited">
+            <span class="entry-emotion-indicator entry-emotion-excited"></span>
+            <i class="far fa-grin-stars"></i> Excited
+          </div>
+          <div class="filter-option" data-emotion="anxious">
+            <span class="entry-emotion-indicator entry-emotion-anxious"></span>
+            <i class="far fa-grimace"></i> Anxious
+          </div>
+        </div>
+      `;
+
+      document.querySelector(".history-sidebar").appendChild(filterDialog);
+
+      // Add event listeners to filter options
+      const filterOptions = filterDialog.querySelectorAll(".filter-option");
+      filterOptions.forEach((option) => {
+        option.addEventListener("click", () => {
+          // Remove active class from all options
+          filterOptions.forEach((opt) => opt.classList.remove("active"));
+          // Add active class to clicked option
+          option.classList.add("active");
+
+          // Apply filter
+          filterByEmotion(option.dataset.emotion);
+
+          // Hide filter dialog
+          filterDialog.classList.remove("show");
+        });
+      });
+    }
+
+    // Toggle filter dialog
+    filterDialog.classList.toggle("show");
+  });
 });
 
 // Function to show notifications with smoother animation

@@ -18,9 +18,23 @@ function saveEntriesToStorage() {
 }
 
 // Save a journal entry
-function saveEntry(entry) {
+function saveEntry(aiReflection) {
+  const userInput = document.getElementById("prompt").value;
+
+  const entry = {
+    id: Date.now().toString(), // Unique ID based on timestamp
+    date: new Date().toISOString(),
+    userInput: userInput,
+    aiReflection: aiReflection,
+    emotion: selectedEmotion || "neutral",
+    isFavorite: false,
+    tags: [],
+  };
+
   entries.unshift(entry); // Add to beginning of array (newest first)
   saveEntriesToStorage();
+
+  return entry;
 }
 
 // Initialize elements and event handlers
@@ -64,16 +78,22 @@ document.addEventListener("DOMContentLoaded", () => {
   // Setup save button with improved animation
   const saveBtn = document.getElementById("save-btn");
   saveBtn.addEventListener("click", () => {
-    saveBtn.innerHTML = '<i class="fas fa-bookmark"></i>';
-    saveBtn.classList.add("saved");
-
-    // Create and show notification
-    showNotification("Reflection saved!");
-
-    // Save the current journal entry
     const output = document.getElementById("output").textContent;
-    if (output.trim()) {
-      saveEntry(output);
+
+    if (
+      output.trim() &&
+      output !== "Your AI-assisted reflections will appear here..."
+    ) {
+      saveBtn.innerHTML = '<i class="fas fa-bookmark"></i>';
+      saveBtn.classList.add("saved");
+
+      // Save the current journal entry with enhanced metadata
+      const savedEntry = saveEntry(output);
+
+      // Create and show notification
+      showNotification("Reflection saved!");
+    } else {
+      showNotification("Nothing to save yet");
     }
   });
 

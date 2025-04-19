@@ -358,6 +358,62 @@ function updateWordCount() {
   } else {
     wordCounter.classList.remove("limit-reached");
   }
+
+  // Auto-save while typing
+  autoSaveDraft();
+}
+
+// Function to auto save draft of current entry
+function autoSaveDraft() {
+  const text = document.getElementById("prompt").value;
+  if (text.trim().length > 10) {
+    // Only save if there's substantial content
+    localStorage.setItem("calmspace_draft", text);
+    localStorage.setItem("calmspace_draft_emotion", selectedEmotion);
+    localStorage.setItem("calmspace_draft_timestamp", new Date().toISOString());
+
+    // Show subtle indicator of save
+    const journalInput = document.querySelector(".journal-input");
+    journalInput.classList.add("auto-saved");
+
+    // Remove the indicator after a short delay
+    setTimeout(() => {
+      journalInput.classList.remove("auto-saved");
+    }, 1000);
+  }
+}
+
+// Function to load saved draft
+function loadDraft() {
+  const draftText = localStorage.getItem("calmspace_draft");
+  const draftEmotion = localStorage.getItem("calmspace_draft_emotion");
+  const draftTimestamp = localStorage.getItem("calmspace_draft_timestamp");
+
+  if (draftText && draftTimestamp) {
+    const lastEditTime = new Date(draftTimestamp);
+    const now = new Date();
+    const hoursSinceEdit = (now - lastEditTime) / (1000 * 60 * 60);
+
+    // Only load drafts that are less than 24 hours old
+    if (hoursSinceEdit < 24) {
+      const textarea = document.getElementById("prompt");
+      textarea.value = draftText;
+      updateWordCount();
+
+      // Select the saved emotion if available
+      if (draftEmotion) {
+        const emotions = document.querySelectorAll(".emotion");
+        emotions.forEach((emotion) => {
+          if (emotion.dataset.emotion === draftEmotion) {
+            emotion.click();
+          }
+        });
+      }
+
+      // Show notification
+      showNotification("Draft restored from your last session");
+    }
+  }
 }
 
 // Initialize elements and event handlers
@@ -367,6 +423,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Load saved entries
   loadSavedEntries();
+
+  // Load saved draft
+  loadDraft();
 
   // Render entries in the sidebar
   renderEntries();

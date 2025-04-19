@@ -270,6 +270,32 @@ main {
   flex-direction: column;
 }
 
+/* Journal input header with word counter */
+.journal-input-header {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-bottom: var(--spacing-sm);
+}
+
+.word-counter {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.8rem;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-full);
+  transition: all var(--transition-fast);
+}
+
+.word-counter.limit-near {
+  color: rgb(242, 153, 74);
+}
+
+.word-counter.limit-reached {
+  color: rgb(235, 87, 87);
+  animation: pulse 1s infinite;
+}
+
 .gradient-text {
   background: var(--gradient-primary);
   -webkit-background-clip: text;

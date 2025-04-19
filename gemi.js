@@ -608,6 +608,9 @@ document.addEventListener("DOMContentLoaded", () => {
   // Setup journaling prompts in the main view
   setupPrompts();
 
+  // Setup meditation launcher
+  setupMeditationLauncher();
+
   // Setup search functionality
   const searchBtn = document.getElementById("search-btn");
   const searchContainer = document.querySelector(".search-container");

@@ -482,3 +482,130 @@ nav {
   from { transform: translateY(20px); opacity: 0; }
   to { transform: translateY(0); opacity: 1; }
 }
+
+.pricing {
+  padding: 80px 20px;
+  background: linear-gradient(135deg, #2e1d5b 0%, #3d2a7d 50%, #453291 100%);
+  color: #fff;
+  text-align: center;
+}
+
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+  margin-top: 60px;
+}
+
+.pricing-card {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 20px;
+  padding: 40px 30px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.pricing-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+.pricing-tier {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #ffffff;
+}
+
+.pricing-desc {
+  font-size: 16px;
+  opacity: 0.85;
+  margin-bottom: 30px;
+  line-height: 1.6;
+}
+
+.pricing-btn {
+  background: linear-gradient(135deg, #4a9eff 0%, #6b5fff 100%);
+  color: #fff;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 30px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.pricing-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
+}
+
+.pricing-card.premium {
+  border: 2px solid #6b5fff;
+}
+.pricing-price {
+  font-size: 20px;
+  margin: 10px 0 20px;
+  opacity: 0.9;
+}
+
+.pricing-benefits {
+  text-align: left;
+  list-style: none;
+  padding-left: 0;
+  margin-bottom: 30px;
+}
+
+.pricing-benefits li {
+  margin-bottom: 12px;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  opacity: 0.85;
+}
+
+.badge {
+  background: linear-gradient(135deg, #ff6b6b, #f06595);
+  color: #fff;
+  padding: 6px 12px;
+  border-radius: 30px;
+  font-size: 12px;
+  font-weight: bold;
+  display: inline-block;
+  margin-bottom: 10px;
+}
+
+.special-offer-banner {
+  background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+  color: #2e1d5b;
+  padding: 8px 16px;
+  border-radius: 30px;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  text-align: center;
+  animation: pulse 2s infinite ease-in-out;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 0 10px rgba(255, 154, 158, 0.4);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(255, 154, 158, 0.6);
+  }
+}
+
+.original-price {
+  text-decoration: line-through;
+  color: #ccc;
+  font-size: 16px;
+  margin-right: 6px;
+  opacity: 0.7;
+}

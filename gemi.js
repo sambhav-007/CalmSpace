@@ -37,10 +37,222 @@ function saveEntry(aiReflection) {
   return entry;
 }
 
+// Function to format date for display
+function formatDate(dateString) {
+  const date = new Date(dateString);
+  return date.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+}
+
+// Get emotion icon based on emotion type
+function getEmotionIcon(emotion) {
+  switch (emotion) {
+    case "happy":
+      return '<i class="far fa-smile"></i>';
+    case "sad":
+      return '<i class="far fa-frown"></i>';
+    case "neutral":
+      return '<i class="far fa-meh"></i>';
+    case "excited":
+      return '<i class="far fa-grin-stars"></i>';
+    case "anxious":
+      return '<i class="far fa-grimace"></i>';
+    default:
+      return '<i class="far fa-meh"></i>';
+  }
+}
+
+// Function to render all entries in the sidebar
+function renderEntries() {
+  const entriesList = document.getElementById("entries-list");
+
+  // Clear current entries
+  entriesList.innerHTML = "";
+
+  if (entries.length === 0) {
+    // Show empty state
+    entriesList.innerHTML = `
+      <div class="empty-state">
+        <i class="far fa-file-alt"></i>
+        <p>No saved entries yet. Start journaling!</p>
+      </div>
+    `;
+    return;
+  }
+
+  // Add each entry to the list
+  entries.forEach((entry) => {
+    const entryElement = document.createElement("div");
+    entryElement.classList.add("entry-item");
+    entryElement.dataset.entryId = entry.id;
+
+    // Truncate the user input for display
+    const previewText =
+      entry.userInput.length > 60
+        ? entry.userInput.substring(0, 60) + "..."
+        : entry.userInput;
+
+    entryElement.innerHTML = `
+      <div class="entry-date">${formatDate(entry.date)}</div>
+      <div class="entry-preview">
+        <span class="entry-emotion-indicator entry-emotion-${
+          entry.emotion
+        }"></span>
+        ${previewText}
+      </div>
+    `;
+
+    // Add click event to show entry details
+    entryElement.addEventListener("click", () => {
+      showEntryDetail(entry);
+    });
+
+    entriesList.appendChild(entryElement);
+  });
+}
+
+// Function to show entry detail in modal
+function showEntryDetail(entry) {
+  const modal = document.getElementById("entry-detail-modal");
+
+  // Update modal content
+  document.getElementById("modal-date").textContent = formatDate(entry.date);
+  document.getElementById("modal-emotion-icon").innerHTML = getEmotionIcon(
+    entry.emotion
+  );
+  document.getElementById("modal-emotion-text").textContent =
+    entry.emotion.charAt(0).toUpperCase() + entry.emotion.slice(1);
+  document.getElementById("modal-user-input").textContent = entry.userInput;
+  document.getElementById("modal-ai-reflection").textContent =
+    entry.aiReflection;
+
+  // Setup delete button
+  const deleteBtn = document.getElementById("delete-entry-btn");
+  deleteBtn.onclick = () => {
+    if (confirm("Are you sure you want to delete this journal entry?")) {
+      deleteEntry(entry.id);
+      closeModal();
+    }
+  };
+
+  // Setup export button
+  const exportBtn = document.getElementById("export-entry-btn");
+  exportBtn.onclick = () => exportEntry(entry);
+
+  // Add current entry id to modal for reference
+  modal.dataset.entryId = entry.id;
+
+  // Show modal
+  modal.classList.add("active");
+
+  // Add close button functionality
+  const closeBtn = modal.querySelector(".close-modal");
+  closeBtn.onclick = closeModal;
+
+  // Close modal on click outside
+  modal.onclick = (e) => {
+    if (e.target === modal) {
+      closeModal();
+    }
+  };
+}
+
+// Function to close modal
+function closeModal() {
+  const modal = document.getElementById("entry-detail-modal");
+  modal.classList.remove("active");
+}
+
+// Function to delete an entry
+function deleteEntry(id) {
+  const index = entries.findIndex((entry) => entry.id === id);
+  if (index !== -1) {
+    entries.splice(index, 1);
+    saveEntriesToStorage();
+    renderEntries();
+    showNotification("Entry deleted");
+  }
+}
+
+// Function to export entry as text file
+function exportEntry(entry) {
+  const content = `
+Journal Entry - ${formatDate(entry.date)}
+Emotion: ${entry.emotion}
+
+YOUR JOURNAL:
+${entry.userInput}
+
+AI REFLECTION:
+${entry.aiReflection}
+  `.trim();
+
+  const blob = new Blob([content], { type: "text/plain" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = `journal-entry-${
+    new Date(entry.date).toISOString().split("T")[0]
+  }.txt`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+
+  showNotification("Entry exported");
+}
+
 // Initialize elements and event handlers
 document.addEventListener("DOMContentLoaded", () => {
   // Load saved entries
   loadSavedEntries();
+
+  // Render entries in the sidebar
+  renderEntries();
+
+  // Setup search functionality
+  const searchBtn = document.getElementById("search-btn");
+  const searchContainer = document.querySelector(".search-container");
+  const searchInput = document.querySelector(".search-input");
+  const searchClose = document.querySelector(".search-close");
+
+  searchBtn.addEventListener("click", () => {
+    searchContainer.classList.toggle("active");
+    if (searchContainer.classList.contains("active")) {
+      searchInput.focus();
+    }
+  });
+
+  searchClose.addEventListener("click", () => {
+    searchContainer.classList.remove("active");
+    searchInput.value = "";
+    renderEntries(); // Reset to show all entries
+  });
+
+  searchInput.addEventListener(
+    "input",
+    debounce(() => {
+      const query = searchInput.value.toLowerCase();
+      if (query.trim() === "") {
+        renderEntries();
+        return;
+      }
+
+      // Filter entries that match the search query
+      const filteredEntries = entries.filter(
+        (entry) =>
+          entry.userInput.toLowerCase().includes(query) ||
+          entry.aiReflection.toLowerCase().includes(query)
+      );
+
+      renderFilteredEntries(filteredEntries, query);
+    }, 300)
+  );
 
   // Add subtle entrance animation to elements
   animateEntranceEffects();
@@ -92,6 +304,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // Create and show notification
       showNotification("Reflection saved!");
+      renderEntries(); // Update the sidebar with the new entry
     } else {
       showNotification("Nothing to save yet");
     }

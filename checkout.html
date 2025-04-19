@@ -24,20 +24,20 @@
         </header>
 
         <section class="checkout-hero">
-            <h1>Buy Premium Plan</h1>
-            <p>Unlock all premium features and enjoy advanced AI insights, custom themes, growth & emotion tracking, and priority support.</p>
+            <h1 id="plan-title">Buy Premium Plan</h1>
+            <p id="plan-description">Unlock all premium features and enjoy advanced AI insights, custom themes, growth & emotion tracking, and priority support.</p>
         </section>
 
         <section class="premium-details">
-            <h2>Premium Plan Details</h2>
-            <ul>
-                <li>✨ All Free features</li>
+            <h2 id="plan-details-title">Premium Plan Details</h2>
+            <ul id="plan-features">
+                <li>✨ All Pro features</li>
                 <li>📈 Advanced AI insights</li>
                 <li>🎨 Custom themes</li>
                 <li>📅 Growth & emotion tracking</li>
                 <li>💬 Priority support</li>
             </ul>
-            <p class="pricing-price"><span class="original-price">$5</span> $2/month</p>
+            <p class="pricing-price"><span class="original-price">$5</span> <span id="current-price">$2/month</span></p>
         </section>
 
         <section class="purchase-form">
@@ -59,12 +59,86 @@
     </div>
 
     <script>
-        document.getElementById('paytm-pay-btn').addEventListener('click', function() {
-            const amount = 2.00; // INR amount
-            const paytmUrl = `https://secure.paytm.in/oltp-web/processTransaction?ORDER_ID=CalmSpacePremium${Date.now()}&CUST_ID=CalmSpaceUser&TXN_AMOUNT=${amount.toFixed(2)}&CHANNEL_ID=WEB&INDUSTRY_TYPE_ID=Retail&WEBSITE=WEBSTAGING&CALLBACK_URL=https://yourdomain.com/callback`;
+        // Plan details data
+        const plans = {
+            premium: {
+                title: "Buy Premium Plan",
+                description: "All Pro features, Unlimited custom themes, Deep AI reflections, Priority support, and End-to-end encryption.",
+                detailsTitle: "Premium Plan Details",
+                features: [
+                    "✨ All Pro features",
+                    "🎨 Unlimited custom themes",
+                    "🔮 Deep AI reflections",
+                    "💬 Priority support",
+                    "🔒 End-to-end encryption"
+                ],
+                originalPrice: "$5",
+                currentPrice: "$2/month",
+                amount: 2.00
+            },
+            pro: {
+                title: "Buy Pro Plan",
+                description: "Unlock enhanced features including more AI insights, custom themes, and monthly growth tracking.",
+                detailsTitle: "Pro Plan Details",
+                features: [
+                    "✨ All Standard features",
+                    "📈 More AI insights",
+                    "🎨 Choose from 5 custom themes",
+                    "📅 Monthly growth tracking"
+                ],
+                originalPrice: "",
+                currentPrice: "$1.50/month",
+                amount: 1.50
+            }
+        };
 
-            // Redirect to Paytm payment page
-            window.location.href = paytmUrl;
+        // Function to get query parameter by name
+        function getQueryParam(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+
+        // Function to update the page content based on plan
+        function updatePlanContent(planName) {
+            const plan = plans[planName] || plans.premium;
+
+            document.getElementById('plan-title').textContent = plan.title;
+            document.getElementById('plan-description').textContent = plan.description;
+            document.getElementById('plan-details-title').textContent = plan.detailsTitle;
+
+            const featuresList = document.getElementById('plan-features');
+            featuresList.innerHTML = "";
+            plan.features.forEach(feature => {
+                const li = document.createElement('li');
+                li.textContent = feature;
+                featuresList.appendChild(li);
+            });
+
+            const originalPriceElem = document.querySelector('.original-price');
+            if (plan.originalPrice) {
+                originalPriceElem.textContent = plan.originalPrice;
+                originalPriceElem.style.display = "inline";
+            } else {
+                originalPriceElem.style.display = "none";
+            }
+
+            document.getElementById('current-price').textContent = plan.currentPrice;
+
+            // Update payment button click handler
+            const payBtn = document.getElementById('paytm-pay-btn');
+            payBtn.onclick = function() {
+                const amount = plan.amount;
+                const paytmUrl = `https://secure.paytm.in/oltp-web/processTransaction?ORDER_ID=CalmSpace${planName.charAt(0).toUpperCase() + planName.slice(1)}${Date.now()}&CUST_ID=CalmSpaceUser&TXN_AMOUNT=${amount.toFixed(2)}&CHANNEL_ID=WEB&INDUSTRY_TYPE_ID=Retail&WEBSITE=WEBSTAGING&CALLBACK_URL=https://yourdomain.com/callback`;
+
+                // Redirect to Paytm payment page
+                window.location.href = paytmUrl;
+            };
+        }
+
+        // On page load, update content based on plan query parameter
+        document.addEventListener('DOMContentLoaded', () => {
+            const planParam = getQueryParam('plan');
+            updatePlanContent(planParam);
         });
     </script>
 </body>

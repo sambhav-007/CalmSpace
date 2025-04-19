@@ -44,15 +44,12 @@
             <h2>Complete Your Purchase</h2>
             <form id="purchase-form">
                 <label for="name">Full Name</label><br />
-                <input type="text" id="name" name="name" required /><br />
+                <input type="text" id="name" name="name" /><br />
 
                 <label for="email">Email Address</label><br />
-                <input type="email" id="email" name="email" required /><br />
+                <input type="email" id="email" name="email" /><br />
 
-                <label for="payment">Payment Information</label><br />
-                <input type="text" id="payment" name="payment" placeholder="Card Number" required /><br />
-
-                <button type="submit" class="btn btn-primary">Buy Now</button>
+            <button type="button" id="paytm-pay-btn" class="btn btn-primary">Pay with Paytm</button>
             </form>
         </section>
 
@@ -62,10 +59,12 @@
     </div>
 
     <script>
-        document.getElementById('purchase-form').addEventListener('submit', function(event) {
-            event.preventDefault();
-            alert('Thank you for purchasing the Premium Plan! (This is a demo, no actual payment processed.)');
-            window.location.href = 'index.html';
+        document.getElementById('paytm-pay-btn').addEventListener('click', function() {
+            const amount = 2.00; // INR amount
+            const paytmUrl = `https://secure.paytm.in/oltp-web/processTransaction?ORDER_ID=CalmSpacePremium${Date.now()}&CUST_ID=CalmSpaceUser&TXN_AMOUNT=${amount.toFixed(2)}&CHANNEL_ID=WEB&INDUSTRY_TYPE_ID=Retail&WEBSITE=WEBSTAGING&CALLBACK_URL=https://yourdomain.com/callback`;
+
+            // Redirect to Paytm payment page
+            window.location.href = paytmUrl;
         });
     </script>
 </body>

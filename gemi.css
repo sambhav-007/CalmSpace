@@ -1,4 +1,4 @@
-/* Modern AI Journal App Styling */
+/* Modern AI Journal App Styling - Minimalist Edition */
 :root {
   /* Core Color Palette */
   --primary-dark: #2d1b69;
@@ -14,7 +14,7 @@
   --surface-dark: rgba(36, 33, 69, 0.7);
 
   /* Glass Effect Variables */
-  --glass-bg-light: rgba(255, 255, 255, 0.25);
+  --glass-bg-light: rgba(255, 255, 255, 0.15);
   --glass-bg-dark: rgba(25, 22, 52, 0.65);
   --glass-border-light: rgba(255, 255, 255, 0.5);
   --glass-border-dark: rgba(255, 255, 255, 0.1);
@@ -29,6 +29,13 @@
   --gradient-primary: linear-gradient(120deg, #6a5acd, #00d4ff);
   --gradient-accent: linear-gradient(120deg, #00d4ff, #e100ff);
   --gradient-background: linear-gradient(135deg, #1a0b2e, #2d1b69 70%);
+  --gradient-full-screen: linear-gradient(
+    135deg,
+    #2d1b69,
+    #5642ce,
+    #3a1f7a,
+    #271456
+  );
   --gradient-card: linear-gradient(
     120deg,
     rgba(255, 255, 255, 0.2),
@@ -46,6 +53,7 @@
   --spacing-md: 1rem;
   --spacing-lg: 1.5rem;
   --spacing-xl: 2.5rem;
+  --spacing-xxl: 4rem;
 
   /* Border Radius */
   --radius-sm: 8px;
@@ -63,12 +71,27 @@
 }
 
 body {
-  background: var(--gradient-background);
+  background: var(--gradient-full-screen);
+  background-size: 400% 400%;
+  animation: gradient-shift 15s ease infinite;
   color: var(--bg-light);
   min-height: 100vh;
   transition: background-color var(--transition-normal);
   position: relative;
   overflow-x: hidden;
+}
+
+/* Animated Background Gradient */
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 /* Dark Mode Styles */
@@ -80,7 +103,13 @@ body.dark-mode {
   --surface-dark: rgba(16, 15, 30, 0.9);
   --glass-bg-light: rgba(36, 33, 69, 0.25);
   --glass-border-light: rgba(255, 255, 255, 0.1);
-  background: linear-gradient(135deg, #0c071b, #1e1246 70%);
+  --gradient-full-screen: linear-gradient(
+    135deg,
+    #0c071b,
+    #1e1246,
+    #150d33,
+    #0a0617
+  );
 }
 
 /* Layout Components */
@@ -90,7 +119,7 @@ body.dark-mode {
   min-height: 100vh;
   position: relative;
   z-index: 1;
-  padding: var(--spacing-lg);
+  padding: var(--spacing-xxl) var(--spacing-xl);
   max-width: 1400px;
   margin: 0 auto;
 }
@@ -100,8 +129,19 @@ body.dark-mode {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: var(--spacing-md) 0;
-  margin-bottom: var(--spacing-xl);
+  padding: var(--spacing-md) var(--spacing-xl);
+  margin-bottom: var(--spacing-xxl);
+  background: var(--glass-bg-light);
+  border-radius: var(--radius-lg);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--glass-border-light);
+  transition: transform var(--transition-normal),
+    box-shadow var(--transition-normal);
+}
+
+.navbar:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-soft);
 }
 
 .logo {
@@ -119,6 +159,12 @@ body.dark-mode {
   background-clip: text;
   color: transparent;
   font-size: 1.8rem;
+  transition: transform var(--transition-normal);
+}
+
+/* Logo animation */
+.logo:hover i {
+  transform: rotate(10deg) scale(1.1);
 }
 
 .nav-links {
@@ -175,10 +221,31 @@ body.dark-mode {
   font-size: 1.2rem;
   backdrop-filter: blur(10px);
   transition: all var(--transition-fast);
+  overflow: hidden;
+  position: relative;
+}
+
+/* Ripple effect for theme toggle */
+.theme-toggle::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  transform: scale(0);
+  opacity: 0;
+  transition: transform 0.5s, opacity 0.5s;
+}
+
+.theme-toggle:active::after {
+  transform: scale(1.5);
+  opacity: 0;
+  transition: 0s;
 }
 
 .theme-toggle:hover {
-  transform: translateY(-2px);
+  transform: translateY(-2px) rotate(5deg);
   box-shadow: var(--shadow-soft);
 }
 
@@ -187,12 +254,13 @@ main {
   flex: 1;
   display: flex;
   flex-direction: column;
+  margin: var(--spacing-xl) 0;
 }
 
 .content-container {
   display: grid;
   grid-template-columns: 1.2fr 1fr;
-  gap: var(--spacing-xl);
+  gap: var(--spacing-xxl);
   height: 100%;
 }
 
@@ -209,15 +277,22 @@ main {
   color: transparent;
   font-size: 3rem;
   font-weight: 800;
-  margin-bottom: var(--spacing-sm);
+  margin-bottom: var(--spacing-md);
   letter-spacing: -0.5px;
+  transform-origin: left;
+  transition: transform var(--transition-slow);
+}
+
+.gradient-text:hover {
+  transform: scale(1.03);
 }
 
 .subtitle {
   color: rgba(255, 255, 255, 0.7);
   font-size: 1.1rem;
-  margin-bottom: var(--spacing-xl);
+  margin-bottom: var(--spacing-xxl);
   max-width: 80%;
+  line-height: 1.6;
 }
 
 /* Glass Morphism Cards */
@@ -231,11 +306,17 @@ main {
   box-shadow: var(--shadow-soft);
 }
 
+/* Hover effect for glass cards */
+.glass-morphism:hover {
+  border-color: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+}
+
 .journal-input {
-  padding: var(--spacing-lg);
+  padding: var(--spacing-xl);
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-md);
+  gap: var(--spacing-lg);
   height: 100%;
   transition: all var(--transition-normal);
 }
@@ -250,28 +331,36 @@ main {
   border: 1px solid rgba(255, 255, 255, 0.2);
   color: white;
   border-radius: var(--radius-md);
-  padding: var(--spacing-md);
+  padding: var(--spacing-lg);
   font-size: 1rem;
   resize: none;
   height: 180px;
   transition: all var(--transition-fast);
+  letter-spacing: 0.02em;
+  line-height: 1.6;
 }
 
 .glass-input:focus {
   outline: none;
   border-color: rgba(255, 255, 255, 0.5);
   box-shadow: 0 0 0 2px rgba(106, 90, 205, 0.3);
+  transform: translateY(-2px);
 }
 
 .glass-input::placeholder {
   color: rgba(255, 255, 255, 0.5);
+  transition: opacity var(--transition-normal);
+}
+
+.glass-input:focus::placeholder {
+  opacity: 0.7;
 }
 
 /* Emotion Selector */
 .emotion-selector {
   display: flex;
   gap: var(--spacing-md);
-  padding: var(--spacing-md) 0;
+  padding: var(--spacing-lg) 0;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   margin-bottom: var(--spacing-md);
 }
@@ -288,12 +377,41 @@ main {
   color: white;
   font-size: 1.2rem;
   cursor: pointer;
-  transition: all var(--transition-fast);
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Ripple effect for emotions */
+.emotion::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  transform: scale(0);
+  opacity: 0;
+}
+
+.emotion:active::after {
+  animation: ripple 0.5s ease-out forwards;
+}
+
+@keyframes ripple {
+  0% {
+    transform: scale(0);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
 }
 
 .emotion:hover {
   background: rgba(255, 255, 255, 0.2);
-  transform: translateY(-3px);
+  transform: translateY(-5px) scale(1.1);
 }
 
 .emotion.active {
@@ -316,11 +434,11 @@ main {
   align-items: center;
   justify-content: center;
   gap: var(--spacing-sm);
-  transition: all var(--transition-fast);
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   position: relative;
   overflow: hidden;
   box-shadow: var(--glow-primary);
-  margin-top: var(--spacing-md);
+  margin-top: var(--spacing-lg);
 }
 
 .gradient-btn::before {
@@ -340,12 +458,18 @@ main {
 }
 
 .gradient-btn:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 10px 25px rgba(106, 90, 205, 0.5);
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 15px 25px rgba(106, 90, 205, 0.5);
 }
 
 .gradient-btn:hover::before {
   left: 100%;
+}
+
+/* Button press effect */
+.gradient-btn:active {
+  transform: translateY(-1px) scale(0.98);
+  box-shadow: 0 5px 15px rgba(106, 90, 205, 0.5);
 }
 
 .outline-btn {
@@ -357,12 +481,17 @@ main {
   font-weight: 500;
   font-size: 0.9rem;
   cursor: pointer;
-  transition: all var(--transition-fast);
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .outline-btn:hover {
   background: rgba(255, 255, 255, 0.1);
   border-color: rgba(255, 255, 255, 0.5);
+  transform: translateY(-2px) scale(1.05);
+}
+
+.outline-btn:active {
+  transform: translateY(0) scale(0.98);
 }
 
 .icon-btn {
@@ -377,12 +506,30 @@ main {
   justify-content: center;
   cursor: pointer;
   font-size: 1rem;
-  transition: all var(--transition-fast);
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Ripple effect for icon buttons */
+.icon-btn::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  transform: scale(0);
+  opacity: 0;
+}
+
+.icon-btn:active::after {
+  animation: ripple 0.5s ease-out forwards;
 }
 
 .icon-btn:hover {
   background: rgba(255, 255, 255, 0.1);
-  transform: translateY(-2px);
+  transform: translateY(-2px) rotate(5deg);
 }
 
 .icon-btn.saved {
@@ -401,7 +548,7 @@ main {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: var(--spacing-md) var(--spacing-lg);
+  padding: var(--spacing-lg) var(--spacing-xl);
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
@@ -411,10 +558,17 @@ main {
   display: flex;
   align-items: center;
   gap: var(--spacing-sm);
+  color: #ffffff; /* Ensure the "AI Reflection" title is always white */
 }
 
 .response-header h3 i {
   color: var(--accent);
+  transition: transform var(--transition-normal);
+}
+
+/* Robot icon animation */
+.response-header:hover h3 i {
+  transform: rotate(10deg);
 }
 
 .controls {
@@ -424,15 +578,16 @@ main {
 
 .response-content {
   flex: 1;
-  padding: var(--spacing-lg);
+  padding: var(--spacing-xl);
   overflow-y: auto;
-  color: rgba(255, 255, 255, 0.9);
-  line-height: 1.6;
+  color: #ffffff; /* Pure white text for better visibility in dark mode */
+  line-height: 1.7;
   font-size: 1rem;
+  letter-spacing: 0.01em;
 }
 
 .response-footer {
-  padding: var(--spacing-md) var(--spacing-lg);
+  padding: var(--spacing-lg) var(--spacing-xl);
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   display: flex;
   justify-content: space-between;
@@ -457,13 +612,41 @@ main {
   background: rgba(255, 255, 255, 0.1);
   border-radius: var(--radius-full);
   overflow: hidden;
+  position: relative;
 }
 
 .mood-level {
   height: 100%;
   width: 0%;
   border-radius: var(--radius-full);
-  transition: width 1s ease-in-out, background-color 1s;
+  transition: width 1s cubic-bezier(0.19, 1, 0.22, 1), background-color 1s;
+  position: relative;
+}
+
+/* Shimmer effect on mood meter */
+.mood-level::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
 }
 
 /* Typing Indicator */
@@ -471,7 +654,7 @@ main {
   display: none;
   align-items: center;
   gap: 5px;
-  padding: var(--spacing-lg);
+  padding: var(--spacing-xl);
 }
 
 .typing-indicator span {
@@ -480,7 +663,7 @@ main {
   border-radius: 50%;
   background: var(--accent);
   display: inline-block;
-  animation: bounce 1.5s infinite ease-in-out;
+  animation: bounce 1.5s infinite cubic-bezier(0.455, 0.03, 0.515, 0.955);
 }
 
 .typing-indicator span:nth-child(1) {
@@ -508,7 +691,7 @@ main {
 
 /* Decorative Background Elements */
 .floating-shapes {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
@@ -521,31 +704,31 @@ main {
 .shape {
   position: absolute;
   border-radius: 50%;
-  filter: blur(40px);
-  opacity: 0.4;
+  filter: blur(80px);
+  opacity: 0.3;
 }
 
 .shape-1 {
-  width: 400px;
-  height: 400px;
+  width: 500px;
+  height: 500px;
   background: radial-gradient(var(--primary), transparent 70%);
-  top: -100px;
+  top: -200px;
   right: -100px;
   animation: float 20s infinite ease-in-out alternate;
 }
 
 .shape-2 {
-  width: 300px;
-  height: 300px;
+  width: 400px;
+  height: 400px;
   background: radial-gradient(var(--accent), transparent 70%);
-  bottom: -50px;
-  left: -100px;
+  bottom: -100px;
+  left: -150px;
   animation: float 15s infinite ease-in-out alternate-reverse;
 }
 
 .shape-3 {
-  width: 200px;
-  height: 200px;
+  width: 300px;
+  height: 300px;
   background: radial-gradient(var(--accent-secondary), transparent 70%);
   top: 40%;
   left: 20%;
@@ -553,8 +736,8 @@ main {
 }
 
 .shape-4 {
-  width: 150px;
-  height: 150px;
+  width: 250px;
+  height: 250px;
   background: radial-gradient(var(--primary-light), transparent 70%);
   bottom: 30%;
   right: 10%;
@@ -564,8 +747,8 @@ main {
 /* Notification */
 .notification {
   position: fixed;
-  bottom: 20px;
-  right: 20px;
+  bottom: 30px;
+  right: 30px;
   background: var(--glass-bg-light);
   border: 1px solid var(--glass-border-light);
   backdrop-filter: blur(12px);
@@ -575,7 +758,7 @@ main {
   box-shadow: var(--shadow-soft);
   transform: translateY(100px);
   opacity: 0;
-  transition: all var(--transition-normal);
+  transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
   z-index: 1000;
 }
 
@@ -610,7 +793,7 @@ main {
 }
 
 .pulse {
-  animation: pulse 0.5s ease-in-out;
+  animation: pulse 0.5s cubic-bezier(0.455, 0.03, 0.515, 0.955);
 }
 
 /* Responsive Media Queries */
@@ -631,11 +814,15 @@ main {
   .subtitle {
     max-width: 100%;
   }
+
+  .app-container {
+    padding: var(--spacing-xl) var(--spacing-lg);
+  }
 }
 
 @media (max-width: 768px) {
   .app-container {
-    padding: var(--spacing-md);
+    padding: var(--spacing-lg) var(--spacing-md);
   }
 
   .nav-links {
@@ -663,23 +850,15 @@ main {
   }
 }
 
-/* Custom scrollbar */
+/* Custom scrollbar - hidden but functional */
 ::-webkit-scrollbar {
-  width: 8px;
+  display: none; /* Chrome, Safari and Opera */
 }
 
-::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.3);
+.response-content,
+body {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
 }
 
 /* About Icon */

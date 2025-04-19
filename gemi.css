@@ -1140,6 +1140,15 @@ body {
   color: #ffffff;
 }
 
+/* Search highlight styling */
+.highlight {
+  background-color: rgba(106, 90, 205, 0.3);
+  padding: 0 2px;
+  border-radius: 3px;
+  color: white;
+  font-weight: 500;
+}
+
 /* Responsive adjustments for history sidebar */
 @media (max-width: 1200px) {
   .content-container {

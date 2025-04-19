@@ -1235,3 +1235,107 @@ body {
   width: 20px;
   text-align: center;
 }
+
+/* Welcome Modal Styling */
+.welcome-modal .modal-content {
+  max-width: 800px;
+}
+
+.welcome-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: var(--spacing-md) 0;
+}
+
+.welcome-icon {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: var(--gradient-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: var(--spacing-lg);
+  box-shadow: var(--glow-primary);
+}
+
+.welcome-icon i {
+  font-size: 2.5rem;
+  color: white;
+}
+
+.welcome-container h2 {
+  font-size: 1.8rem;
+  margin-bottom: var(--spacing-md);
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.welcome-container > p {
+  max-width: 600px;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: var(--spacing-xl);
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+.welcome-features {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--spacing-lg);
+  width: 100%;
+  margin-top: var(--spacing-xl);
+}
+
+.welcome-feature {
+  display: flex;
+  gap: var(--spacing-md);
+  padding: var(--spacing-lg);
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: transform var(--transition-normal),
+    background var(--transition-normal);
+}
+
+.welcome-feature:hover {
+  transform: translateY(-5px);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.welcome-feature i {
+  font-size: 1.8rem;
+  color: var(--accent);
+  margin-top: 5px;
+}
+
+.welcome-feature h4 {
+  font-size: 1.1rem;
+  margin-bottom: var(--spacing-xs);
+  color: white;
+}
+
+.welcome-feature p {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.5;
+}
+
+/* Responsive adjustments for welcome modal */
+@media (max-width: 768px) {
+  .welcome-features {
+    grid-template-columns: 1fr;
+  }
+
+  .welcome-container h2 {
+    font-size: 1.5rem;
+  }
+
+  .welcome-container > p {
+    font-size: 1rem;
+  }
+}

@@ -337,6 +337,29 @@ function closeWelcomeModal() {
   welcomeModal.classList.remove("active");
 }
 
+// Function to update word count
+function updateWordCount() {
+  const text = document.getElementById("prompt").value;
+  const wordCount = text.trim() ? text.trim().split(/\s+/).length : 0;
+  const wordCounter = document.querySelector(".word-counter");
+
+  // Update the word counter
+  wordCounter.textContent = `${wordCount} words`;
+
+  // Add visual indication if approaching a limit
+  if (wordCount > 400) {
+    wordCounter.classList.add("limit-near");
+  } else {
+    wordCounter.classList.remove("limit-near");
+  }
+
+  if (wordCount > 500) {
+    wordCounter.classList.add("limit-reached");
+  } else {
+    wordCounter.classList.remove("limit-reached");
+  }
+}
+
 // Initialize elements and event handlers
 document.addEventListener("DOMContentLoaded", () => {
   // Check for first time users
@@ -347,6 +370,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Render entries in the sidebar
   renderEntries();
+
+  // Setup word counter
+  const textarea = document.getElementById("prompt");
+  textarea.addEventListener("input", debounce(updateWordCount, 300));
 
   // Setup search functionality
   const searchBtn = document.getElementById("search-btn");

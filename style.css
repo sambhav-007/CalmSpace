@@ -307,6 +307,13 @@ nav {
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 30px;
   margin-top: 60px;
+  align-items: flex-start; /* Align cards at the same level */
+}
+
+.pricing-card-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .pricing-card {
@@ -348,6 +355,7 @@ nav {
   font-weight: 600;
   cursor: pointer;
   transition: transform 0.3s, box-shadow 0.3s;
+  margin-top: 25px;
 }
 
 .pricing-btn:hover {
@@ -358,6 +366,7 @@ nav {
 .pricing-card.premium {
   border: 2px solid #6b5fff;
 }
+
 .pricing-price {
   font-size: 20px;
   margin: 10px 0 20px;
@@ -365,19 +374,26 @@ nav {
 }
 
 .pricing-benefits {
-  text-align: left;
   list-style: none;
   padding-left: 0;
-  margin-bottom: 30px;
+  margin: 0;
 }
 
 .pricing-benefits li {
-  margin-bottom: 12px;
-  font-size: 16px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  opacity: 0.85;
+  position: relative;
+  padding-left: 20px;
+  margin-bottom: 16px;
+}
+
+.pricing-benefits li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 9px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #8b5cf6, #38bdf8);
 }
 
 .badge {
@@ -391,7 +407,7 @@ nav {
   margin-bottom: 10px;
 }
 
-.special-offer-banner {
+/* .special-offer-banner {
   background: linear-gradient(135deg, #ff9a9e, #fad0c4);
   color: #2e1d5b;
   padding: 8px 16px;
@@ -401,9 +417,12 @@ nav {
   margin-bottom: 12px;
   text-align: center;
   animation: pulse 2s infinite ease-in-out;
-}
+  position: absolute; /* position it outside the card */
+  /* top: 0;
+  right: 0;
+} */ 
 
-@keyframes pulse {
+/* @keyframes pulse {
   0%, 100% {
     transform: scale(1);
     box-shadow: 0 0 10px rgba(255, 154, 158, 0.4);
@@ -412,7 +431,7 @@ nav {
     transform: scale(1.05);
     box-shadow: 0 0 20px rgba(255, 154, 158, 0.6);
   }
-}
+} */
 
 .original-price {
   text-decoration: line-through;

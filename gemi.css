@@ -1172,3 +1172,66 @@ body {
     margin-bottom: var(--spacing-lg);
   }
 }
+
+/* Filter Dialog */
+.filter-dialog {
+  position: absolute;
+  top: 50px;
+  right: 10px;
+  background: var(--glass-bg-dark);
+  border: 1px solid var(--glass-border-light);
+  backdrop-filter: blur(12px);
+  border-radius: var(--radius-md);
+  width: 220px;
+  box-shadow: var(--shadow-strong);
+  z-index: 100;
+  transform: translateY(-10px);
+  opacity: 0;
+  visibility: hidden;
+  transition: all var(--transition-normal);
+  overflow: hidden;
+}
+
+.filter-dialog.show {
+  transform: translateY(0);
+  opacity: 1;
+  visibility: visible;
+}
+
+.filter-header {
+  padding: var(--spacing-md);
+  font-size: 0.9rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 500;
+}
+
+.filter-options {
+  padding: var(--spacing-xs);
+}
+
+.filter-option {
+  padding: var(--spacing-sm) var(--spacing-md);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  transition: all var(--transition-fast);
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.9rem;
+}
+
+.filter-option:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.filter-option.active {
+  background: rgba(106, 90, 205, 0.2);
+  color: white;
+}
+
+.filter-option i {
+  width: 20px;
+  text-align: center;
+}

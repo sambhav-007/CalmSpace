@@ -460,6 +460,130 @@ function setupJournalingPrompts() {
   });
 }
 
+// Function to toggle fullscreen mode for journaling
+function setupFullscreenMode() {
+  const fullscreenBtn = document.querySelector(".fullscreen-btn");
+
+  fullscreenBtn.addEventListener("click", () => {
+    // Create fullscreen container if it doesn't exist
+    let fullscreenMode = document.querySelector(".fullscreen-mode");
+
+    if (!fullscreenMode) {
+      // Create the fullscreen container
+      fullscreenMode = document.createElement("div");
+      fullscreenMode.classList.add("fullscreen-mode");
+
+      // Create the header
+      const header = document.createElement("div");
+      header.classList.add("fullscreen-header");
+      header.innerHTML = `
+        <div class="fullscreen-title">Focus Mode</div>
+        <div class="exit-fullscreen">
+          <i class="fas fa-compress"></i> Exit Focus Mode
+        </div>
+      `;
+
+      // Clone the journal input
+      const journalInput = document
+        .querySelector(".journal-input")
+        .cloneNode(true);
+
+      // Add to the fullscreen container
+      fullscreenMode.appendChild(header);
+      fullscreenMode.appendChild(journalInput);
+
+      // Append to body
+      document.body.appendChild(fullscreenMode);
+
+      // Setup exit button
+      const exitBtn = fullscreenMode.querySelector(".exit-fullscreen");
+      exitBtn.addEventListener("click", () => {
+        // Get the textarea content before removing
+        const fullscreenTextarea = fullscreenMode.querySelector("#prompt");
+        const mainTextarea = document.getElementById("prompt");
+
+        // Sync content back to main textarea
+        if (fullscreenTextarea && mainTextarea) {
+          mainTextarea.value = fullscreenTextarea.value;
+          updateWordCount(); // Update word count in main view
+        }
+
+        // Remove fullscreen mode
+        fullscreenMode.remove();
+      });
+
+      // Setup textarea in fullscreen mode
+      const textarea = fullscreenMode.querySelector("#prompt");
+      textarea.id = "fullscreen-prompt"; // Change ID to avoid conflict
+
+      // Sync content from main textarea
+      textarea.value = document.getElementById("prompt").value;
+
+      // Focus the textarea
+      setTimeout(() => {
+        textarea.focus();
+      }, 100);
+
+      // Re-initialize prompts in fullscreen mode
+      setupPrompts(fullscreenMode);
+
+      // Apply animation
+      setTimeout(() => {
+        fullscreenMode.classList.add("active");
+      }, 10);
+    }
+  });
+}
+
+// Initialize the prompts in a container
+function setupPrompts(container = document) {
+  const promptBtn = container.querySelector(".prompt-btn");
+  const promptsContainer = container.querySelector(".prompts-container");
+
+  if (!promptBtn || !promptsContainer) return;
+
+  const closePrompts = promptsContainer.querySelector(".close-prompts");
+  const promptItems = promptsContainer.querySelectorAll(".prompt-item");
+
+  promptBtn.addEventListener("click", () => {
+    promptsContainer.classList.toggle("active");
+  });
+
+  if (closePrompts) {
+    closePrompts.addEventListener("click", () => {
+      promptsContainer.classList.remove("active");
+    });
+  }
+
+  promptItems.forEach((item) => {
+    item.addEventListener("click", () => {
+      // Get the prompt text and the proper textarea
+      const promptText = item.dataset.prompt;
+      const textarea = container.querySelector("textarea");
+
+      if (textarea) {
+        // Insert the prompt text
+        textarea.value = promptText;
+
+        // Focus the textarea
+        textarea.focus();
+      }
+
+      // Close the prompts container
+      promptsContainer.classList.remove("active");
+
+      // Animation effect
+      item.classList.add("pulse");
+      setTimeout(() => {
+        item.classList.remove("pulse");
+      }, 500);
+
+      // Show a notification
+      showNotification("Prompt added to journal");
+    });
+  });
+}
+
 // Initialize elements and event handlers
 document.addEventListener("DOMContentLoaded", () => {
   // Check for first time users
@@ -477,6 +601,12 @@ document.addEventListener("DOMContentLoaded", () => {
   // Setup word counter
   const textarea = document.getElementById("prompt");
   textarea.addEventListener("input", debounce(updateWordCount, 300));
+
+  // Setup fullscreen mode
+  setupFullscreenMode();
+
+  // Setup journaling prompts in the main view
+  setupPrompts();
 
   // Setup search functionality
   const searchBtn = document.getElementById("search-btn");

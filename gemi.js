@@ -284,13 +284,155 @@ ${entry.aiReflection}
   showNotification("Entry exported");
 }
 
+// Filter entries by emotion
+function filterByEmotion(emotion) {
+  if (!emotion || emotion === "all") {
+    renderEntries(); // Show all entries if no filter
+    return;
+  }
+
+  const filteredEntries = entries.filter((entry) => entry.emotion === emotion);
+  renderFilteredEntries(filteredEntries, ""); // No search highlight needed
+}
+
+// Check if it's the user's first visit and show welcome modal
+function checkFirstTimeUser() {
+  const hasVisitedBefore = localStorage.getItem("calmspace_visited");
+
+  if (!hasVisitedBefore) {
+    // Show welcome modal
+    const welcomeModal = document.getElementById("welcome-modal");
+    setTimeout(() => {
+      welcomeModal.classList.add("active");
+    }, 1000);
+
+    // Setup button actions
+    const skipBtn = document.getElementById("skip-tour-btn");
+    const startBtn = document.getElementById("start-journey-btn");
+    const closeBtn = welcomeModal.querySelector(".close-modal");
+
+    skipBtn.addEventListener("click", () => {
+      closeWelcomeModal();
+    });
+
+    startBtn.addEventListener("click", () => {
+      closeWelcomeModal();
+      // Could start a guided tour here in the future
+      showNotification(
+        "Welcome to CalmSpace! Start by writing in your journal."
+      );
+    });
+
+    closeBtn.addEventListener("click", () => {
+      closeWelcomeModal();
+    });
+
+    // Mark as visited
+    localStorage.setItem("calmspace_visited", "true");
+  }
+}
+
+function closeWelcomeModal() {
+  const welcomeModal = document.getElementById("welcome-modal");
+  welcomeModal.classList.remove("active");
+}
+
+// Function to update word count
+function updateWordCount() {
+  const text = document.getElementById("prompt").value;
+  const wordCount = text.trim() ? text.trim().split(/\s+/).length : 0;
+  const wordCounter = document.querySelector(".word-counter");
+
+  // Update the word counter
+  wordCounter.textContent = `${wordCount} words`;
+
+  // Add visual indication if approaching a limit
+  if (wordCount > 400) {
+    wordCounter.classList.add("limit-near");
+  } else {
+    wordCounter.classList.remove("limit-near");
+  }
+
+  if (wordCount > 500) {
+    wordCounter.classList.add("limit-reached");
+  } else {
+    wordCounter.classList.remove("limit-reached");
+  }
+
+  // Auto-save while typing
+  autoSaveDraft();
+}
+
+// Function to auto save draft of current entry
+function autoSaveDraft() {
+  const text = document.getElementById("prompt").value;
+  if (text.trim().length > 10) {
+    // Only save if there's substantial content
+    localStorage.setItem("calmspace_draft", text);
+    localStorage.setItem("calmspace_draft_emotion", selectedEmotion);
+    localStorage.setItem("calmspace_draft_timestamp", new Date().toISOString());
+
+    // Show subtle indicator of save
+    const journalInput = document.querySelector(".journal-input");
+    journalInput.classList.add("auto-saved");
+
+    // Remove the indicator after a short delay
+    setTimeout(() => {
+      journalInput.classList.remove("auto-saved");
+    }, 1000);
+  }
+}
+
+// Function to load saved draft
+function loadDraft() {
+  const draftText = localStorage.getItem("calmspace_draft");
+  const draftEmotion = localStorage.getItem("calmspace_draft_emotion");
+  const draftTimestamp = localStorage.getItem("calmspace_draft_timestamp");
+
+  if (draftText && draftTimestamp) {
+    const lastEditTime = new Date(draftTimestamp);
+    const now = new Date();
+    const hoursSinceEdit = (now - lastEditTime) / (1000 * 60 * 60);
+
+    // Only load drafts that are less than 24 hours old
+    if (hoursSinceEdit < 24) {
+      const textarea = document.getElementById("prompt");
+      textarea.value = draftText;
+      updateWordCount();
+
+      // Select the saved emotion if available
+      if (draftEmotion) {
+        const emotions = document.querySelectorAll(".emotion");
+        emotions.forEach((emotion) => {
+          if (emotion.dataset.emotion === draftEmotion) {
+            emotion.click();
+          }
+        });
+      }
+
+      // Show notification
+      showNotification("Draft restored from your last session");
+    }
+  }
+}
+
 // Initialize elements and event handlers
 document.addEventListener("DOMContentLoaded", () => {
+  // Check for first time users
+  checkFirstTimeUser();
+
   // Load saved entries
   loadSavedEntries();
 
+  // Load saved draft
+  loadDraft();
+
   // Render entries in the sidebar
   renderEntries();
+
+  // Setup word counter
+  const textarea = document.getElementById("prompt");
+  textarea.addEventListener("input", debounce(updateWordCount, 300));
 
   // Setup search functionality
   const searchBtn = document.getElementById("search-btn");
@@ -454,6 +596,68 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Add hover animation to floating shapes
   animateBackgroundShapes();
+
+  // Setup filter button
+  const filterBtn = document.getElementById("filter-btn");
+  filterBtn.addEventListener("click", () => {
+    // Create filter dialog if it doesn't exist
+    let filterDialog = document.querySelector(".filter-dialog");
+
+    if (!filterDialog) {
+      filterDialog = document.createElement("div");
+      filterDialog.classList.add("filter-dialog");
+      filterDialog.innerHTML = `
+        <div class="filter-header">Filter by Emotion</div>
+        <div class="filter-options">
+          <div class="filter-option" data-emotion="all">
+            <i class="fas fa-border-all"></i> All Entries
+          </div>
+          <div class="filter-option" data-emotion="happy">
+            <span class="entry-emotion-indicator entry-emotion-happy"></span>
+            <i class="far fa-smile"></i> Happy
+          </div>
+          <div class="filter-option" data-emotion="sad">
+            <span class="entry-emotion-indicator entry-emotion-sad"></span>
+            <i class="far fa-frown"></i> Sad
+          </div>
+          <div class="filter-option" data-emotion="neutral">
+            <span class="entry-emotion-indicator entry-emotion-neutral"></span>
+            <i class="far fa-meh"></i> Neutral
+          </div>
+          <div class="filter-option" data-emotion="excited">
+            <span class="entry-emotion-indicator entry-emotion-excited"></span>
+            <i class="far fa-grin-stars"></i> Excited
+          </div>
+          <div class="filter-option" data-emotion="anxious">
+            <span class="entry-emotion-indicator entry-emotion-anxious"></span>
+            <i class="far fa-grimace"></i> Anxious
+          </div>
+        </div>
+      `;
+
+      document.querySelector(".history-sidebar").appendChild(filterDialog);
+
+      // Add event listeners to filter options
+      const filterOptions = filterDialog.querySelectorAll(".filter-option");
+      filterOptions.forEach((option) => {
+        option.addEventListener("click", () => {
+          // Remove active class from all options
+          filterOptions.forEach((opt) => opt.classList.remove("active"));
+          // Add active class to clicked option
+          option.classList.add("active");
+
+          // Apply filter
+          filterByEmotion(option.dataset.emotion);
+
+          // Hide filter dialog
+          filterDialog.classList.remove("show");
+        });
+      });
+    }
+
+    // Toggle filter dialog
+    filterDialog.classList.toggle("show");
+  });
 });
 
 // Function to show notifications with smoother animation

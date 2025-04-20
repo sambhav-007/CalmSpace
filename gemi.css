@@ -1299,6 +1299,7 @@ body {
   border-radius: 3px;
   color: white;
   font-weight: 500;
+  display: inline;
 }
 
 /* Responsive adjustments for history sidebar */

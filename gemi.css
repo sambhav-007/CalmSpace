@@ -1093,10 +1093,15 @@ body {
   padding: var(--spacing-sm);
   display: none;
   position: relative;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
 .search-container.active {
   display: block;
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .search-input {

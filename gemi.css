@@ -867,6 +867,18 @@ main {
   }
 }
 
+@keyframes subtle-pulse {
+  0% {
+    text-shadow: 0 0 0 transparent;
+  }
+  50% {
+    text-shadow: 0 0 10px rgba(106, 90, 205, 0.3);
+  }
+  100% {
+    text-shadow: 0 0 0 transparent;
+  }
+}
+
 .pulse {
   animation: pulse 0.5s cubic-bezier(0.455, 0.03, 0.515, 0.955);
 }

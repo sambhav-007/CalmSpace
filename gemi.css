@@ -249,6 +249,12 @@ body.dark-mode {
   box-shadow: var(--shadow-soft);
 }
 
+.navbar-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
 /* Main Content Layout */
 main {
   flex: 1;
@@ -823,9 +829,12 @@ main {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   z-index: 1000;
   opacity: 0;
-  transition: transform 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28),
-    opacity 0.3s ease;
+  transition: transform 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28), 
+              opacity 0.3s ease;
   font-size: 0.9rem;
+  text-align: center;
+  min-width: 200px;
+  max-width: 80%;
 }
 
 .notification.show {

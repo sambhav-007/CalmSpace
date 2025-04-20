@@ -1040,6 +1040,10 @@ body {
   transform: translateY(-2px);
 }
 
+.entry-item:hover .entry-preview {
+  color: white;
+}
+
 .entry-item.active {
   background: rgba(106, 90, 205, 0.2);
   border-color: rgba(106, 90, 205, 0.3);

@@ -644,6 +644,97 @@ function incrementMeditationUsage() {
   localStorage.setItem("calmspace_meditation_stats", JSON.stringify(stats));
 }
 
+// Setup speech-to-text functionality
+function setupSpeechToText() {
+  const speechBtn = document.querySelector('.speech-btn');
+  const textarea = document.getElementById('prompt');
+  
+  // Check if browser supports speech recognition
+  if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+    speechBtn.style.display = 'none';
+    return;
+  }
+  
+  // Initialize speech recognition
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  const recognition = new SpeechRecognition();
+  
+  recognition.continuous = true;
+  recognition.interimResults = true;
+  recognition.lang = 'en-US';
+  
+  let isRecording = false;
+  
+  speechBtn.addEventListener('click', () => {
+    if (isRecording) {
+      // Stop recording
+      recognition.stop();
+      speechBtn.classList.remove('recording');
+      showNotification('Voice recording stopped');
+    } else {
+      // Start recording
+      recognition.start();
+      speechBtn.classList.add('recording');
+      showNotification('Listening... Speak now');
+    }
+    
+    isRecording = !isRecording;
+  });
+  
+  // Process speech results
+  recognition.onresult = (event) => {
+    let interimTranscript = '';
+    let finalTranscript = '';
+    
+    // Get current cursor position
+    const cursorPos = textarea.selectionStart;
+    const textBeforeCursor = textarea.value.substring(0, cursorPos);
+    const textAfterCursor = textarea.value.substring(cursorPos);
+    
+    // Process recognition results
+    for (let i = event.resultIndex; i < event.results.length; i++) {
+      const transcript = event.results[i][0].transcript;
+      
+      if (event.results[i].isFinal) {
+        finalTranscript += transcript + ' ';
+      } else {
+        interimTranscript += transcript;
+      }
+    }
+    
+    // Insert recognized text at cursor position
+    if (finalTranscript) {
+      textarea.value = textBeforeCursor + finalTranscript + textAfterCursor;
+      textarea.selectionStart = textarea.selectionEnd = cursorPos + finalTranscript.length;
+      
+      // Update word count
+      updateWordCount();
+    }
+  };
+  
+  // Error handling
+  recognition.onerror = (event) => {
+    if (event.error === 'not-allowed') {
+      showNotification('Microphone access denied');
+    } else {
+      showNotification(`Error: ${event.error}`);
+    }
+    
+    isRecording = false;
+    speechBtn.classList.remove('recording');
+  };
+  
+  // Handle when recognition ends
+  recognition.onend = () => {
+    if (isRecording) {
+      // Auto restart if still in recording mode
+      recognition.start();
+    } else {
+      speechBtn.classList.remove('recording');
+    }
+  };
+}
+
 // Initialize elements and event handlers
 document.addEventListener("DOMContentLoaded", () => {
   // Check for first time users
@@ -684,6 +775,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Setup meditation launcher
   setupMeditationLauncher();
+
+  // Setup speech-to-text functionality
+  setupSpeechToText();
 
   // Setup search functionality
   const searchBtn = document.getElementById("search-btn");

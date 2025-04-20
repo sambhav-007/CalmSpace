@@ -583,6 +583,67 @@ function setupPrompts(container = document) {
   });
 }
 
+// Setup meditation launcher
+function setupMeditationLauncher() {
+  const meditationLauncher = document.querySelector(".meditation-launcher");
+  const meditationContainer = document.getElementById("meditation-container");
+
+  if (!meditationLauncher) return;
+
+  meditationLauncher.addEventListener("click", () => {
+    // Check if meditation timer is initialized
+    if (window.meditationTimer) {
+      // Initialize if not already initialized
+      if (!window.meditationTimer.initialized) {
+        window.meditationTimer.initialize("#meditation-container");
+        window.meditationTimer.initialized = true;
+      }
+
+      // Show the meditation container
+      meditationContainer.classList.add("active");
+
+      // Track meditation usage in local storage
+      incrementMeditationUsage();
+    } else {
+      // If meditation JS is not loaded yet, show a notification
+      showNotification("Loading meditation timer...");
+
+      // Load the meditation script dynamically if needed
+      const script = document.createElement("script");
+      script.src = "meditation.js";
+      script.onload = () => {
+        // Initialize meditation timer once script is loaded
+        if (window.meditationTimer) {
+          window.meditationTimer.initialize("#meditation-container");
+          window.meditationTimer.initialized = true;
+          meditationContainer.classList.add("active");
+          incrementMeditationUsage();
+        }
+      };
+      document.body.appendChild(script);
+    }
+  });
+}
+
+// Track meditation usage stats
+function incrementMeditationUsage() {
+  // Get current stats or initialize
+  const stats = JSON.parse(
+    localStorage.getItem("calmspace_meditation_stats") ||
+      '{"count": 0, "totalMinutes": 0, "lastUsed": null}'
+  );
+
+  // Update stats
+  stats.count++;
+  stats.totalMinutes += window.meditationTimer
+    ? window.meditationTimer.duration
+    : 5; // Default to 5 minutes
+  stats.lastUsed = new Date().toISOString();
+
+  // Save updated stats
+  localStorage.setItem("calmspace_meditation_stats", JSON.stringify(stats));
+}
+
 // Initialize elements and event handlers
 document.addEventListener("DOMContentLoaded", () => {
   // Check for first time users
@@ -600,7 +661,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Setup word counter and focus effects for textarea
   const textarea = document.getElementById("prompt");
   textarea.addEventListener("input", debounce(updateWordCount, 300));
-  
+
   textarea.addEventListener("focus", () => {
     document.querySelector(".journal-input").classList.add("focused");
 
@@ -833,49 +894,45 @@ document.addEventListener("DOMContentLoaded", () => {
     filterDialog.classList.toggle("show");
   });
 
-  // Setup journaling prompts
+  // Setup journaling prompts - call the function directly
   setupJournalingPrompts();
 });
 
 // Function to show notifications with smoother animation
 function showNotification(message) {
   // Create notification element if it doesn't exist
-  let notification = document.querySelector('.notification');
-  
+  let notification = document.querySelector(".notification");
+
   if (!notification) {
-    notification = document.createElement('div');
-    notification.className = 'notification';
+    notification = document.createElement("div");
+    notification.className = "notification";
     document.body.appendChild(notification);
   }
-  
+
   // Set message and show
   notification.textContent = message;
-  notification.classList.add('show');
-  
+  notification.classList.add("show");
+
   // Hide after a delay
   setTimeout(() => {
-    notification.classList.remove('show');
+    notification.classList.remove("show");
   }, 3000);
 }
 
 // Function to add entrance animations to elements
 function animateEntranceEffects() {
-  const elements = [
-    '.journal-input',
-    '.response-section',
-    '.history-sidebar'
-  ];
-  
+  const elements = [".journal-input", ".response-section", ".history-sidebar"];
+
   elements.forEach((selector, index) => {
     const element = document.querySelector(selector);
     if (element) {
-      element.style.opacity = '0';
-      element.style.transform = 'translateY(20px)';
-      element.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-      
+      element.style.opacity = "0";
+      element.style.transform = "translateY(20px)";
+      element.style.transition = "opacity 0.5s ease, transform 0.5s ease";
+
       setTimeout(() => {
-        element.style.opacity = '1';
-        element.style.transform = 'translateY(0)';
+        element.style.opacity = "1";
+        element.style.transform = "translateY(0)";
       }, 100 + index * 150);
     }
   });

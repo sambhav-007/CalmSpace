@@ -25,3 +25,34 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+
+  const darkToggle = document.querySelector(".toggle");
+  darkToggle.addEventListener("click", () => {
+    document.body.classList.toggle("dark");
+    const icon = darkToggle.querySelector("i");
+
+    // Add rotation animation for smooth transition
+    icon.style.transition =
+      "transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)";
+    icon.style.transform = "rotate(360deg)";
+
+    setTimeout(() => {
+      if (document.body.classList.contains("dark")) {
+        icon.classList.remove("fa-moon");
+        icon.classList.add("fa-sun");
+      } else {
+        icon.classList.remove("fa-sun");
+        icon.classList.add("fa-moon");
+      }
+      // Reset transform after icon change
+      setTimeout(() => {
+        icon.style.transition = "none";
+        icon.style.transform = "rotate(0deg)";
+
+        setTimeout(() => {
+          icon.style.transition =
+            "transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)";
+        }, 50);
+      }, 500);
+    }, 250);
+  });

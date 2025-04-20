@@ -9,12 +9,16 @@ function loadSavedEntries() {
   const savedEntries = localStorage.getItem("calmspace_entries");
   if (savedEntries) {
     entries = JSON.parse(savedEntries);
+    console.log("Loaded entries from localStorage:", entries);
+  } else {
+    console.log("No saved entries found in localStorage");
   }
 }
 
 // Save entries to local storage
 function saveEntriesToStorage() {
   localStorage.setItem("calmspace_entries", JSON.stringify(entries));
+  console.log("Saved entries to localStorage:", entries);
 }
 
 // Save a journal entry
@@ -87,7 +91,9 @@ function renderEntries() {
   // Clear current entries
   entriesList.innerHTML = "";
 
-  if (entries.length === 0) {
+  console.log("Rendering entries:", entries);
+  
+  if (!entries || entries.length === 0) {
     // Show empty state
     entriesList.innerHTML = `
       <div class="empty-state">
@@ -855,6 +861,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const saveBtn = document.getElementById("save-btn");
   saveBtn.addEventListener("click", () => {
     const output = document.getElementById("output").textContent;
+    const userInput = document.getElementById("prompt").value;
+
+    console.log("Save button clicked. User input:", userInput);
+    console.log("AI output:", output);
 
     if (
       output.trim() &&
@@ -865,11 +875,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // Save the current journal entry with enhanced metadata
       const savedEntry = saveEntry(output);
+      console.log("Entry saved successfully:", savedEntry);
 
       // Create and show notification
       showNotification("Reflection saved!");
       renderEntries(); // Update the sidebar with the new entry
     } else {
+      console.log("Nothing to save: Empty output or default text");
       showNotification("Nothing to save yet");
     }
   });

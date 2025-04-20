@@ -12,6 +12,12 @@ body {
   min-height: 100vh;
 }
 
+body.dark {
+  background: linear-gradient(135deg, #1a102e 0%, #231344 50%, #2c1a5a 100%);
+  color: #fff;
+  min-height: 100vh;
+}
+
 .container {
   max-width: 1200px;
   margin: 0 auto;
@@ -114,7 +120,7 @@ nav {
   border: none;
 }
 
-.theme-toggle {
+.toggle {
   background: rgba(255, 255, 255, 0.2);
   border-radius: 20px;
   padding: 5px;

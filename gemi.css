@@ -645,6 +645,33 @@ main {
   color: var(--accent);
 }
 
+/* Speech-to-Text Button */
+.speech-btn {
+  color: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.1);
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  margin-right: var(--spacing-xs);
+}
+
+.speech-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.1);
+}
+
+.speech-btn.recording {
+  background: rgba(235, 87, 87, 0.3);
+  color: rgb(235, 87, 87);
+  animation: pulse 1.5s infinite;
+}
+
 /* Response Section */
 .response-section {
   display: flex;

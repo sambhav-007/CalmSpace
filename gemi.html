@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <link rel="stylesheet" href="gemi.css" />
+    <link rel="stylesheet" href="meditation.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
@@ -24,8 +25,13 @@
           <a href="#">Insights</a>
           <a href="#">Progress</a>
         </div>
-        <div class="theme-toggle">
-          <i class="fas fa-moon"></i>
+        <div class="navbar-actions">
+          <div class="meditation-launcher" title="Open meditation timer">
+            <i class="fas fa-spa"></i>
+          </div>
+          <div class="theme-toggle">
+            <i class="fas fa-moon"></i>
+          </div>
         </div>
       </nav>
 
@@ -79,6 +85,9 @@
                   <i class="fas fa-lightbulb"></i> Need inspiration?
                 </div>
                 <div class="journal-controls">
+                  <div class="speech-btn" title="Dictate your journal entry">
+                    <i class="fas fa-microphone"></i>
+                  </div>
                   <div class="fullscreen-btn" title="Toggle fullscreen mode">
                     <i class="fas fa-expand"></i>
                   </div>
@@ -308,7 +317,12 @@
       </div>
     </div>
 
+    <!-- Meditation Timer Container -->
+    <div class="meditation-container" id="meditation-container"></div>
+
     <!-- JavaScript -->
+    <script src="meditation.js"></script>
     <script src="gemi.js"></script>
   </body>
 </html>
+``` 

@@ -1627,6 +1627,12 @@ body {
   font-size: 1.2rem;
 }
 
+.fullscreen-mode .prompts-container {
+  max-width: 900px;
+  margin: -20px auto 20px;
+  width: 100%;
+}
+
 .fullscreen-header {
   display: flex;
   justify-content: space-between;

@@ -567,21 +567,172 @@ function setupPrompts(container = document) {
 
         // Focus the textarea
         textarea.focus();
+
+        // Update word count if we're in the main view
+        if (textarea.id === "prompt") {
+          updateWordCount();
+        }
       }
 
       // Close the prompts container
       promptsContainer.classList.remove("active");
 
-      // Animation effect
-      item.classList.add("pulse");
-      setTimeout(() => {
-        item.classList.remove("pulse");
-      }, 500);
-
       // Show a notification
       showNotification("Prompt added to journal");
     });
   });
+}
+
+// Setup meditation launcher
+function setupMeditationLauncher() {
+  const meditationLauncher = document.querySelector(".meditation-launcher");
+  const meditationContainer = document.getElementById("meditation-container");
+
+  if (!meditationLauncher) return;
+
+  meditationLauncher.addEventListener("click", () => {
+    // Check if meditation timer is initialized
+    if (window.meditationTimer) {
+      // Initialize if not already initialized
+      if (!window.meditationTimer.initialized) {
+        window.meditationTimer.initialize("#meditation-container");
+        window.meditationTimer.initialized = true;
+      }
+
+      // Show the meditation container
+      meditationContainer.classList.add("active");
+
+      // Track meditation usage in local storage
+      incrementMeditationUsage();
+    } else {
+      // If meditation JS is not loaded yet, show a notification
+      showNotification("Loading meditation timer...");
+
+      // Load the meditation script dynamically if needed
+      const script = document.createElement("script");
+      script.src = "meditation.js";
+      script.onload = () => {
+        // Initialize meditation timer once script is loaded
+        if (window.meditationTimer) {
+          window.meditationTimer.initialize("#meditation-container");
+          window.meditationTimer.initialized = true;
+          meditationContainer.classList.add("active");
+          incrementMeditationUsage();
+        }
+      };
+      document.body.appendChild(script);
+    }
+  });
+}
+
+// Track meditation usage stats
+function incrementMeditationUsage() {
+  // Get current stats or initialize
+  const stats = JSON.parse(
+    localStorage.getItem("calmspace_meditation_stats") ||
+      '{"count": 0, "totalMinutes": 0, "lastUsed": null}'
+  );
+
+  // Update stats
+  stats.count++;
+  stats.totalMinutes += window.meditationTimer
+    ? window.meditationTimer.duration
+    : 5; // Default to 5 minutes
+  stats.lastUsed = new Date().toISOString();
+
+  // Save updated stats
+  localStorage.setItem("calmspace_meditation_stats", JSON.stringify(stats));
+}
+
+// Setup speech-to-text functionality
+function setupSpeechToText() {
+  const speechBtn = document.querySelector('.speech-btn');
+  const textarea = document.getElementById('prompt');
+  
+  // Check if browser supports speech recognition
+  if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+    speechBtn.style.display = 'none';
+    return;
+  }
+  
+  // Initialize speech recognition
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  const recognition = new SpeechRecognition();
+  
+  recognition.continuous = true;
+  recognition.interimResults = true;
+  recognition.lang = 'en-US';
+  
+  let isRecording = false;
+  
+  speechBtn.addEventListener('click', () => {
+    if (isRecording) {
+      // Stop recording
+      recognition.stop();
+      speechBtn.classList.remove('recording');
+      showNotification('Voice recording stopped');
+    } else {
+      // Start recording
+      recognition.start();
+      speechBtn.classList.add('recording');
+      showNotification('Listening... Speak now');
+    }
+    
+    isRecording = !isRecording;
+  });
+  
+  // Process speech results
+  recognition.onresult = (event) => {
+    let interimTranscript = '';
+    let finalTranscript = '';
+    
+    // Get current cursor position
+    const cursorPos = textarea.selectionStart;
+    const textBeforeCursor = textarea.value.substring(0, cursorPos);
+    const textAfterCursor = textarea.value.substring(cursorPos);
+    
+    // Process recognition results
+    for (let i = event.resultIndex; i < event.results.length; i++) {
+      const transcript = event.results[i][0].transcript;
+      
+      if (event.results[i].isFinal) {
+        finalTranscript += transcript + ' ';
+      } else {
+        interimTranscript += transcript;
+      }
+    }
+    
+    // Insert recognized text at cursor position
+    if (finalTranscript) {
+      textarea.value = textBeforeCursor + finalTranscript + textAfterCursor;
+      textarea.selectionStart = textarea.selectionEnd = cursorPos + finalTranscript.length;
+      
+      // Update word count
+      updateWordCount();
+    }
+  };
+  
+  // Error handling
+  recognition.onerror = (event) => {
+    if (event.error === 'not-allowed') {
+      showNotification('Microphone access denied');
+    } else {
+      showNotification(`Error: ${event.error}`);
+    }
+    
+    isRecording = false;
+    speechBtn.classList.remove('recording');
+  };
+  
+  // Handle when recognition ends
+  recognition.onend = () => {
+    if (isRecording) {
+      // Auto restart if still in recording mode
+      recognition.start();
+    } else {
+      speechBtn.classList.remove('recording');
+    }
+  };
 }
 
 // Initialize elements and event handlers
@@ -598,15 +749,35 @@ document.addEventListener("DOMContentLoaded", () => {
   // Render entries in the sidebar
   renderEntries();
 
-  // Setup word counter
+  // Setup word counter and focus effects for textarea
   const textarea = document.getElementById("prompt");
   textarea.addEventListener("input", debounce(updateWordCount, 300));
+
+  textarea.addEventListener("focus", () => {
+    document.querySelector(".journal-input").classList.add("focused");
+
+    // Subtle particles or highlight effect around the focused area
+    addFocusParticles();
+  });
+
+  textarea.addEventListener("blur", () => {
+    document.querySelector(".journal-input").classList.remove("focused");
+
+    // Remove particles
+    removeFocusParticles();
+  });
 
   // Setup fullscreen mode
   setupFullscreenMode();
 
   // Setup journaling prompts in the main view
   setupPrompts();
+
+  // Setup meditation launcher
+  setupMeditationLauncher();
+
+  // Setup speech-to-text functionality
+  setupSpeechToText();
 
   // Setup search functionality
   const searchBtn = document.getElementById("search-btn");
@@ -749,22 +920,6 @@ document.addEventListener("DOMContentLoaded", () => {
     journalInput.scrollIntoView({ behavior: "smooth", block: "center" });
   });
 
-  // Focus animation for textarea with enhanced effects
-  const textarea = document.getElementById("prompt");
-  textarea.addEventListener("focus", () => {
-    document.querySelector(".journal-input").classList.add("focused");
-
-    // Subtle particles or highlight effect around the focused area
-    addFocusParticles();
-  });
-
-  textarea.addEventListener("blur", () => {
-    document.querySelector(".journal-input").classList.remove("focused");
-
-    // Remove particles
-    removeFocusParticles();
-  });
-
   // Connect reflect button to the askGemini function
   document.getElementById("reflect-btn").addEventListener("click", askGemini);
 
@@ -833,44 +988,37 @@ document.addEventListener("DOMContentLoaded", () => {
     filterDialog.classList.toggle("show");
   });
 
-  // Setup journaling prompts
+  // Setup journaling prompts - call the function directly
   setupJournalingPrompts();
 });
 
 // Function to show notifications with smoother animation
 function showNotification(message) {
-  const notification = document.createElement("div");
-  notification.classList.add("notification");
+  // Create notification element if it doesn't exist
+  let notification = document.querySelector(".notification");
+
+  if (!notification) {
+    notification = document.createElement("div");
+    notification.className = "notification";
+    document.body.appendChild(notification);
+  }
+
+  // Set message and show
   notification.textContent = message;
-  document.body.appendChild(notification);
+  notification.classList.add("show");
 
-  // Delayed addition of show class for smooth entrance
-  requestAnimationFrame(() => {
-    requestAnimationFrame(() => {
-      notification.classList.add("show");
-    });
-  });
-
+  // Hide after a delay
   setTimeout(() => {
     notification.classList.remove("show");
-    notification.addEventListener("transitionend", () => {
-      notification.remove();
-    });
   }, 3000);
 }
 
 // Function to add entrance animations to elements
 function animateEntranceEffects() {
-  const elements = [
-    { selector: ".navbar", delay: 0 },
-    { selector: ".gradient-text", delay: 200 },
-    { selector: ".subtitle", delay: 400 },
-    { selector: ".journal-input", delay: 600 },
-    { selector: ".response-section", delay: 800 },
-  ];
+  const elements = [".journal-input", ".response-section", ".history-sidebar"];
 
-  elements.forEach((item) => {
-    const element = document.querySelector(item.selector);
+  elements.forEach((selector, index) => {
+    const element = document.querySelector(selector);
     if (element) {
       element.style.opacity = "0";
       element.style.transform = "translateY(20px)";
@@ -879,7 +1027,7 @@ function animateEntranceEffects() {
       setTimeout(() => {
         element.style.opacity = "1";
         element.style.transform = "translateY(0)";
-      }, item.delay);
+      }, 100 + index * 150);
     }
   });
 }

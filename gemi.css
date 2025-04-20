@@ -1,5 +1,12 @@
 /* Modern AI Journal App Styling - Minimalist Edition */
 :root {
+  /* Emotion Colors */
+  --emotion-happy: rgb(68, 190, 135);
+  --emotion-sad: rgb(235, 87, 87);
+  --emotion-neutral: rgb(76, 207, 211);
+  --emotion-excited: rgb(16, 185, 129);
+  --emotion-anxious: rgb(242, 153, 74);
+
   /* Core Color Palette */
   --primary-dark: #2d1b69;
   --primary: #6a5acd;

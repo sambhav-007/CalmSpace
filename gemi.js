@@ -567,16 +567,15 @@ function setupPrompts(container = document) {
 
         // Focus the textarea
         textarea.focus();
+
+        // Update word count if we're in the main view
+        if (textarea.id === "prompt") {
+          updateWordCount();
+        }
       }
 
       // Close the prompts container
       promptsContainer.classList.remove("active");
-
-      // Animation effect
-      item.classList.add("pulse");
-      setTimeout(() => {
-        item.classList.remove("pulse");
-      }, 500);
 
       // Show a notification
       showNotification("Prompt added to journal");
@@ -598,9 +597,23 @@ document.addEventListener("DOMContentLoaded", () => {
   // Render entries in the sidebar
   renderEntries();
 
-  // Setup word counter
+  // Setup word counter and focus effects for textarea
   const textarea = document.getElementById("prompt");
   textarea.addEventListener("input", debounce(updateWordCount, 300));
+  
+  textarea.addEventListener("focus", () => {
+    document.querySelector(".journal-input").classList.add("focused");
+
+    // Subtle particles or highlight effect around the focused area
+    addFocusParticles();
+  });
+
+  textarea.addEventListener("blur", () => {
+    document.querySelector(".journal-input").classList.remove("focused");
+
+    // Remove particles
+    removeFocusParticles();
+  });
 
   // Setup fullscreen mode
   setupFullscreenMode();
@@ -752,22 +765,6 @@ document.addEventListener("DOMContentLoaded", () => {
     journalInput.scrollIntoView({ behavior: "smooth", block: "center" });
   });
 
-  // Focus animation for textarea with enhanced effects
-  const textarea = document.getElementById("prompt");
-  textarea.addEventListener("focus", () => {
-    document.querySelector(".journal-input").classList.add("focused");
-
-    // Subtle particles or highlight effect around the focused area
-    addFocusParticles();
-  });
-
-  textarea.addEventListener("blur", () => {
-    document.querySelector(".journal-input").classList.remove("focused");
-
-    // Remove particles
-    removeFocusParticles();
-  });
-
   // Connect reflect button to the askGemini function
   document.getElementById("reflect-btn").addEventListener("click", askGemini);
 
@@ -842,47 +839,44 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // Function to show notifications with smoother animation
 function showNotification(message) {
-  const notification = document.createElement("div");
-  notification.classList.add("notification");
+  // Create notification element if it doesn't exist
+  let notification = document.querySelector('.notification');
+  
+  if (!notification) {
+    notification = document.createElement('div');
+    notification.className = 'notification';
+    document.body.appendChild(notification);
+  }
+  
+  // Set message and show
   notification.textContent = message;
-  document.body.appendChild(notification);
-
-  // Delayed addition of show class for smooth entrance
-  requestAnimationFrame(() => {
-    requestAnimationFrame(() => {
-      notification.classList.add("show");
-    });
-  });
-
+  notification.classList.add('show');
+  
+  // Hide after a delay
   setTimeout(() => {
-    notification.classList.remove("show");
-    notification.addEventListener("transitionend", () => {
-      notification.remove();
-    });
+    notification.classList.remove('show');
   }, 3000);
 }
 
 // Function to add entrance animations to elements
 function animateEntranceEffects() {
   const elements = [
-    { selector: ".navbar", delay: 0 },
-    { selector: ".gradient-text", delay: 200 },
-    { selector: ".subtitle", delay: 400 },
-    { selector: ".journal-input", delay: 600 },
-    { selector: ".response-section", delay: 800 },
+    '.journal-input',
+    '.response-section',
+    '.history-sidebar'
   ];
-
-  elements.forEach((item) => {
-    const element = document.querySelector(item.selector);
+  
+  elements.forEach((selector, index) => {
+    const element = document.querySelector(selector);
     if (element) {
-      element.style.opacity = "0";
-      element.style.transform = "translateY(20px)";
-      element.style.transition = "opacity 0.5s ease, transform 0.5s ease";
-
+      element.style.opacity = '0';
+      element.style.transform = 'translateY(20px)';
+      element.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+      
       setTimeout(() => {
-        element.style.opacity = "1";
-        element.style.transform = "translateY(0)";
-      }, item.delay);
+        element.style.opacity = '1';
+        element.style.transform = 'translateY(0)';
+      }, 100 + index * 150);
     }
   });
 }

@@ -499,6 +499,36 @@ main {
   box-shadow: var(--glow-primary);
 }
 
+/* Entry emotion indicators */
+.entry-emotion-indicator {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-right: var(--spacing-xs);
+  vertical-align: middle;
+}
+
+.entry-emotion-happy {
+  background: var(--emotion-happy);
+}
+
+.entry-emotion-sad {
+  background: var(--emotion-sad);
+}
+
+.entry-emotion-neutral {
+  background: var(--emotion-neutral);
+}
+
+.entry-emotion-excited {
+  background: var(--emotion-excited);
+}
+
+.entry-emotion-anxious {
+  background: var(--emotion-anxious);
+}
+
 /* Buttons */
 .gradient-btn {
   background: var(--gradient-primary);

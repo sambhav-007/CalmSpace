@@ -1388,6 +1388,14 @@ body {
   text-align: center;
 }
 
+.filter-option .entry-emotion-indicator {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  margin-right: var(--spacing-xs);
+}
+
 /* Welcome Modal Styling */
 .welcome-modal .modal-content {
   max-width: 800px;

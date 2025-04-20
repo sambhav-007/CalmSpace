@@ -2,9 +2,651 @@ const API_KEY = "AIzaSyCh63Ww9HJy5itbB7Qm3niTrOa6PNNNyIA"; // ⚠️ Don't use t
 
 let conversationHistory = []; // To maintain conversation context
 let selectedEmotion = null;
+let entries = []; // Array to store journal entries
+
+// Load saved entries from local storage
+function loadSavedEntries() {
+  const savedEntries = localStorage.getItem("calmspace_entries");
+  if (savedEntries) {
+    entries = JSON.parse(savedEntries);
+  }
+}
+
+// Save entries to local storage
+function saveEntriesToStorage() {
+  localStorage.setItem("calmspace_entries", JSON.stringify(entries));
+}
+
+// Save a journal entry
+function saveEntry(aiReflection) {
+  const userInput = document.getElementById("prompt").value;
+
+  const entry = {
+    id: Date.now().toString(), // Unique ID based on timestamp
+    date: new Date().toISOString(),
+    userInput: userInput,
+    aiReflection: aiReflection,
+    emotion: selectedEmotion || "neutral",
+    isFavorite: false,
+    tags: [],
+  };
+
+  entries.unshift(entry); // Add to beginning of array (newest first)
+  saveEntriesToStorage();
+
+  return entry;
+}
+
+// Function to format date for display
+function formatDate(dateString) {
+  const date = new Date(dateString);
+  return date.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+}
+
+// Get emotion icon based on emotion type
+function getEmotionIcon(emotion) {
+  switch (emotion) {
+    case "happy":
+      return '<i class="far fa-smile"></i>';
+    case "sad":
+      return '<i class="far fa-frown"></i>';
+    case "neutral":
+      return '<i class="far fa-meh"></i>';
+    case "excited":
+      return '<i class="far fa-grin-stars"></i>';
+    case "anxious":
+      return '<i class="far fa-grimace"></i>';
+    default:
+      return '<i class="far fa-meh"></i>';
+  }
+}
+
+// Utility function for debouncing inputs
+function debounce(func, wait) {
+  let timeout;
+  return function () {
+    const context = this;
+    const args = arguments;
+    clearTimeout(timeout);
+    timeout = setTimeout(() => {
+      func.apply(context, args);
+    }, wait);
+  };
+}
+
+// Function to render all entries in the sidebar
+function renderEntries() {
+  const entriesList = document.getElementById("entries-list");
+
+  // Clear current entries
+  entriesList.innerHTML = "";
+
+  if (entries.length === 0) {
+    // Show empty state
+    entriesList.innerHTML = `
+      <div class="empty-state">
+        <i class="far fa-file-alt"></i>
+        <p>No saved entries yet. Start journaling!</p>
+      </div>
+    `;
+    return;
+  }
+
+  // Add each entry to the list
+  entries.forEach((entry) => {
+    const entryElement = document.createElement("div");
+    entryElement.classList.add("entry-item");
+    entryElement.dataset.entryId = entry.id;
+
+    // Truncate the user input for display
+    const previewText =
+      entry.userInput.length > 60
+        ? entry.userInput.substring(0, 60) + "..."
+        : entry.userInput;
+
+    entryElement.innerHTML = `
+      <div class="entry-date">${formatDate(entry.date)}</div>
+      <div class="entry-preview">
+        <span class="entry-emotion-indicator entry-emotion-${
+          entry.emotion
+        }"></span>
+        ${previewText}
+      </div>
+    `;
+
+    // Add click event to show entry details
+    entryElement.addEventListener("click", () => {
+      showEntryDetail(entry);
+    });
+
+    entriesList.appendChild(entryElement);
+  });
+}
+
+// Function to render filtered entries with highlighted search text
+function renderFilteredEntries(filteredEntries, query) {
+  const entriesList = document.getElementById("entries-list");
+
+  // Clear current entries
+  entriesList.innerHTML = "";
+
+  if (filteredEntries.length === 0) {
+    // Show empty search state
+    entriesList.innerHTML = `
+      <div class="empty-state">
+        <i class="fas fa-search"></i>
+        <p>No entries match your search</p>
+      </div>
+    `;
+    return;
+  }
+
+  // Add each filtered entry to the list
+  filteredEntries.forEach((entry) => {
+    const entryElement = document.createElement("div");
+    entryElement.classList.add("entry-item");
+    entryElement.dataset.entryId = entry.id;
+
+    // Prepare preview text with highlighted search term
+    const previewText =
+      entry.userInput.length > 60
+        ? entry.userInput.substring(0, 60) + "..."
+        : entry.userInput;
+
+    // Highlight the search term in preview
+    const highlightedPreview = highlightText(previewText, query);
+
+    entryElement.innerHTML = `
+      <div class="entry-date">${formatDate(entry.date)}</div>
+      <div class="entry-preview">
+        <span class="entry-emotion-indicator entry-emotion-${
+          entry.emotion
+        }"></span>
+        ${highlightedPreview}
+      </div>
+    `;
+
+    // Add click event to show entry details
+    entryElement.addEventListener("click", () => {
+      showEntryDetail(entry);
+    });
+
+    entriesList.appendChild(entryElement);
+  });
+}
+
+// Function to highlight search text in preview
+function highlightText(text, query) {
+  if (!query) return text;
+
+  // Use regex to replace all occurrences of the query with highlighted version
+  const regex = new RegExp(query, "gi");
+  return text.replace(
+    regex,
+    (match) => `<span class="highlight">${match}</span>`
+  );
+}
+
+// Function to show entry detail in modal
+function showEntryDetail(entry) {
+  const modal = document.getElementById("entry-detail-modal");
+
+  // Update modal content
+  document.getElementById("modal-date").textContent = formatDate(entry.date);
+  document.getElementById("modal-emotion-icon").innerHTML = getEmotionIcon(
+    entry.emotion
+  );
+  document.getElementById("modal-emotion-text").textContent =
+    entry.emotion.charAt(0).toUpperCase() + entry.emotion.slice(1);
+  document.getElementById("modal-user-input").textContent = entry.userInput;
+  document.getElementById("modal-ai-reflection").textContent =
+    entry.aiReflection;
+
+  // Setup delete button
+  const deleteBtn = document.getElementById("delete-entry-btn");
+  deleteBtn.onclick = () => {
+    if (confirm("Are you sure you want to delete this journal entry?")) {
+      deleteEntry(entry.id);
+      closeModal();
+    }
+  };
+
+  // Setup export button
+  const exportBtn = document.getElementById("export-entry-btn");
+  exportBtn.onclick = () => exportEntry(entry);
+
+  // Add current entry id to modal for reference
+  modal.dataset.entryId = entry.id;
+
+  // Show modal
+  modal.classList.add("active");
+
+  // Add close button functionality
+  const closeBtn = modal.querySelector(".close-modal");
+  closeBtn.onclick = closeModal;
+
+  // Close modal on click outside
+  modal.onclick = (e) => {
+    if (e.target === modal) {
+      closeModal();
+    }
+  };
+}
+
+// Function to close modal
+function closeModal() {
+  const modal = document.getElementById("entry-detail-modal");
+  modal.classList.remove("active");
+}
+
+// Function to delete an entry
+function deleteEntry(id) {
+  const index = entries.findIndex((entry) => entry.id === id);
+  if (index !== -1) {
+    entries.splice(index, 1);
+    saveEntriesToStorage();
+    renderEntries();
+    showNotification("Entry deleted");
+  }
+}
+
+// Function to export entry as text file
+function exportEntry(entry) {
+  const content = `
+Journal Entry - ${formatDate(entry.date)}
+Emotion: ${entry.emotion}
+
+YOUR JOURNAL:
+${entry.userInput}
+
+AI REFLECTION:
+${entry.aiReflection}
+  `.trim();
+
+  const blob = new Blob([content], { type: "text/plain" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = `journal-entry-${
+    new Date(entry.date).toISOString().split("T")[0]
+  }.txt`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+
+  showNotification("Entry exported");
+}
+
+// Filter entries by emotion
+function filterByEmotion(emotion) {
+  if (!emotion || emotion === "all") {
+    renderEntries(); // Show all entries if no filter
+    return;
+  }
+
+  const filteredEntries = entries.filter((entry) => entry.emotion === emotion);
+  renderFilteredEntries(filteredEntries, ""); // No search highlight needed
+}
+
+// Check if it's the user's first visit and show welcome modal
+function checkFirstTimeUser() {
+  const hasVisitedBefore = localStorage.getItem("calmspace_visited");
+
+  if (!hasVisitedBefore) {
+    // Show welcome modal
+    const welcomeModal = document.getElementById("welcome-modal");
+    setTimeout(() => {
+      welcomeModal.classList.add("active");
+    }, 1000);
+
+    // Setup button actions
+    const skipBtn = document.getElementById("skip-tour-btn");
+    const startBtn = document.getElementById("start-journey-btn");
+    const closeBtn = welcomeModal.querySelector(".close-modal");
+
+    skipBtn.addEventListener("click", () => {
+      closeWelcomeModal();
+    });
+
+    startBtn.addEventListener("click", () => {
+      closeWelcomeModal();
+      // Could start a guided tour here in the future
+      showNotification(
+        "Welcome to CalmSpace! Start by writing in your journal."
+      );
+    });
+
+    closeBtn.addEventListener("click", () => {
+      closeWelcomeModal();
+    });
+
+    // Mark as visited
+    localStorage.setItem("calmspace_visited", "true");
+  }
+}
+
+function closeWelcomeModal() {
+  const welcomeModal = document.getElementById("welcome-modal");
+  welcomeModal.classList.remove("active");
+}
+
+// Function to update word count
+function updateWordCount() {
+  const text = document.getElementById("prompt").value;
+  const wordCount = text.trim() ? text.trim().split(/\s+/).length : 0;
+  const wordCounter = document.querySelector(".word-counter");
+
+  // Update the word counter
+  wordCounter.textContent = `${wordCount} words`;
+
+  // Add visual indication if approaching a limit
+  if (wordCount > 400) {
+    wordCounter.classList.add("limit-near");
+  } else {
+    wordCounter.classList.remove("limit-near");
+  }
+
+  if (wordCount > 500) {
+    wordCounter.classList.add("limit-reached");
+  } else {
+    wordCounter.classList.remove("limit-reached");
+  }
+
+  // Auto-save while typing
+  autoSaveDraft();
+}
+
+// Function to auto save draft of current entry
+function autoSaveDraft() {
+  const text = document.getElementById("prompt").value;
+  if (text.trim().length > 10) {
+    // Only save if there's substantial content
+    localStorage.setItem("calmspace_draft", text);
+    localStorage.setItem("calmspace_draft_emotion", selectedEmotion);
+    localStorage.setItem("calmspace_draft_timestamp", new Date().toISOString());
+
+    // Show subtle indicator of save
+    const journalInput = document.querySelector(".journal-input");
+    journalInput.classList.add("auto-saved");
+
+    // Remove the indicator after a short delay
+    setTimeout(() => {
+      journalInput.classList.remove("auto-saved");
+    }, 1000);
+  }
+}
+
+// Function to load saved draft
+function loadDraft() {
+  const draftText = localStorage.getItem("calmspace_draft");
+  const draftEmotion = localStorage.getItem("calmspace_draft_emotion");
+  const draftTimestamp = localStorage.getItem("calmspace_draft_timestamp");
+
+  if (draftText && draftTimestamp) {
+    const lastEditTime = new Date(draftTimestamp);
+    const now = new Date();
+    const hoursSinceEdit = (now - lastEditTime) / (1000 * 60 * 60);
+
+    // Only load drafts that are less than 24 hours old
+    if (hoursSinceEdit < 24) {
+      const textarea = document.getElementById("prompt");
+      textarea.value = draftText;
+      updateWordCount();
+
+      // Select the saved emotion if available
+      if (draftEmotion) {
+        const emotions = document.querySelectorAll(".emotion");
+        emotions.forEach((emotion) => {
+          if (emotion.dataset.emotion === draftEmotion) {
+            emotion.click();
+          }
+        });
+      }
+
+      // Show notification
+      showNotification("Draft restored from your last session");
+    }
+  }
+}
+
+// Setup journaling prompts functionality
+function setupJournalingPrompts() {
+  const promptBtn = document.querySelector(".prompt-btn");
+  const promptsContainer = document.querySelector(".prompts-container");
+  const closePrompts = document.querySelector(".close-prompts");
+  const promptItems = document.querySelectorAll(".prompt-item");
+
+  promptBtn.addEventListener("click", () => {
+    promptsContainer.classList.toggle("active");
+  });
+
+  closePrompts.addEventListener("click", () => {
+    promptsContainer.classList.remove("active");
+  });
+
+  promptItems.forEach((item) => {
+    item.addEventListener("click", () => {
+      const promptText = item.dataset.prompt;
+      const textarea = document.getElementById("prompt");
+
+      // Insert the prompt text
+      textarea.value = promptText;
+
+      // Update word count
+      updateWordCount();
+
+      // Focus the textarea
+      textarea.focus();
+
+      // Close the prompts container
+      promptsContainer.classList.remove("active");
+
+      // Animation effect
+      item.classList.add("pulse");
+      setTimeout(() => {
+        item.classList.remove("pulse");
+      }, 500);
+
+      // Show a notification
+      showNotification("Prompt added to journal");
+    });
+  });
+}
+
+// Function to toggle fullscreen mode for journaling
+function setupFullscreenMode() {
+  const fullscreenBtn = document.querySelector(".fullscreen-btn");
+
+  fullscreenBtn.addEventListener("click", () => {
+    // Create fullscreen container if it doesn't exist
+    let fullscreenMode = document.querySelector(".fullscreen-mode");
+
+    if (!fullscreenMode) {
+      // Create the fullscreen container
+      fullscreenMode = document.createElement("div");
+      fullscreenMode.classList.add("fullscreen-mode");
+
+      // Create the header
+      const header = document.createElement("div");
+      header.classList.add("fullscreen-header");
+      header.innerHTML = `
+        <div class="fullscreen-title">Focus Mode</div>
+        <div class="exit-fullscreen">
+          <i class="fas fa-compress"></i> Exit Focus Mode
+        </div>
+      `;
+
+      // Clone the journal input
+      const journalInput = document
+        .querySelector(".journal-input")
+        .cloneNode(true);
+
+      // Add to the fullscreen container
+      fullscreenMode.appendChild(header);
+      fullscreenMode.appendChild(journalInput);
+
+      // Append to body
+      document.body.appendChild(fullscreenMode);
+
+      // Setup exit button
+      const exitBtn = fullscreenMode.querySelector(".exit-fullscreen");
+      exitBtn.addEventListener("click", () => {
+        // Get the textarea content before removing
+        const fullscreenTextarea = fullscreenMode.querySelector("#prompt");
+        const mainTextarea = document.getElementById("prompt");
+
+        // Sync content back to main textarea
+        if (fullscreenTextarea && mainTextarea) {
+          mainTextarea.value = fullscreenTextarea.value;
+          updateWordCount(); // Update word count in main view
+        }
+
+        // Remove fullscreen mode
+        fullscreenMode.remove();
+      });
+
+      // Setup textarea in fullscreen mode
+      const textarea = fullscreenMode.querySelector("#prompt");
+      textarea.id = "fullscreen-prompt"; // Change ID to avoid conflict
+
+      // Sync content from main textarea
+      textarea.value = document.getElementById("prompt").value;
+
+      // Focus the textarea
+      setTimeout(() => {
+        textarea.focus();
+      }, 100);
+
+      // Re-initialize prompts in fullscreen mode
+      setupPrompts(fullscreenMode);
+
+      // Apply animation
+      setTimeout(() => {
+        fullscreenMode.classList.add("active");
+      }, 10);
+    }
+  });
+}
+
+// Initialize the prompts in a container
+function setupPrompts(container = document) {
+  const promptBtn = container.querySelector(".prompt-btn");
+  const promptsContainer = container.querySelector(".prompts-container");
+
+  if (!promptBtn || !promptsContainer) return;
+
+  const closePrompts = promptsContainer.querySelector(".close-prompts");
+  const promptItems = promptsContainer.querySelectorAll(".prompt-item");
+
+  promptBtn.addEventListener("click", () => {
+    promptsContainer.classList.toggle("active");
+  });
+
+  if (closePrompts) {
+    closePrompts.addEventListener("click", () => {
+      promptsContainer.classList.remove("active");
+    });
+  }
+
+  promptItems.forEach((item) => {
+    item.addEventListener("click", () => {
+      // Get the prompt text and the proper textarea
+      const promptText = item.dataset.prompt;
+      const textarea = container.querySelector("textarea");
+
+      if (textarea) {
+        // Insert the prompt text
+        textarea.value = promptText;
+
+        // Focus the textarea
+        textarea.focus();
+      }
+
+      // Close the prompts container
+      promptsContainer.classList.remove("active");
+
+      // Animation effect
+      item.classList.add("pulse");
+      setTimeout(() => {
+        item.classList.remove("pulse");
+      }, 500);
+
+      // Show a notification
+      showNotification("Prompt added to journal");
+    });
+  });
+}
 
 // Initialize elements and event handlers
 document.addEventListener("DOMContentLoaded", () => {
+  // Check for first time users
+  checkFirstTimeUser();
+
+  // Load saved entries
+  loadSavedEntries();
+
+  // Load saved draft
+  loadDraft();
+
+  // Render entries in the sidebar
+  renderEntries();
+
+  // Setup word counter
+  const textarea = document.getElementById("prompt");
+  textarea.addEventListener("input", debounce(updateWordCount, 300));
+
+  // Setup fullscreen mode
+  setupFullscreenMode();
+
+  // Setup journaling prompts in the main view
+  setupPrompts();
+
+  // Setup search functionality
+  const searchBtn = document.getElementById("search-btn");
+  const searchContainer = document.querySelector(".search-container");
+  const searchInput = document.querySelector(".search-input");
+  const searchClose = document.querySelector(".search-close");
+
+  searchBtn.addEventListener("click", () => {
+    searchContainer.classList.toggle("active");
+    if (searchContainer.classList.contains("active")) {
+      searchInput.focus();
+    }
+  });
+
+  searchClose.addEventListener("click", () => {
+    searchContainer.classList.remove("active");
+    searchInput.value = "";
+    renderEntries(); // Reset to show all entries
+  });
+
+  searchInput.addEventListener(
+    "input",
+    debounce(() => {
+      const query = searchInput.value.toLowerCase();
+      if (query.trim() === "") {
+        renderEntries();
+        return;
+      }
+
+      // Filter entries that match the search query
+      const filteredEntries = entries.filter(
+        (entry) =>
+          entry.userInput.toLowerCase().includes(query) ||
+          entry.aiReflection.toLowerCase().includes(query)
+      );
+
+      renderFilteredEntries(filteredEntries, query);
+    }, 300)
+  );
+
   // Add subtle entrance animation to elements
   animateEntranceEffects();
 
@@ -41,11 +683,24 @@ document.addEventListener("DOMContentLoaded", () => {
   // Setup save button with improved animation
   const saveBtn = document.getElementById("save-btn");
   saveBtn.addEventListener("click", () => {
-    saveBtn.innerHTML = '<i class="fas fa-bookmark"></i>';
-    saveBtn.classList.add("saved");
+    const output = document.getElementById("output").textContent;
 
-    // Create and show notification
-    showNotification("Reflection saved!");
+    if (
+      output.trim() &&
+      output !== "Your AI-assisted reflections will appear here..."
+    ) {
+      saveBtn.innerHTML = '<i class="fas fa-bookmark"></i>';
+      saveBtn.classList.add("saved");
+
+      // Save the current journal entry with enhanced metadata
+      const savedEntry = saveEntry(output);
+
+      // Create and show notification
+      showNotification("Reflection saved!");
+      renderEntries(); // Update the sidebar with the new entry
+    } else {
+      showNotification("Nothing to save yet");
+    }
   });
 
   // Theme toggle with enhanced animation
@@ -115,6 +770,71 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Add hover animation to floating shapes
   animateBackgroundShapes();
+
+  // Setup filter button
+  const filterBtn = document.getElementById("filter-btn");
+  filterBtn.addEventListener("click", () => {
+    // Create filter dialog if it doesn't exist
+    let filterDialog = document.querySelector(".filter-dialog");
+
+    if (!filterDialog) {
+      filterDialog = document.createElement("div");
+      filterDialog.classList.add("filter-dialog");
+      filterDialog.innerHTML = `
+        <div class="filter-header">Filter by Emotion</div>
+        <div class="filter-options">
+          <div class="filter-option" data-emotion="all">
+            <i class="fas fa-border-all"></i> All Entries
+          </div>
+          <div class="filter-option" data-emotion="happy">
+            <span class="entry-emotion-indicator entry-emotion-happy"></span>
+            <i class="far fa-smile"></i> Happy
+          </div>
+          <div class="filter-option" data-emotion="sad">
+            <span class="entry-emotion-indicator entry-emotion-sad"></span>
+            <i class="far fa-frown"></i> Sad
+          </div>
+          <div class="filter-option" data-emotion="neutral">
+            <span class="entry-emotion-indicator entry-emotion-neutral"></span>
+            <i class="far fa-meh"></i> Neutral
+          </div>
+          <div class="filter-option" data-emotion="excited">
+            <span class="entry-emotion-indicator entry-emotion-excited"></span>
+            <i class="far fa-grin-stars"></i> Excited
+          </div>
+          <div class="filter-option" data-emotion="anxious">
+            <span class="entry-emotion-indicator entry-emotion-anxious"></span>
+            <i class="far fa-grimace"></i> Anxious
+          </div>
+        </div>
+      `;
+
+      document.querySelector(".history-sidebar").appendChild(filterDialog);
+
+      // Add event listeners to filter options
+      const filterOptions = filterDialog.querySelectorAll(".filter-option");
+      filterOptions.forEach((option) => {
+        option.addEventListener("click", () => {
+          // Remove active class from all options
+          filterOptions.forEach((opt) => opt.classList.remove("active"));
+          // Add active class to clicked option
+          option.classList.add("active");
+
+          // Apply filter
+          filterByEmotion(option.dataset.emotion);
+
+          // Hide filter dialog
+          filterDialog.classList.remove("show");
+        });
+      });
+    }
+
+    // Toggle filter dialog
+    filterDialog.classList.toggle("show");
+  });
+
+  // Setup journaling prompts
+  setupJournalingPrompts();
 });
 
 // Function to show notifications with smoother animation

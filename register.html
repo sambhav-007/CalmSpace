@@ -1,101 +1,107 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>Register Page | CalmSpace</title>
-    <link rel="stylesheet" href="style.css" />
-    <style>
-      /* Glassmorphism box style */
-      .glass-box {
-        background: rgba(255, 255, 255, 0.1);
-        border-radius: 20px;
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-        backdrop-filter: blur(10px);
-        padding: 40px 30px;
-        max-width: 480px;
-        margin: 60px auto;
-      }
-      .glass-box h2 {
-        font-size: 2.5rem;
-        text-align: center;
-        margin-bottom: 30px;
-      }
-      /* Form element styles for register.html */
-      .form-group {
-        margin-bottom: 20px;
-        display: flex;
-        flex-direction: column;
-      }
-      label {
-        font-size: 14px;
-        margin-bottom: 6px;
-        color: #ddd;
-        font-weight: 600;
-      }
-      input[type="text"],
-      input[type="email"],
-      input[type="password"],
-      input[type="tel"],
-      select {
-        padding: 10px 12px;
-        font-size: 16px;
-        border-radius: 8px;
-        border: 1px solid rgba(255, 255, 255, 0.3);
-        background-color: rgba(255, 255, 255, 0.1);
-        color: #fff;
-        outline: none;
-        transition: border-color 0.3s ease;
-      }
-      input[type="text"]:focus,
-      input[type="email"]:focus,
-      input[type="password"]:focus,
-      input[type="tel"]:focus,
-      select:focus {
-        border-color: #4a9eff;
-        background-color: rgba(255, 255, 255, 0.15);
-      }
-      button.btn {
-        padding: 12px 0;
-        font-size: 16px;
-        font-weight: 700;
-        border-radius: 30px;
-        cursor: pointer;
-        border: none;
-        background: linear-gradient(135deg, #4a9eff 0%, #6b5fff 100%);
-        color: #fff;
-        transition: box-shadow 0.3s ease;
-      }
-      button.btn:hover {
-        box-shadow: 0 8px 20px rgba(74, 158, 255, 0.7);
-      }
-      .login-link {
-        text-align: center;
-        margin-top: 20px;
-        color: #ccc;
-        font-size: 14px;
-      }
-      .login-link a {
-        color: #4a9eff;
-        text-decoration: none;
-        font-weight: 600;
-      }
-      .login-link a:hover {
-        text-decoration: underline;
-      }
-    </style>
-</head>
-<body>
-    <header>
-      <nav class="container" style="display:flex; justify-content:space-between; align-items:center; padding:20px 0;">
-        <div class="logo" style="font-weight:bold; font-size:24px; color:#4a9eff;">CalmSpace</div>
-        <div class="nav-links" style="display:flex; gap:20px;">
-          <a href="index.html" style="color:#4a9eff; text-decoration:none; font-weight:600;">Home</a>
-          <a href="login.html" style="color:#4a9eff; text-decoration:none; font-weight:600;">Login</a>
-        </div>
-      </nav>
-    </header>
+        <title>Register Page | CalmSpace</title>
+        <link rel="stylesheet" href="style.css" />
+        <link
+          rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        />
+        <style>
+          /* Glassmorphism box style */
+          .glass-box {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            padding: 40px 30px;
+            max-width: 480px;
+            margin: 60px auto;
+          }
+          .glass-box h2 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 30px;
+          }
+          /* Form element styles for register.html */
+          .form-group {
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+          }
+          label {
+            font-size: 14px;
+            margin-bottom: 6px;
+            color: #ddd;
+            font-weight: 600;
+          }
+          input[type="text"],
+          input[type="email"],
+          input[type="password"],
+          input[type="tel"],
+          select {
+            padding: 10px 12px;
+            font-size: 16px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            background-color: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            outline: none;
+            transition: border-color 0.3s ease;
+          }
+          input[type="text"]:focus,
+          input[type="email"]:focus,
+          input[type="password"]:focus,
+          input[type="tel"]:focus,
+          select:focus {
+            border-color: #4a9eff;
+            background-color: rgba(255, 255, 255, 0.15);
+          }
+          button.btn {
+            padding: 12px 0;
+            font-size: 16px;
+            font-weight: 700;
+            border-radius: 30px;
+            cursor: pointer;
+            border: none;
+            background: linear-gradient(135deg, #4a9eff 0%, #6b5fff 100%);
+            color: #fff;
+            transition: box-shadow 0.3s ease;
+          }
+          button.btn:hover {
+            box-shadow: 0 8px 20px rgba(74, 158, 255, 0.7);
+          }
+          .login-link {
+            text-align: center;
+            margin-top: 20px;
+            color: #ccc;
+            font-size: 14px;
+          }
+          .login-link a {
+            color: #4a9eff;
+            text-decoration: none;
+            font-weight: 600;
+          }
+          .login-link a:hover {
+            text-decoration: underline;
+          }
+        </style>
+    </head>
+    <body>
+        <header>
+          <nav class="container" style="display:flex; justify-content:space-between; align-items:center; padding:20px 0;">
+            <div class="logo" style="font-weight:bold; font-size:24px; color:#4a9eff;">
+              <i class="fas fa-brain"></i>&nbsp;CalmSpace
+            </div>
+            <div class="nav-links" style="display:flex; gap:20px;">
+              <a href="index.html" style="color:#4a9eff; text-decoration:none; font-weight:600;">Home</a>
+              <a href="login.html" style="color:#4a9eff; text-decoration:none; font-weight:600;">Login</a>
+            </div>
+          </nav>
+        </header>
     <div class="container">
       <div class="glass-box">
         <h2>Register</h2>
@@ -126,7 +132,7 @@
           </div>
           <p class="login-link">
             Already registered?
-            <a href="index.html">Login here</a>
+            <a href="login.html">Login here</a>
           </p>
         </form>
       </div>

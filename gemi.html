@@ -32,6 +32,40 @@
       <!-- Main Content -->
       <main>
         <div class="content-container">
+          <!-- Journal History Sidebar -->
+          <div class="history-sidebar glass-morphism">
+            <div class="history-header">
+              <h3><i class="fas fa-history"></i> Journal History</h3>
+              <div class="history-controls">
+                <button class="icon-btn" id="filter-btn" title="Filter entries">
+                  <i class="fas fa-filter"></i>
+                </button>
+                <button class="icon-btn" id="search-btn" title="Search entries">
+                  <i class="fas fa-search"></i>
+                </button>
+              </div>
+            </div>
+
+            <div class="search-container">
+              <input
+                type="text"
+                class="search-input glass-input"
+                placeholder="Search journal entries..."
+              />
+              <button class="icon-btn search-close">
+                <i class="fas fa-times"></i>
+              </button>
+            </div>
+
+            <div class="entries-list" id="entries-list">
+              <!-- Entries will be dynamically added here -->
+              <div class="empty-state">
+                <i class="far fa-file-alt"></i>
+                <p>No saved entries yet. Start journaling!</p>
+              </div>
+            </div>
+          </div>
+
           <div class="journal-section">
             <h1 class="gradient-text">Reflect & Grow</h1>
             <p class="subtitle">
@@ -40,12 +74,65 @@
             </p>
 
             <div class="journal-input glass-morphism">
+              <div class="journal-input-header">
+                <div class="prompt-btn">
+                  <i class="fas fa-lightbulb"></i> Need inspiration?
+                </div>
+                <div class="journal-controls">
+                  <div class="fullscreen-btn" title="Toggle fullscreen mode">
+                    <i class="fas fa-expand"></i>
+                  </div>
+                  <div class="word-counter">0 words</div>
+                </div>
+              </div>
+
               <textarea
                 id="prompt"
                 rows="6"
                 placeholder="Start journaling here... How are you feeling today?"
                 class="glass-input"
               ></textarea>
+
+              <div class="prompts-container">
+                <div class="prompts-header">
+                  <h4>Journaling Prompts</h4>
+                  <button class="close-prompts">
+                    <i class="fas fa-times"></i>
+                  </button>
+                </div>
+                <div class="prompts-list">
+                  <div
+                    class="prompt-item"
+                    data-prompt="What are three things that brought you joy today, and why did they make you feel that way?"
+                  >
+                    <i class="far fa-smile"></i> Three joys from today
+                  </div>
+                  <div
+                    class="prompt-item"
+                    data-prompt="Describe a challenge you're facing currently. What steps can you take to overcome it?"
+                  >
+                    <i class="fas fa-mountain"></i> Current challenge
+                  </div>
+                  <div
+                    class="prompt-item"
+                    data-prompt="What is one thing you're grateful for today? How has it impacted your life?"
+                  >
+                    <i class="fas fa-heart"></i> Today's gratitude
+                  </div>
+                  <div
+                    class="prompt-item"
+                    data-prompt="Reflect on your recent emotions. Have you noticed any patterns? What might be triggering them?"
+                  >
+                    <i class="fas fa-brain"></i> Emotional patterns
+                  </div>
+                  <div
+                    class="prompt-item"
+                    data-prompt="What's something you'd like to accomplish this week? What small steps can you take toward that goal?"
+                  >
+                    <i class="fas fa-trophy"></i> Weekly goal
+                  </div>
+                </div>
+              </div>
 
               <div class="emotion-selector">
                 <div class="emotion" data-emotion="happy">
@@ -117,6 +204,100 @@
           </div>
         </div>
       </main>
+
+      <!-- Entry Detail Modal -->
+      <div class="modal" id="entry-detail-modal">
+        <div class="modal-content glass-morphism">
+          <div class="modal-header">
+            <h3>
+              <i class="far fa-file-alt"></i>
+              <span id="modal-date">Entry Date</span>
+            </h3>
+            <button class="close-modal"><i class="fas fa-times"></i></button>
+          </div>
+          <div class="modal-body">
+            <div class="entry-detail-container">
+              <div class="entry-emotion">
+                <span id="modal-emotion-icon"></span>
+                <span id="modal-emotion-text"></span>
+              </div>
+
+              <h4>Your Journal</h4>
+              <div id="modal-user-input" class="entry-user-input"></div>
+
+              <h4>AI Reflection</h4>
+              <div id="modal-ai-reflection" class="entry-ai-reflection"></div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button class="outline-btn" id="delete-entry-btn">
+              Delete Entry
+            </button>
+            <button class="gradient-btn" id="export-entry-btn">
+              Export Entry
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Welcome Modal for first-time users -->
+      <div class="modal welcome-modal" id="welcome-modal">
+        <div class="modal-content glass-morphism">
+          <div class="modal-header">
+            <h3><i class="fas fa-seedling"></i> Welcome to CalmSpace</h3>
+            <button class="close-modal"><i class="fas fa-times"></i></button>
+          </div>
+          <div class="modal-body">
+            <div class="welcome-container">
+              <div class="welcome-icon">
+                <i class="fas fa-brain"></i>
+              </div>
+              <h2>Begin Your Mindfulness Journey</h2>
+              <p>
+                CalmSpace is your AI-powered journaling companion designed to
+                help you reflect, process emotions, and grow through
+                self-discovery.
+              </p>
+
+              <div class="welcome-features">
+                <div class="welcome-feature">
+                  <i class="fas fa-pen-nib"></i>
+                  <div>
+                    <h4>Express Yourself</h4>
+                    <p>
+                      Write freely about your thoughts, feelings, and
+                      experiences
+                    </p>
+                  </div>
+                </div>
+                <div class="welcome-feature">
+                  <i class="fas fa-robot"></i>
+                  <div>
+                    <h4>AI Reflection</h4>
+                    <p>
+                      Receive thoughtful insights and perspectives from your AI
+                      companion
+                    </p>
+                  </div>
+                </div>
+                <div class="welcome-feature">
+                  <i class="fas fa-chart-line"></i>
+                  <div>
+                    <h4>Track Progress</h4>
+                    <p>Monitor your emotional journey and growth over time</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button class="outline-btn" id="skip-tour-btn">Skip Tour</button>
+            <button class="gradient-btn" id="start-journey-btn">
+              Start My Journey
+            </button>
+          </div>
+        </div>
+      </div>
 
       <!-- Visual Elements -->
       <div class="floating-shapes">

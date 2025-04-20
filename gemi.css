@@ -879,6 +879,25 @@ main {
   }
 }
 
+@keyframes pulse-animation {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.pulse-effect {
+  animation: pulse-animation 0.5s ease-in-out;
+}
+
 .pulse {
   animation: pulse 0.5s cubic-bezier(0.455, 0.03, 0.515, 0.955);
 }

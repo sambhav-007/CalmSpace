@@ -114,14 +114,13 @@
     background: linear-gradient(135deg, #4a9eff 0%, #6b5fff 100%);
     border: none;
   }
-  
-  /* Privacy Policy Specific Styles */
+
   .terms-hero {
     text-align: center;
     padding: 60px 0 40px;
   }
   
-  .privacy-hero h1 {
+  .terms-hero h1 {
     font-size: 42px;
     margin-bottom: 15px;
     background: linear-gradient(to right, #8b5cf6, #38bdf8);
@@ -131,14 +130,14 @@
     display: inline-block;
   }
   
-  .privacy-hero .last-updated {
+  .terms-hero .last-updated {
     font-style: italic;
     opacity: 0.7;
     margin-bottom: 30px;
     font-size: 16px;
   }
   
-  .privacy-content {
+  .terms-content {
     background: rgba(255, 255, 255, 0.05);
     border-radius: 20px;
     padding: 40px;

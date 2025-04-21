@@ -590,6 +590,11 @@ nav {
   background: rgba(255, 255, 255, 0.3);
 }
 
+.reviews-container {
+  padding: 50px;
+  margin-top:10px;
+}
+
 .reviews .section-title {
   text-align: center;
   font-size: 32px;
@@ -615,6 +620,7 @@ nav {
 
 .review-card:hover {
   transform: translateY(-5px);
+  background: linear-gradient(135deg, #4a9eff 0%, #6b5fff 100%);
 }
 
 .review-text {

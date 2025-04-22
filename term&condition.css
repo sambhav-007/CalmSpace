@@ -1,0 +1,322 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    text-decoration: none;
+  }
+  
+  body {
+    background: linear-gradient(135deg, #2e1d5b 0%, #3d2a7d 50%, #453291 100%);
+    color: #fff;
+    min-height: 100vh;
+  }
+  
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+  
+  header {
+    padding: 20px 0;
+  }
+  
+  nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+  }
+  
+  .logo {
+    display: flex;
+    align-items: center;
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  .logo-icon {
+    width: 30px;
+    height: 30px;
+    background: linear-gradient(135deg, #4a9eff 0%, #6b5fff 100%);
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+  
+  .nav-links {
+    display: flex;
+    gap: 30px;
+    position: relative;
+  }
+  
+  .nav-links a {
+    color: #fff;
+    text-decoration: none;
+    opacity: 0.8;
+    position: relative;
+    transition: opacity 0.3s;
+  }
+  
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(to right, #8b5cf6, #38bdf8);
+    border-radius: 4px;
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .nav-links a:hover {
+    opacity: 1;
+  }
+  
+  .nav-links a:hover::after {
+    transform: scaleX(1);
+  }
+  
+  
+  .auth-buttons {
+    display: flex;
+    gap: 15px;
+  }
+  
+  .btn-auth {
+    padding: 8px 18px;
+    border-radius: 30px;
+    font-weight: 600;
+    font-size: 14px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: #fff;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(6px);
+  }
+  
+  .btn-auth:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    border-color: rgba(255, 255, 255, 0.5);
+  }
+  
+  .login-btn {
+    background: rgba(255, 255, 255, 0.1);
+  }
+  
+  .register-btn {
+    background: linear-gradient(135deg, #4a9eff 0%, #6b5fff 100%);
+    border: none;
+  }
+
+  .terms-hero {
+    text-align: center;
+    padding: 60px 0 40px;
+  }
+  
+  .terms-hero h1 {
+    font-size: 42px;
+    margin-bottom: 15px;
+    background: linear-gradient(to right, #8b5cf6, #38bdf8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    display: inline-block;
+  }
+  
+  .terms-hero .last-updated {
+    font-style: italic;
+    opacity: 0.7;
+    margin-bottom: 30px;
+    font-size: 16px;
+  }
+  
+  .terms-content {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    padding: 40px;
+    margin-bottom: 60px;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+  
+  .terms-section {
+    margin-bottom: 40px;
+  }
+  
+  .terms-section:last-child {
+    margin-bottom: 0;
+  }
+  
+  .terms-section h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #fff;
+    position: relative;
+    padding-bottom: 12px;
+  }
+  
+  .terms-section h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(135deg, #4a9eff 0%, #6b5fff 100%);
+    border-radius: 3px;
+  }
+  
+  .terms-section p {
+    margin-bottom: 16px;
+    line-height: 1.7;
+    font-size: 16px;
+    opacity: 0.9;
+  }
+  
+  .terms-section ul, 
+  .terms-sectionol {
+    margin-left: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .terms-section li {
+    margin-bottom: 10px;
+    line-height: 1.6;
+    opacity: 0.9;
+  }
+  
+  .terms-section strong {
+    font-weight: 600;
+    color: #fff;
+    opacity: 1;
+  }
+  
+  .contact-info {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 30px;
+    margin-top: 40px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+  }
+  
+  .contact-info h2 {
+    color: #fff;
+    margin-bottom: 20px;
+  }
+  
+  .contact-info p {
+    margin-bottom: 5px;
+    line-height: 1.6;
+  }
+  
+  .toc {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+  }
+  
+  .toc-title {
+    font-size: 18px;
+    margin-bottom: 12px;
+    color: #fff;
+  }
+  
+  .toc-list {
+    list-style-type: none;
+  }
+  
+  .toc-list li {
+    margin-bottom: 8px;
+  }
+  
+  .toc-list a {
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    transition: all 0.3s;
+  }
+  
+  .toc-list a:hover {
+    color: #fff;
+    padding-left: 5px;
+  }
+  
+  .calm-footer {
+    background: radial-gradient(circle at center, #2e1d5b, #1e1a38);
+    padding: 60px 20px 30px;
+    color: #ddd;
+    font-size: 14px;
+    margin-top: 100px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  .footer-top {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 30px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 30px;
+  }
+  
+  .footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  
+  .footer-links a {
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.7);
+    transition: color 0.3s;
+  }
+  
+  .footer-links a:hover {
+    color: #fff;
+  }
+  
+  .social-icons {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .social-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    transition: all 0.3s ease;
+  }
+  
+  .social-icon:hover {
+    background: linear-gradient(135deg, #4a9eff, #6b5fff);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(106, 161, 255, 0.3);
+  }
+  
+  .social-icon svg {
+    width: 20px;
+    height: 20px;
+  }
+  
+  .footer-bottom {
+    text-align: center;
+    margin-top: 30px;
+    font-size: 13px;
+    opacity: 0.8;
+  }

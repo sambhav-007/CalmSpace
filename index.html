@@ -1,60 +1,351 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>CalmSpace – AI Therapist</title>
-  <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CalmSpace - Find Your Inner Peace</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
+    <div class="container">
+        <header>
+            <nav>
+                <div class="logo" style="color:#4a9eff; font-weight:bold; font-size:24px;">
+                    <i class="fas fa-brain"></i>&nbsp;CalmSpace
+                </div>
+                <div class="nav-links">
+                    <a href="#">Home</a>
+                    <a href="about.html">About</a>
+                    <a href="#pricing">Plans</a>
+                    <a href="#faq">FAQs</a>
+                </div>
+                <div class="auth-buttons">
+                  <a href="login.html" class="btn-auth login-btn">Login</a>
+                  <a href="register.html" class="btn-auth register-btn">Register</a>
+                </div>
+                <div class="toggle">
+                    <i class="fas fa-moon"></i>
+                </div>
+            </nav>
+        </header>
 
-  <!-- Navbar -->
-  <header>
-    <nav>
-      <div class="logo">CalmSpace</div>
-      <ul class="nav-links">
-        <li><a href="#features">Features</a></li>
-        <li><a href="#therapy">Therapy</a></li>
-        <li><a href="#journal">Journal</a></li>
-        <li><a href="#contact">Contact</a></li>
-        <li><a href="#login" class="btn-login">Login</a></li>
-      </ul>
-      <button class="menu-btn" id="menuBtn">
-        &#9776;
-      </button>
-    </nav>
-  </header>
-
-  <!-- Mobile Menu -->
-  <div class="mobile-menu" id="mobileMenu">
-    <ul>
-      <li><a href="#features">Features</a></li>
-      <li><a href="#therapy">Therapy</a></li>
-      <li><a href="#journal">Journal</a></li>
-      <li><a href="#contact">Contact</a></li>
-      <li><a href="#login" class="btn-login">Login</a></li>
-    </ul>
-  </div>
-
-  <!-- Hero Section -->
-  <section class="hero">
-    <div class="hero-content">
-      <h1>Your AI Therapist & Journaling Companion</h1>
-      <p>Talk. Reflect. Heal. CalmSpace supports your mental wellness—anytime, anywhere.</p>
-      <a href="#therapy" class="cta-btn">Start Talking</a>
+        <section class="hero">
+          <div class="hero-content">
+              <h1 class="hero-title">Reflect & Grow with CalmSpace</h1>
+              <p class="hero-subtitle">Express your thoughts freely and let AI guide your self-discovery journey. Find peace, clarity, and personal growth through mindful journaling.</p>
+              <div class="cta-buttons">
+                  <a href="login.html" class="btn btn-primary">Get Started Free</a>
+              </div>
+          </div>
+          <div class="hero-image">
+              <div class="app-preview">
+                  <div class="app-preview-inner">
+                      <div class="journal-box" id="journal-box"></div>
+                      <div class="mood-icons">
+                          <div class="mood-icon" data-mood="happy" onclick="selectMood('😊', 'Happy')">😊</div>
+                          <div class="mood-icon" data-mood="neutral" onclick="selectMood('😐', 'Neutral')">😐</div>
+                          <div class="mood-icon" data-mood="content" onclick="selectMood('🙂', 'Content')">🙂</div>
+                          <div class="mood-icon" data-mood="sad" onclick="selectMood('😢', 'Sad')">😢</div>
+                          <div class="mood-icon" data-mood="angry" onclick="selectMood('😡', 'Angry')">😡</div>
+                      </div>
+                      <div class="button">
+                        <a href="login.html" class="journal-button">Reflect with AI</a>
+                      </div>
+                  </div>
+              </div>
+          </div>
+        </section>
+        <section class="features" id="features">
+            <h2 class="section-title">Discover <span style="background: linear-gradient(135deg, #4a9eff 0%, #6b5fff 100%); padding: 12px; border-radius: 30px;">Inner</span> Peace</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 2v8"></path>
+                            <path d="m4.93 10.93 1.41 1.41"></path>
+                            <path d="M2 18h2"></path>
+                            <path d="M20 18h2"></path>
+                            <path d="m19.07 10.93-1.41 1.41"></path>
+                            <path d="M22 22H2"></path>
+                            <path d="M16 6 7 22"></path>
+                            <path d="m17 6-3.5 7"></path>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">AI-Guided Journaling</h3>
+                    <p class="feature-desc">Our intelligent assistant helps you unpack your thoughts, identify patterns, and gain deeper insights into your emotions and behaviors.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Mood Tracking</h3>
+                    <p class="feature-desc">Track your emotional state over time, visualize patterns, and understand what triggers different moods to improve your mental wellbeing.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 20.94c1.5 0 2.75 1.06 4 1.06 3 0 6-8 6-12.22A4.91 4.91 0 0 0 17 5c-2.22 0-4 1.44-5 2-1-.56-2.78-2-5-2a4.9 4.9 0 0 0-5 4.78C2 14 5 22 8 22c1.25 0 2.5-1.06 4-1.06Z"></path>
+                            <path d="M10 2c1 .5 2 2 2 5"></path>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Personal Growth</h3>
+                    <p class="feature-desc">Set mindfulness goals, receive personalized suggestions, and track your progress on your journey to becoming your best self.</p>
+                </div>
+            </div>
+        </section>
     </div>
-    <div class="hero-image">
-      <img src="https://illustrations.popsy.co/gray/relaxing.svg" alt="AI Therapy">
-    </div>
-  </section>
-
-  <script>
-    const menuBtn = document.getElementById("menuBtn");
-    const mobileMenu = document.getElementById("mobileMenu");
-    menuBtn.addEventListener("click", () => {
-      mobileMenu.classList.toggle("active");
-    });
-  </script>
-
+    <section class="pricing" id="pricing">
+        <h2 class="section-title"><span style="background: linear-gradient(135deg, #4a9eff 0%, #6b5fff 100%); padding: 15px; border-radius: 35px;">Plans</span></h2>
+        <div class="pricing-grid container">
+          
+          <!-- Standard Plan -->
+          <div class="pricing-card">
+            <h3 class="pricing-tier">Standard</h3>
+            <p class="pricing-price">$0/month</p>
+            <ul class="pricing-benefits">
+              <li>Daily journaling</li>
+              <li>Mood tracking</li>
+              <li>Basic AI prompts</li>
+              <li>Save journal history</li>
+            </ul>
+            <a href="register.html">
+            <button class="pricing-btn">Get Started</button>
+            </a>
+          </div>
+      
+          <!-- Pro Plan -->
+          <div class="pricing-card">
+            <h3 class="pricing-tier">Pro</h3>
+            <p class="pricing-price"><span class="original-price">$3</span> $1.50/month</p>
+            <ul class="pricing-benefits">
+              <li>All Standard features</li>
+              <li>More AI insights</li>
+              <li>Choose from 5 custom themes</li>
+              <li>Monthly growth tracking</li>
+            </ul>
+            <a href="checkout.html?plan=pro">
+              <button class="pricing-btn">Upgrade to Pro</button>
+            </a>
+          </div>
+      
+          <!-- Premium Plan -->
+          <div class="pricing-card premium">
+            <!-- <div class="special-offer-banner">🎉 Limited Time Offer: 60% OFF!</div> -->
+            <div class="badge">Most Popular</div>
+            <h3 class="pricing-tier">Premium</h3>
+            <p class="pricing-price"><span class="original-price">$5</span> $2/month</p>
+            <ul class="pricing-benefits">
+              <li>All Pro features</li>
+              <li>Unlimited custom themes</li>
+              <li>Deep AI reflections</li>
+              <li>Priority support</li>
+              <li>End-to-end encryption</li>
+            </ul>
+            <a href="checkout.html?plan=premium">
+              <button class="pricing-btn">Go Premium</button>
+            </a>
+          </div>
+        </div>
+      </section>
+      <section class="reviews-container">
+        <h2 class="section-title">What Our <span style="background: linear-gradient(135deg, #4a9eff 0%, #6b5fff 100%); padding: 12px; border-radius: 30px;">Users</span> Say</h2>
+        <div class="reviews-grid">
+          <div class="review-card">
+            <p class="review-text">
+                "I never thought journaling would become such an important part of my mental health routine. 
+                CalmSpace doesn't just give me a place to write — it helps me process, reflect, and actually feel heard.
+                The AI therapist feels surprisingly empathetic and insightful. It's honestly become a part of my daily self-care."
+            </p>
+            <div class="review-stars">★★★★★</div>
+            <h4 class="review-author">— Alex M.</h4>
+          </div>
+          <div class="review-card">
+            <p class="review-text">
+                "I’ve tried journaling apps before, but CalmSpace is different. The way it gently encourages me to open up — 
+                without judgment — has helped me work through emotions I didn’t even know I was carrying. 
+                It feels like I’m finally giving myself the space I’ve always needed to heal and grow."
+            </p>
+            <div class="review-stars">★★★★★</div>
+            <h4 class="review-author">— Priya S.</h4>
+          </div>
+          <div class="review-card">
+            <p class="review-text">
+                "The AI companion is honestly amazing. It doesn't feel robotic — it listens, reflects, and sometimes says 
+                exactly what I need to hear. It’s helped me feel less alone during rough nights, and even guided me through 
+                moments of anxiety. This app is like having a pocket therapist who’s always there."
+            </p>
+            <div class="review-stars">★★★★★</div>
+            <h4 class="review-author">— Jordan L.</h4>
+          </div>
+        </div>
+      </section>
+      <section class="faq-section" id="faq">
+        <div class="container">
+            <h2 class="faq-section-title">Frequently Asked Questions</h2>
+            <p class="faq-subtitle">Find answers to common questions about CalmSpace AI therapy and how our service can help support your mental wellbeing journey.</p>
+            
+            <div class="faq-grid">
+                <div class="faq-column">
+                    <!-- FAQ Item 1 -->
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            How does AI therapy with CalmSpace work?
+                        </button>
+                        <div class="faq-answer">
+                            <p>CalmSpace uses advanced AI technology to provide therapeutic support through conversational interactions. Our AI analyzes your responses and emotions to offer personalized guidance, coping strategies, and emotional support available 24/7, helping you process thoughts and develop healthy mental habits.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ Item 2 -->
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            Is my data private and secure?
+                        </button>
+                        <div class="faq-answer">
+                            <p>Absolutely. All conversations with CalmSpace are encrypted end-to-end, and your personal data is never sold to third parties. You can remain anonymous and have complete control over your data, including the ability to delete it at any time. Our systems comply with HIPAA and GDPR regulations.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ Item 3 -->
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            Can CalmSpace replace traditional therapy?
+                        </button>
+                        <div class="faq-answer">
+                            <p>CalmSpace is designed to complement traditional therapy, not replace it. Our AI provides valuable support for daily mental wellness, but for clinical conditions or severe distress, we recommend consulting with licensed mental health professionals. CalmSpace works alongside traditional therapy.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ Item 4 -->
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            What therapeutic approaches does CalmSpace use?
+                        </button>
+                        <div class="faq-answer">
+                            <p>CalmSpace integrates evidence-based approaches including Cognitive Behavioral Therapy (CBT), Mindfulness-Based Stress Reduction (MBSR), and Acceptance and Commitment Therapy (ACT). Our AI adapts its approach based on your needs, helping you develop skills for managing stress and anxiety.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ Item 5 -->
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            How much does CalmSpace cost?
+                        </button>
+                        <div class="faq-answer">
+                            <p>CalmSpace offers several subscription options. Our Free plan provides basic access to daily check-ins. The Pro plan ($3/month) offers unlimited conversations and progress tracking. Our Premium plan ($5/month) includes advanced features like mood analysis and customized exercises.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Right Column -->
+                <div class="faq-column">
+                    <!-- FAQ Item 6 -->
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            How often should I use CalmSpace?
+                        </button>
+                        <div class="faq-answer">
+                            <p>Usage frequency depends on your personal needs. Many users benefit from daily check-ins lasting 5-15 minutes. During challenging periods, more frequent sessions may be helpful. CalmSpace is flexible – use it for quick emotional check-ins or longer therapeutic conversations as needed.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ Item 7 -->
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            What if I'm experiencing a mental health crisis?
+                        </button>
+                        <div class="faq-answer">
+                            <p>CalmSpace is not designed for crisis intervention. If you're experiencing thoughts of self-harm or feel you may be a danger to yourself or others, please contact emergency services (911), call the National Suicide Prevention Lifeline (988), or visit your nearest emergency room.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ Item 8 -->
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            Can I access my conversation history?
+                        </button>
+                        <div class="faq-answer">
+                            <p>Yes, all subscribers can access their conversation history. Our Plus and Premium plans offer enhanced analytics that visualize emotional patterns, identify triggers, and show progress toward wellness goals. You can review past insights and see how your responses have evolved.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ Item 9 -->
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            Is CalmSpace available on all devices?
+                        </button>
+                        <div class="faq-answer">
+                            <p>CalmSpace is available as a web application and as native apps for iOS and Android. Your account synchronizes across all platforms. The mobile apps include additional features like push notifications for check-ins, offline mode for guided meditations, and quick mood tracking widgets.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ Item 10 -->
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            How does CalmSpace handle cultural differences?
+                        </button>
+                        <div class="faq-answer">
+                            <p>CalmSpace is designed with cultural sensitivity in mind. Our AI is trained on diverse datasets and updated to respect various cultural perspectives on mental health. During onboarding, you can indicate cultural preferences to tailor the experience to your background and needs.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="faq-contact">
+                <h3 class="faq-contact-title">Still have questions?</h3>
+                <p class="faq-contact-text">We're here to help. Reach out to our support team for personalized assistance.</p>
+                <a href="contact.html" class="faq-contact-btn">Contact Support</a>
+            </div>
+        </div>
+    </section>
+    <footer class="calm-footer">
+        <div class="container">
+          <div class="footer-top">
+            <div class="footer-links">
+              <a href="about.html">About</a>
+              <a href="#features">Features</a>
+              <a href="#pricing">Plans</a>
+              <a href="privacy.html">Privacy</a>
+              <a href="terms&condition.html">Terms</a>
+              <a href="contact.html">Contact</a>
+            </div>
+            <div class="social-icons">
+              <a href="#" class="social-icon" aria-label="Facebook">
+                <!-- Facebook -->
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2"
+                  viewBox="0 0 24 24">
+                  <path
+                    d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z" />
+                </svg>
+              </a>
+              <a href="#" class="social-icon" aria-label="Instagram">
+                <!-- Instagram -->
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2"
+                  viewBox="0 0 24 24">
+                  <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
+                  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                  <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+                </svg>
+              </a>
+              <a href="#" class="social-icon" aria-label="Twitter">
+                <!-- Twitter -->
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2"
+                  viewBox="0 0 24 24">
+                  <path
+                    d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z" />
+                </svg>
+              </a>
+            </div>
+          </div>
+          <div class="footer-bottom">
+            <p>&copy; 2025 <strong>CalmSpace</strong>. All rights reserved.</p>
+          </div>
+        </div>
+    </footer>
+      
+    <script src="main.js"></script>
 </body>
 </html>

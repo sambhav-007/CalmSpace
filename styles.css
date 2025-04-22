@@ -99,13 +99,14 @@ header {
 }
 
 .intro-card {
-  background: white;
+  /* background: white; */
   border-radius: 16px;
   padding: 2rem;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+  box-shadow: none;
   max-width: 800px;
   margin: 0 auto;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  color: white;
 }
 
 .intro-card:hover {
@@ -122,24 +123,27 @@ header {
 /* Team Section */
 .team-section {
   padding: 4rem 2rem;
-  background: white;
+  /* background: white; */
+  max-width: 700px;
+  margin: 0 auto;
+  color: white;
 }
 
 .section-title {
   text-align: center;
-  
+  width: 100%; 
   font-weight: 700;
   margin: 0 auto 3rem;
   
   position: relative;
 
-  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  background: linear-gradient(135deg, #4a9eff 0%, #6b5fff 100%);
   color: white;
   padding: 12px 24px;
   border-radius: 30px;
   display: inline-block;
-  font-size: 2rem;
-  margin-bottom: 3rem;
+  font-size: 2.5rem;
+  
 }
 
 .section-title::after {

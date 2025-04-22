@@ -99,7 +99,7 @@ header {
 /* Project Intro */
 .project-intro {
   padding: 4rem 2rem;
-  background: var(--primary);
+  background: linear-gradient(135deg, #3d2a7d 0%, #453291 100%);
 }
 
 .intro-card {

@@ -1,9 +1,9 @@
 :root {
-  --primary: #5680E9;
-  --secondary: #84CEEB;
-  --accent: #5AB9EA;
-  --light: #C1C8E4;
-  --dark: #8860D0;
+  --primary: #4a9eff;
+  --secondary: #6b5fff;
+  --accent: #8b5cf6;
+  --light: #e6f0ff;
+  --dark: #2e1d5b;
 }
 
 /* Base Styles */
@@ -13,13 +13,16 @@ body {
   background: #f8fafc;
   margin: 0;
   padding: 0;
+  background: linear-gradient(135deg, var(--dark) 0%, #3d2a7d 50%, #453291 100%);
+  color: #fff;
+  min-height: 100vh;
 }
 
 /* Header with Gradient */
 header {
   text-align: center;
-  padding: 6rem 2rem;
-  background: linear-gradient(135deg, var(--primary), var(--dark));
+  padding: 10rem 2rem 6rem;
+  background: linear-gradient(135deg, var(--dark) 0%, #3d2a7d 100%);
   color: white;
   position: relative;
   overflow: hidden;
@@ -29,12 +32,17 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 2rem;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 10;
+  
+    background: transparent;
+    padding: 1rem 2rem;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  
 }
 
 .logo {
@@ -119,11 +127,19 @@ header {
 
 .section-title {
   text-align: center;
-  font-size: 2.5rem;
+  
   font-weight: 700;
   margin: 0 auto 3rem;
-  color: var(--dark);
+  
   position: relative;
+
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  color: white;
+  padding: 12px 24px;
+  border-radius: 30px;
+  display: inline-block;
+  font-size: 2rem;
+  margin-bottom: 3rem;
 }
 
 .section-title::after {

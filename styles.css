@@ -130,18 +130,22 @@ header {
 }
 
 .features-grid-about {
-  max-width: 700px;
+  max-width: 1000px;
   margin: 0 auto 4rem;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem 0.5rem;
   color: white;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
 }
 
 .feature-card-about {
   background: rgba(74, 158, 255, 0.2);
   border-radius: 12px;
   padding: 1.5rem;
+  border: 1px solid rgba(74, 158, 255, 0.5);
   box-shadow: 0 4px 15px rgba(74, 158, 255, 0.3);
   transition: transform 0.3s ease;
 }
@@ -153,7 +157,7 @@ header {
 
 .section-title {
   text-align: center;
-  width: 100%; 
+  width: auto; 
   font-weight: 700;
   margin: 0 auto 3rem;
   

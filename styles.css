@@ -220,10 +220,14 @@ header {
   border-radius: 50px;
   margin-top: 1rem;
   transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(74, 158, 255, 0.3);
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
 }
 
 .linkedin-btn:hover {
   background: rgba(255,255,255,0.2);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(74, 158, 255, 0.4);
 }
 
 /* Back to Top Button */
@@ -248,7 +252,8 @@ header {
 }
 
 .back-to-top:hover {
-  transform: scale(1.1);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(74, 158, 255, 0.4);
 }
 
 /* Overlay Effect */

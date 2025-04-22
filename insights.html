@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="gemi.css" />
+    <link rel="stylesheet" href="insights.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>CalmSpace - Insights</title>
+  </head>
+  <body>
+    <div class="app-container">
+      <!-- Navigation -->
+      <nav class="navbar">
+        <div class="logo">
+          <i class="fas fa-brain pulse"></i>
+          <span>CalmSpace</span>
+        </div>
+        <div class="nav-links">
+          <a href="gemi.html">Journal</a>
+          <a href="insights.html" class="active">Insights</a>
+          <a href="progress.html">Progress</a>
+        </div>
+        <div class="navbar-actions">
+          <div class="meditation-launcher" title="Open meditation timer">
+            <i class="fas fa-spa"></i>
+          </div>
+          <div class="theme-toggle">
+            <i class="fas fa-moon"></i>
+          </div>
+        </div>
+      </nav>
+
+      <!-- Main Content -->
+      <main>
+        <div class="content-container insights-container">
+          <h1 class="gradient-text">Journal Insights</h1>
+          <p class="subtitle">
+            Track your emotional patterns and journaling habits over time
+          </p>
+
+          <div class="insights-grid">
+            <!-- Summary Stats -->
+            <div class="stats-container glass-morphism">
+              <div class="stats-header">
+                <h3><i class="fas fa-chart-simple"></i> Summary</h3>
+                <select id="time-range" class="glass-select">
+                  <option value="7">Last 7 days</option>
+                  <option value="30" selected>Last 30 days</option>
+                  <option value="90">Last 90 days</option>
+                  <option value="all">All time</option>
+                </select>
+              </div>
+              <div class="stats-grid">
+                <div class="stat-item">
+                  <div class="stat-value" id="total-entries">0</div>
+                  <div class="stat-label">Journal Entries</div>
+                </div>
+                <div class="stat-item">
+                  <div class="stat-value" id="meditation-sessions">0</div>
+                  <div class="stat-label">Meditation Minutes</div>
+                </div>
+                <div class="stat-item">
+                  <div class="stat-value" id="avg-words">0</div>
+                  <div class="stat-label">Avg. Words/Entry</div>
+                </div>
+                <div class="stat-item">
+                  <div class="stat-value" id="streak-count">0</div>
+                  <div class="stat-label">Day Streak</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Emotion Distribution -->
+            <div class="chart-container glass-morphism">
+              <h3><i class="fas fa-chart-pie"></i> Emotion Distribution</h3>
+              <div class="chart-wrapper">
+                <canvas id="emotions-chart"></canvas>
+              </div>
+              <div class="chart-legend" id="emotions-legend"></div>
+            </div>
+
+            <!-- Journaling Activity -->
+            <div class="chart-container glass-morphism">
+              <h3><i class="fas fa-calendar-check"></i> Journaling Activity</h3>
+              <div class="chart-wrapper">
+                <canvas id="activity-chart"></canvas>
+              </div>
+            </div>
+
+            <!-- Top Keywords -->
+            <div class="keywords-container glass-morphism">
+              <h3><i class="fas fa-tags"></i> Common Themes</h3>
+              <div class="tag-cloud" id="keyword-cloud">
+                <div class="loading-keywords">
+                  Analyzing your journal entries...
+                </div>
+              </div>
+            </div>
+
+            <!-- Most Reflective Times -->
+            <div class="chart-container glass-morphism">
+              <h3><i class="far fa-clock"></i> Most Reflective Times</h3>
+              <div class="chart-wrapper">
+                <canvas id="time-chart"></canvas>
+              </div>
+              <p class="time-insight" id="time-insight">
+                You tend to journal most frequently in the evenings.
+              </p>
+            </div>
+
+            <!-- Mood Trends -->
+            <div class="chart-container glass-morphism">
+              <h3><i class="fas fa-chart-line"></i> Mood Trends</h3>
+              <div class="chart-wrapper">
+                <canvas id="mood-chart"></canvas>
+              </div>
+            </div>
+          </div>
+
+          <div class="insights-action">
+            <button class="gradient-btn" id="export-insights-btn">
+              <i class="fas fa-download"></i> Export Insights Report
+            </button>
+          </div>
+        </div>
+      </main>
+
+      <!-- Visual Elements -->
+      <div class="floating-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+        <div class="shape shape-4"></div>
+      </div>
+    </div>
+
+    <!-- Meditation Timer Container -->
+    <div class="meditation-container" id="meditation-container"></div>
+
+    <!-- JavaScript -->
+    <script src="meditation.js"></script>
+    <script src="gemi.js"></script>
+    <script src="insights.js"></script>
+  </body>
+</html>

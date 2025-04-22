@@ -95,7 +95,7 @@ header {
 /* Project Intro */
 .project-intro {
   padding: 4rem 2rem;
-  background: linear-gradient(to bottom, var(--light), white);
+  background: var(--primary);
 }
 
 .intro-card {
@@ -127,6 +127,28 @@ header {
   max-width: 700px;
   margin: 0 auto;
   color: white;
+}
+
+.features-grid-about {
+  max-width: 700px;
+  margin: 0 auto 4rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+  color: white;
+}
+
+.feature-card-about {
+  background: rgba(74, 158, 255, 0.2);
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 15px rgba(74, 158, 255, 0.3);
+  transition: transform 0.3s ease;
+}
+
+.feature-card-about:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(74, 158, 255, 0.5);
 }
 
 .section-title {

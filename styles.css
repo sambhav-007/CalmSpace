@@ -272,20 +272,28 @@ header {
 /* Footer */
 footer {
   text-align: center;
-  padding: 2rem;
+  padding: 3rem 2rem;
   background: linear-gradient(135deg, var(--dark), var(--primary));
   color: white;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-footer a {
-  color: white;
-  text-decoration: none;
-  transition: all 0.3s ease;
+
+
+footer a::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: white;
+  transform: scaleX(0);
+  transition: transform 0.3s;
 }
 
-footer a:hover {
-  text-decoration: underline;
-  color: var(--light);
+footer a:hover::after {
+  transform: scaleX(1);
 }
 
 /* Responsive Design */

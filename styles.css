@@ -296,6 +296,19 @@ footer a:hover::after {
   transform: scaleX(1);
 }
 
+a, button {
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.card-hover-effect {
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.card-hover-effect:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
   .navbar {

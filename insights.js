@@ -45,7 +45,64 @@ document.addEventListener('DOMContentLoaded', () => {
   // Set up export button
   const exportBtn = document.getElementById('export-insights-btn');
   exportBtn.addEventListener('click', exportInsightsReport);
+  
+  // Add animation to charts on scroll
+  addChartAnimations();
+
+  // Set up real-time updates
+  setupRealTimeUpdates();
 });
+
+// Add animations to charts when scrolled into view
+function addChartAnimations() {
+  // Get all chart containers
+  const chartContainers = document.querySelectorAll('.chart-container, .keywords-container');
+  
+  // Create intersection observer
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        // Add animation class when chart is visible
+        entry.target.classList.add('animate-in');
+        // Stop observing after animation is added
+        observer.unobserve(entry.target);
+      }
+    });
+  }, {
+    threshold: 0.2 // Trigger when 20% of the element is visible
+  });
+  
+  // Observe each chart container
+  chartContainers.forEach(container => {
+    observer.observe(container);
+  });
+}
+
+// Setup real-time updates for new journal entries
+function setupRealTimeUpdates() {
+  // Check for new entries every minute (in a real app, you might use WebSockets instead)
+  setInterval(() => {
+    // Check if there are new entries since last update
+    const lastUpdateTime = localStorage.getItem('calmspace_last_insights_update');
+    const lastUpdate = lastUpdateTime ? parseInt(lastUpdateTime) : 0;
+    
+    const journalUpdatedTime = localStorage.getItem('calmspace_journal_updated');
+    const journalUpdated = journalUpdatedTime ? parseInt(journalUpdatedTime) : 0;
+    
+    if (journalUpdated > lastUpdate) {
+      // Reload data if there are new entries
+      loadUserData();
+      // Update last update time
+      localStorage.setItem('calmspace_last_insights_update', Date.now().toString());
+      
+      // Show notification
+      showNotification('Insights updated with new journal entries');
+    }
+  }, 60000); // Check every minute
+  
+  // Store initial update time
+  localStorage.setItem('calmspace_last_insights_update', Date.now().toString());
+}
 
 // Load and process user data from local storage
 function loadUserData() {
@@ -66,6 +123,24 @@ function loadUserData() {
   updateActivityChart(entries);
   updateMoodTrendChart(entries);
   updateTimeOfDayChart(entries);
+  
+  // Show pulsing animation on stats to indicate update
+  animateStatsUpdate();
+}
+
+// Animate stats when they're updated
+function animateStatsUpdate() {
+  const statValues = document.querySelectorAll('.stat-value');
+  
+  statValues.forEach(stat => {
+    // Add pulse class
+    stat.classList.add('pulse-animation');
+    
+    // Remove class after animation completes
+    setTimeout(() => {
+      stat.classList.remove('pulse-animation');
+    }, 1000);
+  });
 }
 
 // Get journal entries filtered by date range

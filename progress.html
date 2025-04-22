@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="gemi.css" />
+    <link rel="stylesheet" href="progress.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <title>CalmSpace - Progress</title>
+  </head>
+  <body>
+    <div class="app-container">
+      <!-- Navigation -->
+      <nav class="navbar">
+        <div class="logo">
+          <i class="fas fa-brain pulse"></i>
+          <span>CalmSpace</span>
+        </div>
+        <div class="nav-links">
+          <a href="gemi.html">Journal</a>
+          <a href="insights.html">Insights</a>
+          <a href="progress.html" class="active">Progress</a>
+        </div>
+        <div class="navbar-actions">
+          <div class="meditation-launcher" title="Open meditation timer">
+            <i class="fas fa-spa"></i>
+          </div>
+          <div class="theme-toggle">
+            <i class="fas fa-moon"></i>
+          </div>
+        </div>
+      </nav>
+
+      <!-- Main Content -->
+      <main>
+        <div class="content-container progress-container">
+          <h1 class="gradient-text">Your Growth Journey</h1>
+          <p class="subtitle">
+            Set goals, build habits, and track your progress
+          </p>
+
+          <div class="progress-grid">
+            <!-- Habit Tracker -->
+            <div class="habits-container glass-morphism">
+              <div class="section-header">
+                <h3><i class="fas fa-calendar-check"></i> Habit Tracker</h3>
+                <button class="outline-btn" id="add-habit-btn">
+                  <i class="fas fa-plus"></i> New Habit
+                </button>
+              </div>
+
+              <div class="habit-list" id="habit-list">
+                <!-- Habits will be dynamically added here -->
+                <div class="empty-habits">
+                  <i class="fas fa-seedling"></i>
+                  <p>Add habits to track your progress</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Daily Mood Log -->
+            <div class="mood-log-container glass-morphism">
+              <h3><i class="fas fa-chart-bar"></i> Daily Mood Log</h3>
+              <div class="calendar-container">
+                <div class="calendar-header">
+                  <button class="icon-btn" id="prev-month">
+                    <i class="fas fa-chevron-left"></i>
+                  </button>
+                  <div class="current-month" id="current-month">April 2025</div>
+                  <button class="icon-btn" id="next-month">
+                    <i class="fas fa-chevron-right"></i>
+                  </button>
+                </div>
+                <div class="weekdays">
+                  <div>Sun</div>
+                  <div>Mon</div>
+                  <div>Tue</div>
+                  <div>Wed</div>
+                  <div>Thu</div>
+                  <div>Fri</div>
+                  <div>Sat</div>
+                </div>
+                <div class="calendar-days" id="calendar-days">
+                  <!-- Calendar days will be added dynamically -->
+                </div>
+              </div>
+              <div class="mood-legend">
+                <div class="legend-item">
+                  <span class="mood-dot mood-happy"></span>
+                  <span>Happy</span>
+                </div>
+                <div class="legend-item">
+                  <span class="mood-dot mood-sad"></span>
+                  <span>Sad</span>
+                </div>
+                <div class="legend-item">
+                  <span class="mood-dot mood-neutral"></span>
+                  <span>Neutral</span>
+                </div>
+                <div class="legend-item">
+                  <span class="mood-dot mood-excited"></span>
+                  <span>Excited</span>
+                </div>
+                <div class="legend-item">
+                  <span class="mood-dot mood-anxious"></span>
+                  <span>Anxious</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Growth Goals -->
+            <div class="goals-container glass-morphism">
+              <div class="section-header">
+                <h3><i class="fas fa-bullseye"></i> Growth Goals</h3>
+                <button class="outline-btn" id="add-goal-btn">
+                  <i class="fas fa-plus"></i> New Goal
+                </button>
+              </div>
+              <div class="goals-wrapper">
+                <div class="goals-categories">
+                  <div class="goal-category active" data-category="all">
+                    All Goals
+                  </div>
+                  <div class="goal-category" data-category="wellness">
+                    Wellness
+                  </div>
+                  <div class="goal-category" data-category="mindfulness">
+                    Mindfulness
+                  </div>
+                  <div class="goal-category" data-category="growth">
+                    Personal Growth
+                  </div>
+                </div>
+                <div class="goals-list" id="goals-list">
+                  <!-- Goals will be dynamically added here -->
+                </div>
+              </div>
+            </div>
+
+            <!-- Journal Streak -->
+            <div class="streak-container glass-morphism">
+              <h3><i class="fas fa-fire"></i> Journal Streak</h3>
+              <div class="streak-wrapper">
+                <div class="streak-counter">
+                  <div class="streak-number" id="streak-count">0</div>
+                  <div class="streak-label">Days</div>
+                </div>
+                <div class="streak-calendar" id="streak-calendar">
+                  <!-- Last 7 days will show here -->
+                </div>
+              </div>
+              <div class="streak-message" id="streak-message">
+                Start journaling daily to build your streak!
+              </div>
+            </div>
+
+            <!-- Quote of the Day -->
+            <div class="quote-container glass-morphism">
+              <h3><i class="fas fa-quote-left"></i> Daily Inspiration</h3>
+              <div class="quote-content">
+                <div class="quote-text" id="quote-text">
+                  "The mind is everything. What you think you become."
+                </div>
+                <div class="quote-author" id="quote-author">- Buddha</div>
+              </div>
+              <button class="icon-btn refresh-btn" id="refresh-quote">
+                <i class="fas fa-sync-alt"></i>
+              </button>
+            </div>
+
+            <!-- Gratitude Notes -->
+            <div class="gratitude-container glass-morphism">
+              <h3><i class="fas fa-heart"></i> Gratitude Notes</h3>
+              <div class="gratitude-form">
+                <input
+                  type="text"
+                  id="gratitude-input"
+                  class="glass-input"
+                  placeholder="What are you grateful for today?"
+                />
+                <button class="outline-btn" id="add-gratitude-btn">Add</button>
+              </div>
+              <div class="gratitude-list" id="gratitude-list">
+                <!-- Gratitude notes will be dynamically added here -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <!-- Add Habit Modal -->
+      <div class="modal" id="habit-modal">
+        <div class="modal-content glass-morphism">
+          <div class="modal-header">
+            <h3><i class="fas fa-plus-circle"></i> Add New Habit</h3>
+            <button class="close-modal"><i class="fas fa-times"></i></button>
+          </div>
+          <div class="modal-body">
+            <form id="habit-form">
+              <div class="form-group">
+                <label for="habit-name">Habit Name</label>
+                <input
+                  type="text"
+                  id="habit-name"
+                  class="glass-input"
+                  placeholder="E.g., Morning Meditation"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label>Frequency</label>
+                <div class="days-selector">
+                  <div class="day-checkbox" data-day="0">S</div>
+                  <div class="day-checkbox" data-day="1">M</div>
+                  <div class="day-checkbox" data-day="2">T</div>
+                  <div class="day-checkbox" data-day="3">W</div>
+                  <div class="day-checkbox" data-day="4">T</div>
+                  <div class="day-checkbox" data-day="5">F</div>
+                  <div class="day-checkbox" data-day="6">S</div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="habit-color">Color</label>
+                <div class="color-selector">
+                  <div
+                    class="color-option active"
+                    style="background-color: #6a5acd"
+                    data-color="#6a5acd"
+                  ></div>
+                  <div
+                    class="color-option"
+                    style="background-color: #00bfff"
+                    data-color="#00bfff"
+                  ></div>
+                  <div
+                    class="color-option"
+                    style="background-color: #64c27b"
+                    data-color="#64c27b"
+                  ></div>
+                  <div
+                    class="color-option"
+                    style="background-color: #e5c05e"
+                    data-color="#e5c05e"
+                  ></div>
+                  <div
+                    class="color-option"
+                    style="background-color: #e57e5e"
+                    data-color="#e57e5e"
+                  ></div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="habit-icon">Icon</label>
+                <div class="icon-selector">
+                  <div class="icon-option active" data-icon="fas fa-spa">
+                    <i class="fas fa-spa"></i>
+                  </div>
+                  <div class="icon-option" data-icon="fas fa-book">
+                    <i class="fas fa-book"></i>
+                  </div>
+                  <div class="icon-option" data-icon="fas fa-running">
+                    <i class="fas fa-running"></i>
+                  </div>
+                  <div class="icon-option" data-icon="fas fa-water">
+                    <i class="fas fa-water"></i>
+                  </div>
+                  <div class="icon-option" data-icon="fas fa-apple-alt">
+                    <i class="fas fa-apple-alt"></i>
+                  </div>
+                  <div class="icon-option" data-icon="fas fa-moon">
+                    <i class="fas fa-moon"></i>
+                  </div>
+                  <div class="icon-option" data-icon="fas fa-heart">
+                    <i class="fas fa-heart"></i>
+                  </div>
+                  <div class="icon-option" data-icon="fas fa-brain">
+                    <i class="fas fa-brain"></i>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button class="outline-btn" id="cancel-habit-btn">Cancel</button>
+            <button class="gradient-btn" id="save-habit-btn">Save Habit</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Add Goal Modal -->
+      <div class="modal" id="goal-modal">
+        <div class="modal-content glass-morphism">
+          <div class="modal-header">
+            <h3><i class="fas fa-bullseye"></i> Set New Goal</h3>
+            <button class="close-modal"><i class="fas fa-times"></i></button>
+          </div>
+          <div class="modal-body">
+            <form id="goal-form">
+              <div class="form-group">
+                <label for="goal-title">Goal Title</label>
+                <input
+                  type="text"
+                  id="goal-title"
+                  class="glass-input"
+                  placeholder="Enter your goal"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="goal-category">Category</label>
+                <select id="goal-category" class="glass-select">
+                  <option value="wellness">Wellness</option>
+                  <option value="mindfulness">Mindfulness</option>
+                  <option value="growth">Personal Growth</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="goal-deadline">Target Date (Optional)</label>
+                <input type="date" id="goal-deadline" class="glass-input" />
+              </div>
+              <div class="form-group">
+                <label for="goal-steps">Action Steps</label>
+                <textarea
+                  id="goal-steps"
+                  class="glass-input"
+                  placeholder="List specific steps to achieve this goal..."
+                  rows="3"
+                ></textarea>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button class="outline-btn" id="cancel-goal-btn">Cancel</button>
+            <button class="gradient-btn" id="save-goal-btn">Save Goal</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Visual Elements -->
+      <div class="floating-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+        <div class="shape shape-4"></div>
+      </div>
+    </div>
+
+    <!-- Meditation Timer Container -->
+    <div class="meditation-container" id="meditation-container"></div>
+
+    <!-- JavaScript -->
+    <script src="meditation.js"></script>
+    <script src="gemi.js"></script>
+    <script src="progress.js"></script>
+  </body>
+</html>

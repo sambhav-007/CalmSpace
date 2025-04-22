@@ -1,0 +1,661 @@
+/* Progress Page Styles */
+
+.progress-container {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.progress-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 20px;
+  margin-top: 30px;
+}
+
+/* Grid layout for different components */
+.habits-container {
+  grid-column: span 8;
+  grid-row: span 2;
+}
+
+.mood-log-container {
+  grid-column: span 4;
+  grid-row: span 2;
+}
+
+.goals-container {
+  grid-column: span 8;
+  grid-row: span 2;
+}
+
+.streak-container {
+  grid-column: span 4;
+  grid-row: span 1;
+}
+
+.quote-container {
+  grid-column: span 4;
+  grid-row: span 1;
+}
+
+.gratitude-container {
+  grid-column: span 12;
+  grid-row: span 1;
+}
+
+@media (max-width: 1024px) {
+  .habits-container,
+  .goals-container {
+    grid-column: span 7;
+  }
+
+  .mood-log-container,
+  .streak-container,
+  .quote-container {
+    grid-column: span 5;
+  }
+}
+
+@media (max-width: 768px) {
+  .progress-grid {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+
+  .habits-container,
+  .mood-log-container,
+  .goals-container,
+  .streak-container,
+  .quote-container,
+  .gratitude-container {
+    grid-column: span 1;
+  }
+}
+
+/* Section Header */
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+/* Habit Tracker Styles */
+.habit-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  max-height: 350px;
+  overflow-y: auto;
+  padding-right: 5px;
+}
+
+.habit-item {
+  display: flex;
+  flex-direction: column;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 15px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.habit-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.habit-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.habit-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.habit-name {
+  font-weight: 500;
+  flex-grow: 1;
+}
+
+.habit-actions {
+  display: flex;
+  gap: 5px;
+}
+
+.habit-track {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+
+.habit-day {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.habit-day:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.habit-day.completed {
+  color: white;
+  position: relative;
+}
+
+.habit-day.completed::after {
+  content: "✓";
+  position: absolute;
+  font-size: 0.9rem;
+}
+
+.empty-habits {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 150px;
+  opacity: 0.5;
+}
+
+.empty-habits i {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+}
+
+/* Calendar Styles */
+.calendar-container {
+  margin-bottom: 15px;
+}
+
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.current-month {
+  font-weight: 500;
+  font-size: 1.1rem;
+}
+
+.weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  text-align: center;
+  font-size: 0.8rem;
+  font-weight: 500;
+  margin-bottom: 5px;
+}
+
+.calendar-days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 5px;
+}
+
+.calendar-day {
+  aspect-ratio: 1/1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 0.9rem;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.calendar-day:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.calendar-day.today {
+  box-shadow: 0 0 0 2px var(--accent-color);
+}
+
+.calendar-day.other-month {
+  opacity: 0.3;
+}
+
+.calendar-day .mood-indicator {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.mood-legend {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  font-size: 0.8rem;
+}
+
+.mood-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 5px;
+}
+
+.mood-happy {
+  background-color: #64c27b;
+}
+.mood-sad {
+  background-color: #7b88c9;
+}
+.mood-neutral {
+  background-color: #c2bb7b;
+}
+.mood-excited {
+  background-color: #e5c05e;
+}
+.mood-anxious {
+  background-color: #e57e5e;
+}
+
+/* Goals Styles */
+.goals-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: calc(100% - 45px);
+}
+
+.goals-categories {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+  overflow-x: auto;
+  padding-bottom: 5px;
+}
+
+.goal-category {
+  padding: 6px 12px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+.goal-category:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.goal-category.active {
+  background: var(--accent-color);
+  color: white;
+}
+
+.goals-list {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  overflow-y: auto;
+}
+
+.goal-item {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 15px;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.goal-item:hover {
+  background: rgba(255, 255, 255, 0.08);
+  transform: translateY(-2px);
+}
+
+.goal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.goal-title {
+  font-weight: 500;
+  margin-right: 10px;
+}
+
+.goal-category-tag {
+  font-size: 0.8rem;
+  padding: 3px 8px;
+  border-radius: 12px;
+  background: rgba(106, 90, 205, 0.2);
+}
+
+.goal-deadline {
+  font-size: 0.9rem;
+  opacity: 0.7;
+  margin-top: 5px;
+}
+
+.goal-progress {
+  margin-top: 8px;
+}
+
+.progress-bar {
+  height: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(135deg, #6a5acd, #00bfff);
+  border-radius: 3px;
+  transition: width 0.3s ease;
+}
+
+.goal-steps {
+  font-size: 0.9rem;
+  padding-left: 15px;
+  opacity: 0.8;
+}
+
+.goal-step {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.step-checkbox {
+  margin-right: 8px;
+  cursor: pointer;
+}
+
+/* Streak Styles */
+.streak-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+  margin-bottom: 15px;
+}
+
+.streak-counter {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.streak-number {
+  font-size: 3rem;
+  font-weight: bold;
+  background: linear-gradient(135deg, #ff7f50, #e5c05e);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.streak-label {
+  font-size: 0.9rem;
+  opacity: 0.7;
+}
+
+.streak-calendar {
+  display: flex;
+  gap: 6px;
+}
+
+.streak-day {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  position: relative;
+}
+
+.streak-day.active {
+  background: linear-gradient(135deg, #ff7f50, #e5c05e);
+  border: none;
+}
+
+.streak-day.active::after {
+  content: "✓";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 0.7rem;
+}
+
+.streak-message {
+  text-align: center;
+  font-size: 0.9rem;
+  font-style: italic;
+  opacity: 0.7;
+}
+
+/* Quote Styles */
+.quote-container {
+  position: relative;
+}
+
+.quote-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: calc(100% - 50px);
+  padding: 0 20px;
+  text-align: center;
+}
+
+.quote-text {
+  font-style: italic;
+  margin-bottom: 10px;
+}
+
+.quote-author {
+  font-size: 0.9rem;
+  opacity: 0.7;
+}
+
+.refresh-btn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+}
+
+/* Gratitude Notes */
+.gratitude-form {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.gratitude-form input {
+  flex-grow: 1;
+}
+
+.gratitude-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  max-height: 100px;
+  overflow-y: auto;
+}
+
+.gratitude-note {
+  padding: 8px 15px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.delete-note {
+  cursor: pointer;
+  opacity: 0.6;
+  transition: opacity 0.2s ease;
+}
+
+.delete-note:hover {
+  opacity: 1;
+}
+
+/* Modal Specific Styles */
+.days-selector {
+  display: flex;
+  gap: 8px;
+  margin-top: 5px;
+}
+
+.day-checkbox {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.day-checkbox:hover {
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.day-checkbox.selected {
+  background-color: var(--accent-color);
+  border-color: var(--accent-color);
+  color: white;
+}
+
+.color-selector,
+.icon-selector {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 5px;
+}
+
+.color-option {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  border: 2px solid transparent;
+}
+
+.color-option:hover {
+  transform: scale(1.1);
+}
+
+.color-option.active {
+  border-color: white;
+}
+
+.icon-option {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.icon-option:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.05);
+}
+
+.icon-option.active {
+  background-color: var(--accent-color);
+  color: white;
+}
+
+/* Form Element Styles */
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+  font-size: 0.95rem;
+}
+
+/* Animation for streak counter */
+@keyframes pulse-streak {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.streak-number {
+  animation: pulse-streak 2s infinite ease-in-out;
+}
+
+/* Dark mode adjustments */
+.dark-mode .habit-item,
+.dark-mode .goal-item {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.dark-mode .habit-day {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.dark-mode .goal-category,
+.dark-mode .gratitude-note {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.dark-mode .calendar-day:hover {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.dark-mode .progress-bar {
+  background: rgba(0, 0, 0, 0.3);
+}

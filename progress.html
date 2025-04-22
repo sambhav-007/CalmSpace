@@ -38,306 +38,170 @@
       <main>
         <div class="content-container progress-container">
           <h1 class="gradient-text">Your Growth Journey</h1>
-          <p class="subtitle">
-            Set goals, build habits, and track your progress
-          </p>
+          <p class="subtitle">Track habits, set goals, and celebrate your daily wins</p>
 
-          <div class="progress-grid">
-            <!-- Habit Tracker -->
-            <div class="habits-container glass-morphism">
+          <div class="progress-section-container">
+            <!-- Left Section: Habits -->
+            <section class="progress-section glass-morphism">
               <div class="section-header">
-                <h3><i class="fas fa-calendar-check"></i> Habit Tracker</h3>
-                <button class="outline-btn" id="add-habit-btn">
-                  <i class="fas fa-plus"></i> New Habit
+                <h2><i class="fas fa-calendar-check"></i> Daily Habits</h2>
+                <button id="add-habit-btn" class="icon-btn" title="Add new habit">
+                  <i class="fas fa-plus"></i>
                 </button>
               </div>
 
-              <div class="habit-list" id="habit-list">
+              <div class="habits-list" id="habits-list">
                 <!-- Habits will be dynamically added here -->
-                <div class="empty-habits">
-                  <i class="fas fa-seedling"></i>
-                  <p>Add habits to track your progress</p>
+                <div class="empty-state">
+                  <i class="fas fa-tasks"></i>
+                  <p>Add daily habits to track your consistency</p>
                 </div>
               </div>
-            </div>
 
-            <!-- Daily Mood Log -->
-            <div class="mood-log-container glass-morphism">
-              <h3><i class="fas fa-chart-bar"></i> Daily Mood Log</h3>
-              <div class="calendar-container">
-                <div class="calendar-header">
-                  <button class="icon-btn" id="prev-month">
-                    <i class="fas fa-chevron-left"></i>
-                  </button>
-                  <div class="current-month" id="current-month">April 2025</div>
-                  <button class="icon-btn" id="next-month">
-                    <i class="fas fa-chevron-right"></i>
-                  </button>
+              <!-- Add Habit Form -->
+              <div class="add-habit-form glass-morphism">
+                <h3>Create New Habit</h3>
+                <div class="form-group">
+                  <label for="habit-name">Habit Name</label>
+                  <input type="text" id="habit-name" class="glass-input" placeholder="e.g., Morning meditation" />
                 </div>
-                <div class="weekdays">
-                  <div>Sun</div>
-                  <div>Mon</div>
-                  <div>Tue</div>
-                  <div>Wed</div>
-                  <div>Thu</div>
-                  <div>Fri</div>
-                  <div>Sat</div>
+                <div class="form-group">
+                  <label for="habit-icon">Icon</label>
+                  <div class="icon-selector" id="icon-selector">
+                    <span class="selected-icon" data-icon="fa-spa"><i class="fas fa-spa"></i></span>
+                    <div class="icon-options">
+                      <span data-icon="fa-spa"><i class="fas fa-spa"></i></span>
+                      <span data-icon="fa-book"><i class="fas fa-book"></i></span>
+                      <span data-icon="fa-running"><i class="fas fa-running"></i></span>
+                      <span data-icon="fa-water"><i class="fas fa-water"></i></span>
+                      <span data-icon="fa-bed"><i class="fas fa-bed"></i></span>
+                      <span data-icon="fa-apple-alt"><i class="fas fa-apple-alt"></i></span>
+                      <span data-icon="fa-brain"><i class="fas fa-brain"></i></span>
+                      <span data-icon="fa-heart"><i class="fas fa-heart"></i></span>
+                    </div>
+                  </div>
                 </div>
-                <div class="calendar-days" id="calendar-days">
-                  <!-- Calendar days will be added dynamically -->
+                <div class="form-group">
+                  <label for="habit-color">Color</label>
+                  <div class="color-selector" id="color-selector">
+                    <span class="selected-color" style="background-color: #6a5acd" data-color="#6a5acd"></span>
+                    <div class="color-options">
+                      <span style="background-color: #6a5acd" data-color="#6a5acd"></span>
+                      <span style="background-color: #64c27b" data-color="#64c27b"></span>
+                      <span style="background-color: #e5c05e" data-color="#e5c05e"></span>
+                      <span style="background-color: #e57e5e" data-color="#e57e5e"></span>
+                      <span style="background-color: #7b88c9" data-color="#7b88c9"></span>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-actions">
+                  <button id="cancel-habit-btn" class="btn">Cancel</button>
+                  <button id="save-habit-btn" class="gradient-btn">
+                    <span class="btn-text">Save Habit</span>
+                  </button>
                 </div>
               </div>
-              <div class="mood-legend">
-                <div class="legend-item">
-                  <span class="mood-dot mood-happy"></span>
-                  <span>Happy</span>
-                </div>
-                <div class="legend-item">
-                  <span class="mood-dot mood-sad"></span>
-                  <span>Sad</span>
-                </div>
-                <div class="legend-item">
-                  <span class="mood-dot mood-neutral"></span>
-                  <span>Neutral</span>
-                </div>
-                <div class="legend-item">
-                  <span class="mood-dot mood-excited"></span>
-                  <span>Excited</span>
-                </div>
-                <div class="legend-item">
-                  <span class="mood-dot mood-anxious"></span>
-                  <span>Anxious</span>
-                </div>
-              </div>
-            </div>
+            </section>
 
-            <!-- Growth Goals -->
-            <div class="goals-container glass-morphism">
+            <!-- Right Section: Goals -->
+            <section class="progress-section glass-morphism">
               <div class="section-header">
-                <h3><i class="fas fa-bullseye"></i> Growth Goals</h3>
-                <button class="outline-btn" id="add-goal-btn">
-                  <i class="fas fa-plus"></i> New Goal
+                <h2><i class="fas fa-bullseye"></i> Current Goals</h2>
+                <button id="add-goal-btn" class="icon-btn" title="Add new goal">
+                  <i class="fas fa-plus"></i>
                 </button>
               </div>
-              <div class="goals-wrapper">
-                <div class="goals-categories">
-                  <div class="goal-category active" data-category="all">
-                    All Goals
-                  </div>
-                  <div class="goal-category" data-category="wellness">
-                    Wellness
-                  </div>
-                  <div class="goal-category" data-category="mindfulness">
-                    Mindfulness
-                  </div>
-                  <div class="goal-category" data-category="growth">
-                    Personal Growth
-                  </div>
-                </div>
-                <div class="goals-list" id="goals-list">
-                  <!-- Goals will be dynamically added here -->
-                </div>
-              </div>
-            </div>
 
-            <!-- Journal Streak -->
-            <div class="streak-container glass-morphism">
-              <h3><i class="fas fa-fire"></i> Journal Streak</h3>
-              <div class="streak-wrapper">
-                <div class="streak-counter">
-                  <div class="streak-number" id="streak-count">0</div>
-                  <div class="streak-label">Days</div>
-                </div>
-                <div class="streak-calendar" id="streak-calendar">
-                  <!-- Last 7 days will show here -->
+              <div class="goals-list" id="goals-list">
+                <!-- Goals will be dynamically added here -->
+                <div class="empty-state">
+                  <i class="fas fa-flag-checkered"></i>
+                  <p>Set meaningful goals to focus on</p>
                 </div>
               </div>
-              <div class="streak-message" id="streak-message">
-                Start journaling daily to build your streak!
-              </div>
-            </div>
 
-            <!-- Quote of the Day -->
-            <div class="quote-container glass-morphism">
-              <h3><i class="fas fa-quote-left"></i> Daily Inspiration</h3>
-              <div class="quote-content">
-                <div class="quote-text" id="quote-text">
-                  "The mind is everything. What you think you become."
+              <!-- Add Goal Form -->
+              <div class="add-goal-form glass-morphism">
+                <h3>Create New Goal</h3>
+                <div class="form-group">
+                  <label for="goal-name">Goal Description</label>
+                  <input type="text" id="goal-name" class="glass-input" placeholder="e.g., Complete 30 days of journaling" />
                 </div>
-                <div class="quote-author" id="quote-author">- Buddha</div>
+                <div class="form-group">
+                  <label for="goal-deadline">Target Date (Optional)</label>
+                  <input type="date" id="goal-deadline" class="glass-input" />
+                </div>
+                <div class="form-group">
+                  <label for="goal-type">Goal Type</label>
+                  <select id="goal-type" class="glass-select">
+                    <option value="personal">Personal</option>
+                    <option value="mindfulness">Mindfulness</option>
+                    <option value="health">Health</option>
+                  </select>
+                </div>
+                <div class="form-actions">
+                  <button id="cancel-goal-btn" class="btn">Cancel</button>
+                  <button id="save-goal-btn" class="gradient-btn">
+                    <span class="btn-text">Save Goal</span>
+                  </button>
+                </div>
               </div>
-              <button class="icon-btn refresh-btn" id="refresh-quote">
-                <i class="fas fa-sync-alt"></i>
-              </button>
-            </div>
-
-            <!-- Gratitude Notes -->
-            <div class="gratitude-container glass-morphism">
-              <h3><i class="fas fa-heart"></i> Gratitude Notes</h3>
-              <div class="gratitude-form">
-                <input
-                  type="text"
-                  id="gratitude-input"
-                  class="glass-input"
-                  placeholder="What are you grateful for today?"
-                />
-                <button class="outline-btn" id="add-gratitude-btn">Add</button>
-              </div>
-              <div class="gratitude-list" id="gratitude-list">
-                <!-- Gratitude notes will be dynamically added here -->
-              </div>
-            </div>
+            </section>
           </div>
+
+          <!-- Mood Calendar -->
+          <section class="mood-calendar-section glass-morphism">
+            <div class="section-header">
+              <h2><i class="fas fa-calendar-alt"></i> Mood Calendar</h2>
+              <div class="calendar-controls">
+                <button id="prev-month" class="icon-btn" title="Previous month">
+                  <i class="fas fa-chevron-left"></i>
+                </button>
+                <span id="calendar-month">April 2023</span>
+                <button id="next-month" class="icon-btn" title="Next month">
+                  <i class="fas fa-chevron-right"></i>
+                </button>
+              </div>
+            </div>
+            <div class="calendar-container" id="mood-calendar"></div>
+            <div class="calendar-legend">
+              <div class="legend-item">
+                <span class="mood-dot" style="background-color: #e5c05e"></span>
+                <span>Excited</span>
+              </div>
+              <div class="legend-item">
+                <span class="mood-dot" style="background-color: #64c27b"></span>
+                <span>Happy</span>
+              </div>
+              <div class="legend-item">
+                <span class="mood-dot" style="background-color: #c2bb7b"></span>
+                <span>Neutral</span>
+              </div>
+              <div class="legend-item">
+                <span class="mood-dot" style="background-color: #e57e5e"></span>
+                <span>Anxious</span>
+              </div>
+              <div class="legend-item">
+                <span class="mood-dot" style="background-color: #7b88c9"></span>
+                <span>Sad</span>
+              </div>
+            </div>
+          </section>
+
+          <!-- Achievement Milestones -->
+          <section class="achievements-section glass-morphism">
+            <div class="section-header">
+              <h2><i class="fas fa-medal"></i> Achievements</h2>
+              <span class="achievement-count">
+                <span id="achievement-unlocked-count">0</span>/<span id="achievement-total-count">12</span>
+              </span>
+            </div>
+            <div class="achievements-grid" id="achievements-grid">
+              <!-- Achievements will be dynamically added here -->
+            </div>
+          </section>
         </div>
       </main>
-
-      <!-- Add Habit Modal -->
-      <div class="modal" id="habit-modal">
-        <div class="modal-content glass-morphism">
-          <div class="modal-header">
-            <h3><i class="fas fa-plus-circle"></i> Add New Habit</h3>
-            <button class="close-modal"><i class="fas fa-times"></i></button>
-          </div>
-          <div class="modal-body">
-            <form id="habit-form">
-              <div class="form-group">
-                <label for="habit-name">Habit Name</label>
-                <input
-                  type="text"
-                  id="habit-name"
-                  class="glass-input"
-                  placeholder="E.g., Morning Meditation"
-                  required
-                />
-              </div>
-              <div class="form-group">
-                <label>Frequency</label>
-                <div class="days-selector">
-                  <div class="day-checkbox" data-day="0">S</div>
-                  <div class="day-checkbox" data-day="1">M</div>
-                  <div class="day-checkbox" data-day="2">T</div>
-                  <div class="day-checkbox" data-day="3">W</div>
-                  <div class="day-checkbox" data-day="4">T</div>
-                  <div class="day-checkbox" data-day="5">F</div>
-                  <div class="day-checkbox" data-day="6">S</div>
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="habit-color">Color</label>
-                <div class="color-selector">
-                  <div
-                    class="color-option active"
-                    style="background-color: #6a5acd"
-                    data-color="#6a5acd"
-                  ></div>
-                  <div
-                    class="color-option"
-                    style="background-color: #00bfff"
-                    data-color="#00bfff"
-                  ></div>
-                  <div
-                    class="color-option"
-                    style="background-color: #64c27b"
-                    data-color="#64c27b"
-                  ></div>
-                  <div
-                    class="color-option"
-                    style="background-color: #e5c05e"
-                    data-color="#e5c05e"
-                  ></div>
-                  <div
-                    class="color-option"
-                    style="background-color: #e57e5e"
-                    data-color="#e57e5e"
-                  ></div>
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="habit-icon">Icon</label>
-                <div class="icon-selector">
-                  <div class="icon-option active" data-icon="fas fa-spa">
-                    <i class="fas fa-spa"></i>
-                  </div>
-                  <div class="icon-option" data-icon="fas fa-book">
-                    <i class="fas fa-book"></i>
-                  </div>
-                  <div class="icon-option" data-icon="fas fa-running">
-                    <i class="fas fa-running"></i>
-                  </div>
-                  <div class="icon-option" data-icon="fas fa-water">
-                    <i class="fas fa-water"></i>
-                  </div>
-                  <div class="icon-option" data-icon="fas fa-apple-alt">
-                    <i class="fas fa-apple-alt"></i>
-                  </div>
-                  <div class="icon-option" data-icon="fas fa-moon">
-                    <i class="fas fa-moon"></i>
-                  </div>
-                  <div class="icon-option" data-icon="fas fa-heart">
-                    <i class="fas fa-heart"></i>
-                  </div>
-                  <div class="icon-option" data-icon="fas fa-brain">
-                    <i class="fas fa-brain"></i>
-                  </div>
-                </div>
-              </div>
-            </form>
-          </div>
-          <div class="modal-footer">
-            <button class="outline-btn" id="cancel-habit-btn">Cancel</button>
-            <button class="gradient-btn" id="save-habit-btn">Save Habit</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Add Goal Modal -->
-      <div class="modal" id="goal-modal">
-        <div class="modal-content glass-morphism">
-          <div class="modal-header">
-            <h3><i class="fas fa-bullseye"></i> Set New Goal</h3>
-            <button class="close-modal"><i class="fas fa-times"></i></button>
-          </div>
-          <div class="modal-body">
-            <form id="goal-form">
-              <div class="form-group">
-                <label for="goal-title">Goal Title</label>
-                <input
-                  type="text"
-                  id="goal-title"
-                  class="glass-input"
-                  placeholder="Enter your goal"
-                  required
-                />
-              </div>
-              <div class="form-group">
-                <label for="goal-category">Category</label>
-                <select id="goal-category" class="glass-select">
-                  <option value="wellness">Wellness</option>
-                  <option value="mindfulness">Mindfulness</option>
-                  <option value="growth">Personal Growth</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label for="goal-deadline">Target Date (Optional)</label>
-                <input type="date" id="goal-deadline" class="glass-input" />
-              </div>
-              <div class="form-group">
-                <label for="goal-steps">Action Steps</label>
-                <textarea
-                  id="goal-steps"
-                  class="glass-input"
-                  placeholder="List specific steps to achieve this goal..."
-                  rows="3"
-                ></textarea>
-              </div>
-            </form>
-          </div>
-          <div class="modal-footer">
-            <button class="outline-btn" id="cancel-goal-btn">Cancel</button>
-            <button class="gradient-btn" id="save-goal-btn">Save Goal</button>
-          </div>
-        </div>
-      </div>
 
       <!-- Visual Elements -->
       <div class="floating-shapes">
@@ -353,7 +217,6 @@
 
     <!-- JavaScript -->
     <script src="meditation.js"></script>
-    <script src="gemi.js"></script>
     <script src="progress.js"></script>
   </body>
 </html>

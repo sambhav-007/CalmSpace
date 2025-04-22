@@ -10,6 +10,7 @@ let emotionsChart = null;
 let activityChart = null;
 let moodChart = null;
 let timeChart = null;
+let comparisonChart = null;
 
 // Set chart theme based on current mode
 Chart.defaults.color = '#e0e0e0';
@@ -46,63 +47,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const exportBtn = document.getElementById('export-insights-btn');
   exportBtn.addEventListener('click', exportInsightsReport);
   
-  // Add animation to charts on scroll
-  addChartAnimations();
-
-  // Set up real-time updates
-  setupRealTimeUpdates();
+  // Set up comparison toggle
+  const comparisonBtn = document.getElementById('toggle-comparison-btn');
+  if (comparisonBtn) {
+    comparisonBtn.addEventListener('click', toggleComparisonView);
+  }
 });
-
-// Add animations to charts when scrolled into view
-function addChartAnimations() {
-  // Get all chart containers
-  const chartContainers = document.querySelectorAll('.chart-container, .keywords-container');
-  
-  // Create intersection observer
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        // Add animation class when chart is visible
-        entry.target.classList.add('animate-in');
-        // Stop observing after animation is added
-        observer.unobserve(entry.target);
-      }
-    });
-  }, {
-    threshold: 0.2 // Trigger when 20% of the element is visible
-  });
-  
-  // Observe each chart container
-  chartContainers.forEach(container => {
-    observer.observe(container);
-  });
-}
-
-// Setup real-time updates for new journal entries
-function setupRealTimeUpdates() {
-  // Check for new entries every minute (in a real app, you might use WebSockets instead)
-  setInterval(() => {
-    // Check if there are new entries since last update
-    const lastUpdateTime = localStorage.getItem('calmspace_last_insights_update');
-    const lastUpdate = lastUpdateTime ? parseInt(lastUpdateTime) : 0;
-    
-    const journalUpdatedTime = localStorage.getItem('calmspace_journal_updated');
-    const journalUpdated = journalUpdatedTime ? parseInt(journalUpdatedTime) : 0;
-    
-    if (journalUpdated > lastUpdate) {
-      // Reload data if there are new entries
-      loadUserData();
-      // Update last update time
-      localStorage.setItem('calmspace_last_insights_update', Date.now().toString());
-      
-      // Show notification
-      showNotification('Insights updated with new journal entries');
-    }
-  }, 60000); // Check every minute
-  
-  // Store initial update time
-  localStorage.setItem('calmspace_last_insights_update', Date.now().toString());
-}
 
 // Load and process user data from local storage
 function loadUserData() {
@@ -124,23 +74,11 @@ function loadUserData() {
   updateMoodTrendChart(entries);
   updateTimeOfDayChart(entries);
   
-  // Show pulsing animation on stats to indicate update
-  animateStatsUpdate();
-}
-
-// Animate stats when they're updated
-function animateStatsUpdate() {
-  const statValues = document.querySelectorAll('.stat-value');
-  
-  statValues.forEach(stat => {
-    // Add pulse class
-    stat.classList.add('pulse-animation');
-    
-    // Remove class after animation completes
-    setTimeout(() => {
-      stat.classList.remove('pulse-animation');
-    }, 1000);
-  });
+  // If comparison view is active, update comparison chart
+  const comparisonContainer = document.getElementById('comparison-container');
+  if (comparisonContainer && comparisonContainer.classList.contains('active')) {
+    updateComparisonChart();
+  }
 }
 
 // Get journal entries filtered by date range
@@ -159,6 +97,20 @@ function getJournalEntries(daysToInclude) {
   return entries.filter(entry => {
     const entryDate = new Date(entry.date);
     return entryDate >= cutoffDate;
+  });
+}
+
+// Get journal entries for a specific date range
+function getJournalEntriesForRange(startDate, endDate) {
+  const savedEntries = localStorage.getItem('calmspace_entries');
+  
+  if (!savedEntries) return [];
+  
+  const entries = JSON.parse(savedEntries);
+  
+  return entries.filter(entry => {
+    const entryDate = new Date(entry.date);
+    return entryDate >= startDate && entryDate <= endDate;
   });
 }
 
@@ -262,6 +214,327 @@ function calculateJournalingStreak(entries) {
   }
   
   return streak;
+}
+
+// Toggle comparison view
+function toggleComparisonView() {
+  const comparisonContainer = document.getElementById('comparison-container');
+  const comparisonBtn = document.getElementById('toggle-comparison-btn');
+  
+  if (!comparisonContainer) return;
+  
+  comparisonContainer.classList.toggle('active');
+  
+  if (comparisonContainer.classList.contains('active')) {
+    comparisonBtn.innerHTML = '<i class="fas fa-times"></i> Hide Comparison';
+    comparisonBtn.classList.add('active');
+    updateComparisonChart();
+  } else {
+    comparisonBtn.innerHTML = '<i class="fas fa-chart-bar"></i> Compare Periods';
+    comparisonBtn.classList.remove('active');
+  }
+}
+
+// Update the comparison chart
+function updateComparisonChart() {
+  // Set up date ranges for comparison
+  const currentDate = new Date();
+  
+  // Current period (based on selected time range)
+  const timeRange = document.getElementById('time-range').value;
+  const daysToInclude = timeRange === 'all' ? 30 : parseInt(timeRange);
+  
+  const currentPeriodStart = new Date(currentDate);
+  currentPeriodStart.setDate(currentDate.getDate() - daysToInclude);
+  
+  // Previous period (same length, immediately before)
+  const previousPeriodStart = new Date(currentPeriodStart);
+  previousPeriodStart.setDate(previousPeriodStart.getDate() - daysToInclude);
+  const previousPeriodEnd = new Date(currentPeriodStart);
+  previousPeriodEnd.setDate(previousPeriodEnd.getDate() - 1);
+  
+  // Get entries for both periods
+  const currentPeriodEntries = getJournalEntriesForRange(currentPeriodStart, currentDate);
+  const previousPeriodEntries = getJournalEntriesForRange(previousPeriodStart, previousPeriodEnd);
+  
+  // Get mood data for both periods
+  const currentMoodData = calculateMoodDistribution(currentPeriodEntries);
+  const previousMoodData = calculateMoodDistribution(previousPeriodEntries);
+  
+  // Format date ranges for display
+  const formatOptions = { month: 'short', day: 'numeric' };
+  const currentPeriodLabel = `${currentPeriodStart.toLocaleDateString('en-US', formatOptions)} - ${currentDate.toLocaleDateString('en-US', formatOptions)}`;
+  const previousPeriodLabel = `${previousPeriodStart.toLocaleDateString('en-US', formatOptions)} - ${previousPeriodEnd.toLocaleDateString('en-US', formatOptions)}`;
+  
+  // Update title
+  const comparisonTitle = document.getElementById('comparison-title');
+  if (comparisonTitle) {
+    comparisonTitle.textContent = `Comparing ${daysToInclude} Day Periods`;
+  }
+  
+  // Update period labels
+  const currentPeriodDisplay = document.getElementById('current-period');
+  const previousPeriodDisplay = document.getElementById('previous-period');
+  
+  if (currentPeriodDisplay) {
+    currentPeriodDisplay.textContent = currentPeriodLabel;
+  }
+  
+  if (previousPeriodDisplay) {
+    previousPeriodDisplay.textContent = previousPeriodLabel;
+  }
+  
+  // Create datasets
+  const ctx = document.getElementById('comparison-chart').getContext('2d');
+  
+  // Destroy previous chart if it exists
+  if (comparisonChart) {
+    comparisonChart.destroy();
+  }
+  
+  // Get emotions and ensure same order for both datasets
+  const emotions = Object.keys(emotionColors);
+  
+  // Create datasets
+  const currentData = emotions.map(emotion => currentMoodData[emotion] || 0);
+  const previousData = emotions.map(emotion => previousMoodData[emotion] || 0);
+  
+  comparisonChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: emotions.map(e => e.charAt(0).toUpperCase() + e.slice(1)),
+      datasets: [
+        {
+          label: 'Current Period',
+          data: currentData,
+          backgroundColor: emotions.map(emotion => `${emotionColors[emotion]}cc`),
+          borderColor: emotions.map(emotion => emotionColors[emotion]),
+          borderWidth: 1,
+          borderRadius: 4
+        },
+        {
+          label: 'Previous Period',
+          data: previousData,
+          backgroundColor: emotions.map(emotion => `${emotionColors[emotion]}66`),
+          borderColor: emotions.map(emotion => emotionColors[emotion]),
+          borderWidth: 1,
+          borderRadius: 4
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        y: {
+          beginAtZero: true,
+          ticks: {
+            precision: 0
+          },
+          title: {
+            display: true,
+            text: 'Number of Entries'
+          }
+        }
+      },
+      plugins: {
+        legend: {
+          display: true,
+          position: 'top'
+        },
+        tooltip: {
+          callbacks: {
+            label: function(context) {
+              const datasetLabel = context.dataset.label || '';
+              const value = context.raw || 0;
+              const total = context.dataset.data.reduce((a, b) => a + b, 0);
+              const percentage = total > 0 ? Math.round((value / total) * 100) : 0;
+              return `${datasetLabel}: ${value} (${percentage}%)`;
+            }
+          }
+        }
+      }
+    }
+  });
+  
+  // Update insights section
+  updateComparisonInsights(currentMoodData, previousMoodData, currentPeriodEntries, previousPeriodEntries);
+}
+
+// Calculate mood distribution from entries
+function calculateMoodDistribution(entries) {
+  const moodCounts = {
+    'happy': 0,
+    'sad': 0,
+    'neutral': 0,
+    'excited': 0,
+    'anxious': 0
+  };
+  
+  entries.forEach(entry => {
+    if (entry.emotion && moodCounts.hasOwnProperty(entry.emotion)) {
+      moodCounts[entry.emotion]++;
+    } else {
+      moodCounts['neutral']++;
+    }
+  });
+  
+  return moodCounts;
+}
+
+// Update comparison insights
+function updateComparisonInsights(currentMoodData, previousMoodData, currentEntries, previousEntries) {
+  const insightsContainer = document.getElementById('comparison-insights');
+  if (!insightsContainer) return;
+  
+  // Calculate total entries for both periods
+  const currentTotal = currentEntries.length;
+  const previousTotal = previousEntries.length;
+  
+  // Calculate dominant mood for both periods
+  let currentDominantMood = 'neutral';
+  let currentMax = 0;
+  let previousDominantMood = 'neutral';
+  let previousMax = 0;
+  
+  Object.keys(currentMoodData).forEach(mood => {
+    if (currentMoodData[mood] > currentMax) {
+      currentMax = currentMoodData[mood];
+      currentDominantMood = mood;
+    }
+  });
+  
+  Object.keys(previousMoodData).forEach(mood => {
+    if (previousMoodData[mood] > previousMax) {
+      previousMax = previousMoodData[mood];
+      previousDominantMood = mood;
+    }
+  });
+  
+  // Calculate entry frequency (entries per day)
+  const timeRange = document.getElementById('time-range').value;
+  const daysToInclude = timeRange === 'all' ? 30 : parseInt(timeRange);
+  
+  const currentFrequency = currentTotal / daysToInclude;
+  const previousFrequency = previousTotal / daysToInclude;
+  
+  // Generate insights
+  let insightsHTML = '';
+  
+  // Entries comparison
+  const entryDiff = currentTotal - previousTotal;
+  const entryDiffPercent = previousTotal > 0 ? Math.round((entryDiff / previousTotal) * 100) : 0;
+  
+  insightsHTML += `
+    <div class="insight-item">
+      <div class="insight-icon ${entryDiff >= 0 ? 'positive' : 'negative'}">
+        <i class="${entryDiff >= 0 ? 'fas fa-arrow-up' : 'fas fa-arrow-down'}"></i>
+      </div>
+      <div class="insight-content">
+        <h4>Journaling Frequency</h4>
+        <p>
+          ${Math.abs(entryDiffPercent)}% ${entryDiff >= 0 ? 'increase' : 'decrease'} in journal entries 
+          (${currentTotal} vs ${previousTotal})
+        </p>
+      </div>
+    </div>
+  `;
+  
+  // Mood shift
+  insightsHTML += `
+    <div class="insight-item">
+      <div class="insight-icon">
+        <i class="fas fa-exchange-alt"></i>
+      </div>
+      <div class="insight-content">
+        <h4>Emotional Shift</h4>
+        <p>
+          Your dominant emotion changed from 
+          <span class="highlight" style="color:${emotionColors[previousDominantMood]}">
+            ${previousDominantMood.charAt(0).toUpperCase() + previousDominantMood.slice(1)}
+          </span> to
+          <span class="highlight" style="color:${emotionColors[currentDominantMood]}">
+            ${currentDominantMood.charAt(0).toUpperCase() + currentDominantMood.slice(1)}
+          </span>
+        </p>
+      </div>
+    </div>
+  `;
+  
+  // Detailed mood changes
+  const moodChanges = [];
+  Object.keys(emotionColors).forEach(mood => {
+    const currentCount = currentMoodData[mood] || 0;
+    const previousCount = previousMoodData[mood] || 0;
+    const change = currentCount - previousCount;
+    if (change !== 0) {
+      moodChanges.push({
+        mood,
+        change,
+        percentage: previousCount > 0 ? Math.abs(Math.round((change / previousCount) * 100)) : 0
+      });
+    }
+  });
+  
+  // Sort by magnitude of change
+  moodChanges.sort((a, b) => Math.abs(b.change) - Math.abs(a.change));
+  
+  // Take top 2 changes
+  const topChanges = moodChanges.slice(0, 2);
+  
+  if (topChanges.length > 0) {
+    insightsHTML += `
+      <div class="insight-item">
+        <div class="insight-icon analysis">
+          <i class="fas fa-chart-line"></i>
+        </div>
+        <div class="insight-content">
+          <h4>Notable Changes</h4>
+          <ul>
+    `;
+    
+    topChanges.forEach(change => {
+      insightsHTML += `
+        <li>
+          <span class="highlight" style="color:${emotionColors[change.mood]}">
+            ${change.mood.charAt(0).toUpperCase() + change.mood.slice(1)}
+          </span>: 
+          ${change.change > 0 ? '+' : ''}${change.change} entries 
+          (${change.change > 0 ? '+' : ''}${change.percentage}%)
+        </li>
+      `;
+    });
+    
+    insightsHTML += `
+          </ul>
+        </div>
+      </div>
+    `;
+  }
+  
+  // Overall assessment
+  let overallMessage = "";
+  if (entryDiff > 0) {
+    overallMessage = "You're journaling more frequently, which can lead to greater self-awareness.";
+  } else if (entryDiff < 0) {
+    overallMessage = "Your journaling frequency has decreased. Consider setting reminders to reflect regularly.";
+  } else {
+    overallMessage = "Your journaling frequency has remained consistent.";
+  }
+  
+  insightsHTML += `
+    <div class="insight-item">
+      <div class="insight-icon recommendation">
+        <i class="fas fa-lightbulb"></i>
+      </div>
+      <div class="insight-content">
+        <h4>Insight</h4>
+        <p>${overallMessage}</p>
+      </div>
+    </div>
+  `;
+  
+  insightsContainer.innerHTML = insightsHTML;
 }
 
 // Update emotions distribution chart

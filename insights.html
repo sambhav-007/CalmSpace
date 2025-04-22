@@ -38,11 +38,14 @@
       <!-- Main Content -->
       <main>
         <div class="content-container insights-container">
-          <h1 class="gradient-text">Your Journaling Insights</h1>
-          <p class="subtitle">Visualize patterns and gain deeper understanding of your journey</p>
+          <h1 class="insights-title">Your Journaling Insights</h1>
+          <p class="subtitle">
+            Visualize patterns and gain deeper understanding of your journey
+          </p>
 
           <!-- Time Range Selector -->
-          <div style="text-align: right; margin: 10px 0;">
+          <div class="time-range-wrapper">
+            <span class="time-range-label">Time Period:</span>
             <select id="time-range" class="glass-select">
               <option value="7">Last 7 days</option>
               <option value="30" selected>Last 30 days</option>
@@ -52,7 +55,7 @@
           </div>
 
           <!-- Stats Summary -->
-          <div class="stats-container glass-morphism">
+          <div class="stats-container">
             <div class="stats-header">
               <h3><i class="fas fa-chart-line"></i> Your Stats</h3>
             </div>
@@ -79,8 +82,10 @@
           <!-- Charts Grid -->
           <div class="insights-grid">
             <!-- Emotions Chart -->
-            <div class="chart-container glass-morphism">
-              <h3><i class="fas fa-smile"></i> Emotion Distribution</h3>
+            <div class="chart-container emotions-container glass-morphism">
+              <div class="chart-header">
+                <h3><i class="fas fa-smile"></i> Emotion Distribution</h3>
+              </div>
               <div class="chart-wrapper">
                 <canvas id="emotions-chart"></canvas>
               </div>
@@ -89,13 +94,19 @@
 
             <!-- Keywords Cloud -->
             <div class="keywords-container glass-morphism">
-              <h3><i class="fas fa-cloud"></i> Common Themes</h3>
+              <div class="chart-header">
+                <h3><i class="fas fa-cloud"></i> Common Themes</h3>
+              </div>
               <div class="tag-cloud" id="keyword-cloud"></div>
             </div>
 
             <!-- Activity Chart -->
             <div class="chart-container glass-morphism">
-              <h3><i class="fas fa-calendar-check"></i> Journaling Activity</h3>
+              <div class="chart-header">
+                <h3>
+                  <i class="fas fa-calendar-check"></i> Journaling Activity
+                </h3>
+              </div>
               <div class="chart-wrapper">
                 <canvas id="activity-chart"></canvas>
               </div>
@@ -103,7 +114,9 @@
 
             <!-- Mood Chart -->
             <div class="chart-container glass-morphism">
-              <h3><i class="fas fa-heart"></i> Mood Trend</h3>
+              <div class="chart-header">
+                <h3><i class="fas fa-heart"></i> Mood Trend</h3>
+              </div>
               <div class="chart-wrapper">
                 <canvas id="mood-chart"></canvas>
               </div>
@@ -111,7 +124,9 @@
 
             <!-- Time of Day Chart -->
             <div class="chart-container glass-morphism">
-              <h3><i class="fas fa-clock"></i> Time of Day Analysis</h3>
+              <div class="chart-header">
+                <h3><i class="fas fa-clock"></i> Time of Day Analysis</h3>
+              </div>
               <div class="chart-wrapper">
                 <canvas id="time-chart"></canvas>
               </div>
@@ -120,9 +135,40 @@
               </div>
             </div>
 
+            <!-- Add Comparison Container -->
+            <div class="comparison-container" id="comparison-container">
+              <div class="comparison-header">
+                <h3>
+                  <i class="fas fa-balance-scale"></i>
+                  <span id="comparison-title">Period Comparison</span>
+                </h3>
+              </div>
+
+              <div class="comparison-periods">
+                <div class="period-label current-period-label">
+                  <span id="current-period">Current Period</span>
+                </div>
+                <div class="period-label previous-period-label">
+                  <span id="previous-period">Previous Period</span>
+                </div>
+              </div>
+
+              <div class="comparison-content">
+                <div class="comparison-chart-wrapper">
+                  <canvas id="comparison-chart"></canvas>
+                </div>
+                <div class="comparison-insights" id="comparison-insights">
+                  <!-- Insights will be dynamically added here -->
+                </div>
+              </div>
+            </div>
+
             <!-- Export Button -->
             <div class="insights-action">
-              <button id="export-insights-btn" class="gradient-btn">
+              <button id="toggle-comparison-btn" class="toggle-comparison-btn">
+                <i class="fas fa-chart-bar"></i> Compare Periods
+              </button>
+              <button id="export-insights-btn" class="export-insights-btn">
                 <i class="fas fa-download"></i> Export Insights Report
               </button>
             </div>

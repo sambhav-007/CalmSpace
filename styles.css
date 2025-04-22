@@ -49,6 +49,10 @@ header {
   font-size: 1.5rem;
   font-weight: 700;
   color: white;
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.7);
+  background: rgba(74, 158, 255, 0.3);
+  padding: 0.2rem 0.6rem;
+  border-radius: 8px;
 }
 
 .nav-links {
@@ -99,7 +103,7 @@ header {
 }
 
 .intro-card {
-  /* background: white; */
+  background: rgba(255, 255, 255, 0.1);
   border-radius: 16px;
   padding: 2rem;
   box-shadow: none;
@@ -116,7 +120,8 @@ header {
 
 .intro-icon {
   font-size: 2.5rem;
-  color: var(--primary);
+  color: white;
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.7);
   margin-bottom: 1rem;
 }
 
@@ -139,6 +144,8 @@ header {
   overflow-x: auto;
   scroll-snap-type: x mandatory;
   -webkit-overflow-scrolling: touch;
+  justify-content: center;
+  text-align: center;
 }
 
 .feature-card-about {

@@ -386,3 +386,102 @@ a, button {
     transform: none;
   }
 }
+
+/* Toggle Button Styles */
+.toggle {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: 2px solid white;
+  border-radius: 50%;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+  color: white;
+}
+
+.toggle:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.toggle i {
+  font-size: 20px;
+  pointer-events: none;
+}
+
+/* Dark Mode Styles */
+body.dark {
+  background: linear-gradient(135deg, var(--dark) 0%, #3d2a7d 50%, #453291 100%);
+  color: #e0e0e0;
+}
+
+body.dark header {
+  background: #1e1e1e;
+}
+
+body.dark .navbar {
+  border-bottom: 1px solid rgba(224, 224, 224, 0.1);
+  backdrop-filter: blur(10px);
+}
+
+body.dark .nav-links a {
+  color: #e0e0e0;
+}
+
+body.dark .nav-links a.active {
+  color: #8b5cf6;
+  border-bottom: 2px solid #8b5cf6;
+}
+
+body.dark .toggle {
+  border-color: #8b5cf6;
+  color: #8b5cf6;
+}
+
+body.dark .toggle:hover {
+  background-color: rgba(139, 92, 246, 0.2);
+}
+
+body.dark .member-card {
+  background: rgba(74, 158, 255, 0.2);
+  border: 1px solid rgba(74, 158, 255, 0.5);
+  box-shadow: 0 4px 15px rgba(74, 158, 255, 0.3);
+  color: #e0e0e0;
+}
+
+body.dark .feature-card-about {
+  background: rgba(74, 158, 255, 0.2);
+  border: 1px solid rgba(74, 158, 255, 0.5);
+  box-shadow: 0 4px 15px rgba(74, 158, 255, 0.3);
+  color: #e0e0e0;
+}
+
+body.dark .team-section {
+  color: #e0e0e0;
+}
+
+body.dark .features-grid-about {
+  color: #e0e0e0;
+}
+
+body.dark .features-about {
+  color: #e0e0e0;
+}
+
+body.dark .section-title {
+  background: linear-gradient(135deg, #4a9eff 0%, #6b5fff 100%);
+  color: white;
+}
+
+body.dark .member-info {
+  background: linear-gradient(transparent, rgba(74, 158, 255, 0.7));
+  color: white;
+}
+
+body.dark .linkedin-btn {
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  color: white;
+  border: 1px solid rgba(255,255,255,0.5);
+  box-shadow: 0 4px 15px rgba(74, 158, 255, 0.3);
+}

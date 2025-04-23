@@ -132,6 +132,7 @@ header {
   max-width: 700px;
   margin: 0 auto;
   color: white;
+  text-align: center;
 }
 
 .features-grid-about {
@@ -146,6 +147,12 @@ header {
   -webkit-overflow-scrolling: touch;
   justify-content: center;
   text-align: center;
+}
+
+.features-about {
+  text-align: center;
+  max-width: 1000px;
+  margin: 0 auto 2rem;
 }
 
 .feature-card-about {

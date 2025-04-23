@@ -49,8 +49,6 @@ header {
   font-size: 1.5rem;
   font-weight: 700;
   color: white;
-  text-shadow: 0 0 5px rgba(255, 255, 255, 0.7);
-  background: rgba(74, 158, 255, 0.3);
   padding: 0.2rem 0.6rem;
   border-radius: 8px;
 }

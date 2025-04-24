@@ -1,3 +1,57 @@
+// Add global error handler at the top of the file to help debug issues
+window.addEventListener("error", function (event) {
+  console.error("Global error caught:", event.error);
+});
+
+// Add a function to fix button click issues
+function fixButtonClicks() {
+  console.log("Fixing button click issues...");
+
+  // Direct handling for all clickable elements
+  const clickableElements = document.querySelectorAll(
+    "button, .icon-btn, .gradient-btn, .outline-btn, .emotion, .meditation-launcher, .theme-toggle, .prompt-btn, .entry-item"
+  );
+
+  clickableElements.forEach((element) => {
+    // Ensure element is clickable
+    element.style.pointerEvents = "auto";
+    element.style.cursor = "pointer";
+
+    // Add a direct click handler to log and ensure clicks work
+    element.addEventListener("click", function (e) {
+      console.log("Element clicked:", this);
+    });
+  });
+}
+
+// Run after DOM is fully loaded
+document.addEventListener("DOMContentLoaded", function () {
+  // Try to fix button clicks
+  fixButtonClicks();
+
+  // Add a general document click handler to debug
+  document.addEventListener("click", function (event) {
+    console.log("Document click detected on:", event.target);
+  });
+
+  // Run again after a short delay
+  setTimeout(fixButtonClicks, 1000);
+});
+
+// Check for any CSS issues that might block clicks
+document.addEventListener("DOMContentLoaded", function () {
+  // Remove any full-page overlays that might block clicks
+  const possibleOverlays = document.querySelectorAll(
+    'div[style*="position: fixed"][style*="top: 0"][style*="left: 0"][style*="width: 100%"][style*="height: 100%"]'
+  );
+  possibleOverlays.forEach((overlay) => {
+    if (overlay.style.pointerEvents !== "none") {
+      overlay.style.pointerEvents = "none";
+      console.log("Fixed potential overlay blocking clicks:", overlay);
+    }
+  });
+});
+
 const API_KEY = "AIzaSyCh63Ww9HJy5itbB7Qm3niTrOa6PNNNyIA"; // ⚠️ Don't use this in production
 
 let conversationHistory = []; // To maintain conversation context
@@ -92,7 +146,7 @@ function renderEntries() {
   entriesList.innerHTML = "";
 
   console.log("Rendering entries:", entries);
-  
+
   if (!entries || entries.length === 0) {
     // Show empty state
     entriesList.innerHTML = `
@@ -426,17 +480,46 @@ function loadDraft() {
 function setupJournalingPrompts() {
   const promptBtn = document.querySelector(".prompt-btn");
   const promptsContainer = document.querySelector(".prompts-container");
-  const closePrompts = document.querySelector(".close-prompts");
-  const promptItems = document.querySelectorAll(".prompt-item");
 
+  if (!promptBtn || !promptsContainer) return;
+
+  const closePrompts = promptsContainer.querySelector(".close-prompts");
+  const promptItems = promptsContainer.querySelectorAll(".prompt-item");
+
+  // Add glow effect when hovering over the inspiration button
+  promptBtn.addEventListener("mouseenter", () => {
+    promptBtn.style.boxShadow = "0 0 10px rgba(0, 212, 255, 0.4)";
+  });
+
+  promptBtn.addEventListener("mouseleave", () => {
+    promptBtn.style.boxShadow = "";
+  });
+
+  // Toggle prompt container visibility with animation
   promptBtn.addEventListener("click", () => {
+    // Add a subtle animation to the button itself
+    promptBtn.classList.add("pulse");
+    setTimeout(() => {
+      promptBtn.classList.remove("pulse");
+    }, 500);
+
+    // Toggle the prompts container
     promptsContainer.classList.toggle("active");
+
+    // If opening, ensure it has focus and is visible
+    if (promptsContainer.classList.contains("active")) {
+      showNotification("Choose a prompt for inspiration");
+    }
   });
 
-  closePrompts.addEventListener("click", () => {
-    promptsContainer.classList.remove("active");
-  });
+  // Close button functionality
+  if (closePrompts) {
+    closePrompts.addEventListener("click", () => {
+      promptsContainer.classList.remove("active");
+    });
+  }
 
+  // Setup each prompt item with enhanced feedback
   promptItems.forEach((item) => {
     item.addEventListener("click", () => {
       const promptText = item.dataset.prompt;
@@ -505,7 +588,7 @@ function setupFullscreenMode() {
       const exitBtn = fullscreenMode.querySelector(".exit-fullscreen");
       exitBtn.addEventListener("click", () => {
         // Get the textarea content before removing
-        const fullscreenTextarea = fullscreenMode.querySelector("#prompt");
+        const fullscreenTextarea = fullscreenMode.querySelector("textarea");
         const mainTextarea = document.getElementById("prompt");
 
         // Sync content back to main textarea
@@ -514,12 +597,37 @@ function setupFullscreenMode() {
           updateWordCount(); // Update word count in main view
         }
 
+        // Sync emotion selection back to main view if selected in fullscreen
+        const fullscreenActiveEmotion =
+          fullscreenMode.querySelector(".emotion.active");
+        if (
+          fullscreenActiveEmotion &&
+          fullscreenActiveEmotion.dataset.emotion
+        ) {
+          // Find the corresponding emotion in the main view and activate it
+          const mainEmotions = document.querySelectorAll(
+            ".journal-section .emotion"
+          );
+          mainEmotions.forEach((emotion) => {
+            if (
+              emotion.dataset.emotion ===
+              fullscreenActiveEmotion.dataset.emotion
+            ) {
+              // Remove active class from all emotions in main view
+              mainEmotions.forEach((e) => e.classList.remove("active"));
+              // Add active class to selected emotion
+              emotion.classList.add("active");
+              selectedEmotion = emotion.dataset.emotion;
+            }
+          });
+        }
+
         // Remove fullscreen mode
         fullscreenMode.remove();
       });
 
       // Setup textarea in fullscreen mode
-      const textarea = fullscreenMode.querySelector("#prompt");
+      const textarea = fullscreenMode.querySelector("textarea");
       textarea.id = "fullscreen-prompt"; // Change ID to avoid conflict
 
       // Sync content from main textarea
@@ -529,6 +637,34 @@ function setupFullscreenMode() {
       setTimeout(() => {
         textarea.focus();
       }, 100);
+
+      // Setup emotions in fullscreen mode
+      const fullscreenEmotions = fullscreenMode.querySelectorAll(".emotion");
+      fullscreenEmotions.forEach((emotion) => {
+        // First, remove old event listeners by cloning and replacing each emotion element
+        const newEmotion = emotion.cloneNode(true);
+        emotion.parentNode.replaceChild(newEmotion, emotion);
+
+        // Add new click event listeners to each emotion
+        newEmotion.addEventListener("click", () => {
+          // Remove active class from all emotions in fullscreen mode
+          fullscreenEmotions.forEach((e) => e.classList.remove("active"));
+          // Add active class to selected emotion
+          newEmotion.classList.add("active");
+          selectedEmotion = newEmotion.dataset.emotion;
+
+          // Add animation to selected emotion
+          newEmotion.classList.add("pulse");
+          setTimeout(() => {
+            newEmotion.classList.remove("pulse");
+          }, 500);
+        });
+
+        // Mark the currently selected emotion as active in fullscreen mode
+        if (newEmotion.dataset.emotion === selectedEmotion) {
+          newEmotion.classList.add("active");
+        }
+      });
 
       // Re-initialize prompts in fullscreen mode
       setupPrompts(fullscreenMode);
@@ -594,10 +730,19 @@ function setupMeditationLauncher() {
   const meditationLauncher = document.querySelector(".meditation-launcher");
   const meditationContainer = document.getElementById("meditation-container");
 
-  if (!meditationLauncher) return;
+  if (!meditationLauncher || !meditationContainer) {
+    console.error("Meditation launcher or container not found");
+    return;
+  }
 
   meditationLauncher.addEventListener("click", () => {
-    // Check if meditation timer is initialized
+    // Show loading notification
+    showNotification("Opening meditation timer...");
+
+    // Make the container visible first
+    meditationContainer.classList.add("active");
+
+    // Simple approach - directly check if meditationTimer exists and is initialized
     if (window.meditationTimer) {
       // Initialize if not already initialized
       if (!window.meditationTimer.initialized) {
@@ -652,91 +797,96 @@ function incrementMeditationUsage() {
 
 // Setup speech-to-text functionality
 function setupSpeechToText() {
-  const speechBtn = document.querySelector('.speech-btn');
-  const textarea = document.getElementById('prompt');
-  
+  const speechBtn = document.querySelector(".speech-btn");
+  const textarea = document.getElementById("prompt");
+
   // Check if browser supports speech recognition
-  if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
-    speechBtn.style.display = 'none';
+  if (
+    !("webkitSpeechRecognition" in window) &&
+    !("SpeechRecognition" in window)
+  ) {
+    speechBtn.style.display = "none";
     return;
   }
-  
+
   // Initialize speech recognition
-  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  const SpeechRecognition =
+    window.SpeechRecognition || window.webkitSpeechRecognition;
   const recognition = new SpeechRecognition();
-  
+
   recognition.continuous = true;
   recognition.interimResults = true;
-  recognition.lang = 'en-US';
-  
+  recognition.lang = "en-US";
+
   let isRecording = false;
-  
-  speechBtn.addEventListener('click', () => {
+
+  speechBtn.addEventListener("click", () => {
     if (isRecording) {
       // Stop recording
       recognition.stop();
-      speechBtn.classList.remove('recording');
-      showNotification('Voice recording stopped');
+      speechBtn.classList.remove("recording");
+      showNotification("Voice recording stopped");
     } else {
       // Start recording
       recognition.start();
-      speechBtn.classList.add('recording');
-      showNotification('Listening... Speak now');
+      speechBtn.classList.add("recording");
+      showNotification("Listening... Speak now");
     }
-    
+
     isRecording = !isRecording;
   });
-  
+
   // Process speech results
   recognition.onresult = (event) => {
-    let interimTranscript = '';
-    let finalTranscript = '';
-    
+    let interimTranscript = "";
+    let finalTranscript = "";
+
     // Get current cursor position
     const cursorPos = textarea.selectionStart;
     const textBeforeCursor = textarea.value.substring(0, cursorPos);
     const textAfterCursor = textarea.value.substring(cursorPos);
-    
+
     // Process recognition results
     for (let i = event.resultIndex; i < event.results.length; i++) {
       const transcript = event.results[i][0].transcript;
-      
+
       if (event.results[i].isFinal) {
-        finalTranscript += transcript + ' ';
+        finalTranscript += transcript + " ";
       } else {
         interimTranscript += transcript;
       }
     }
-    
+
     // Insert recognized text at cursor position
     if (finalTranscript) {
       textarea.value = textBeforeCursor + finalTranscript + textAfterCursor;
-      textarea.selectionStart = textarea.selectionEnd = cursorPos + finalTranscript.length;
-      
+      textarea.selectionStart = textarea.selectionEnd =
+        cursorPos + finalTranscript.length;
+
       // Update word count
       updateWordCount();
     }
   };
-  
+
   // Error handling
   recognition.onerror = (event) => {
-    if (event.error === 'not-allowed') {
-      showNotification('Microphone access denied');
+    if (event.error === "not-allowed") {
+      showNotification("Microphone access denied");
     } else {
       showNotification(`Error: ${event.error}`);
     }
-    
+
     isRecording = false;
-    speechBtn.classList.remove('recording');
+    speechBtn.classList.remove("recording");
   };
-  
+
   // Handle when recognition ends
   recognition.onend = () => {
     if (isRecording) {
       // Auto restart if still in recording mode
       recognition.start();
     } else {
-      speechBtn.classList.remove('recording');
+      speechBtn.classList.remove("recording");
     }
   };
 }
@@ -776,8 +926,8 @@ document.addEventListener("DOMContentLoaded", () => {
   // Setup fullscreen mode
   setupFullscreenMode();
 
-  // Setup journaling prompts in the main view
-  setupPrompts();
+  // Setup journaling prompts in the main view - use the enhanced function
+  setupJournalingPrompts(); // We'll use this for the main view instead of setupPrompts()
 
   // Setup meditation launcher
   setupMeditationLauncher();
@@ -999,9 +1149,6 @@ document.addEventListener("DOMContentLoaded", () => {
     // Toggle filter dialog
     filterDialog.classList.toggle("show");
   });
-
-  // Setup journaling prompts - call the function directly
-  setupJournalingPrompts();
 });
 
 // Function to show notifications with smoother animation
@@ -1103,20 +1250,39 @@ async function askGemini() {
 
   output.textContent = "";
 
+  // Reset conversation history to prevent context buildup
+  conversationHistory = [];
+
   // Add emotion context if selected
   let promptWithEmotion = userInput;
   if (selectedEmotion) {
     promptWithEmotion = `I'm feeling ${selectedEmotion} today. ${userInput}`;
   }
 
+  // Calculate journal length to determine response length
+  const wordCount = promptWithEmotion.trim().split(/\s+/).length;
+  const isShortJournal = wordCount < 30;
+
+  // Create a strict prompt that demands extremely short responses
+  const promptText = `CRITICAL INSTRUCTION: You are a therapeutic companion. Your responses MUST be extremely brief.
+  
+  ${
+    isShortJournal
+      ? "RESPOND WITH EXACTLY ONE SENTENCE, MAXIMUM 15 WORDS TOTAL. NO EXCEPTIONS."
+      : "MAXIMUM 2 SENTENCES, NEVER MORE THAN 25 WORDS TOTAL. NO EXCEPTIONS."
+  }
+  
+  Your response should be warm but extremely concise. Use contractions. 
+  NO greetings, NO introductions, NO "I understand" phrases.
+  NEVER mention the word limits in your response.
+  Be insightful but brief.
+  
+  Journal entry: "${promptWithEmotion}"`;
+
   // Add the user's input to the conversation history
   conversationHistory.push({
     role: "user",
-    parts: [
-      {
-        text: `You are a compassionate and empathetic therapist. Your role is to help users reflect on their thoughts, provide emotional support, and guide them toward personal growth. Respond thoughtfully and kindly to the following journaling entry: "${promptWithEmotion}"`,
-      },
-    ],
+    parts: [{ text: promptText }],
   });
 
   try {
@@ -1130,6 +1296,10 @@ async function askGemini() {
         },
         body: JSON.stringify({
           contents: conversationHistory,
+          generationConfig: {
+            maxOutputTokens: 50,
+            temperature: 0.7,
+          },
         }),
       }
     );
@@ -1138,7 +1308,23 @@ async function askGemini() {
     console.log(data); // DEBUG: full response
 
     if (data.candidates && data.candidates[0]?.content?.parts?.[0]?.text) {
-      const reply = data.candidates[0].content.parts[0].text;
+      let reply = data.candidates[0].content.parts[0].text.trim();
+
+      // Additional safeguard: Truncate long responses
+      const replyWords = reply.split(/\s+/);
+      const maxWords = isShortJournal ? 15 : 25;
+
+      if (replyWords.length > maxWords) {
+        reply = replyWords.slice(0, maxWords).join(" ");
+        // Ensure proper ending punctuation
+        if (
+          !reply.endsWith(".") &&
+          !reply.endsWith("!") &&
+          !reply.endsWith("?")
+        ) {
+          reply += ".";
+        }
+      }
 
       // Add the AI's reply to the conversation history
       conversationHistory.push({

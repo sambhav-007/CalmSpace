@@ -286,7 +286,7 @@ main {
 /* Journal input header with word counter */
 .journal-input-header {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   align-items: center;
   margin-bottom: var(--spacing-sm);
 }
@@ -670,6 +670,35 @@ main {
   background: rgba(235, 87, 87, 0.3);
   color: rgb(235, 87, 87);
   animation: pulse 1.5s infinite;
+}
+
+/* Fix spacing and style for the Need inspiration button */
+.prompt-btn {
+  color: var(--accent);
+  background: rgba(0, 212, 255, 0.1);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--radius-full);
+  font-size: 0.85rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: all var(--transition-fast);
+  margin-right: auto; /* Push other controls to the right */
+}
+
+.prompt-btn i {
+  color: #ffcc00;
+  transition: transform var(--transition-fast);
+}
+
+.prompt-btn:hover {
+  background: rgba(0, 212, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+.prompt-btn:hover i {
+  transform: rotate(15deg);
 }
 
 /* Response Section */
@@ -1540,6 +1569,7 @@ body {
   align-items: center;
   gap: 5px;
   transition: all var(--transition-fast);
+  margin-right: auto; /* Push other controls to the right */
 }
 
 .prompt-btn i {

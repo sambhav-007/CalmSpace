@@ -676,10 +676,19 @@ function setupMeditationLauncher() {
   const meditationLauncher = document.querySelector(".meditation-launcher");
   const meditationContainer = document.getElementById("meditation-container");
 
-  if (!meditationLauncher) return;
+  if (!meditationLauncher || !meditationContainer) {
+    console.error("Meditation launcher or container not found");
+    return;
+  }
 
   meditationLauncher.addEventListener("click", () => {
-    // Check if meditation timer is initialized
+    // Show loading notification
+    showNotification("Opening meditation timer...");
+    
+    // Make the container visible first
+    meditationContainer.classList.add("active");
+    
+    // Simple approach - directly check if meditationTimer exists and is initialized
     if (window.meditationTimer) {
       // Initialize if not already initialized
       if (!window.meditationTimer.initialized) {

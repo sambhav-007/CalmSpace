@@ -92,7 +92,7 @@ function renderEntries() {
   entriesList.innerHTML = "";
 
   console.log("Rendering entries:", entries);
-  
+
   if (!entries || entries.length === 0) {
     // Show empty state
     entriesList.innerHTML = `
@@ -505,7 +505,7 @@ function setupFullscreenMode() {
       const exitBtn = fullscreenMode.querySelector(".exit-fullscreen");
       exitBtn.addEventListener("click", () => {
         // Get the textarea content before removing
-        const fullscreenTextarea = fullscreenMode.querySelector("#prompt");
+        const fullscreenTextarea = fullscreenMode.querySelector("textarea");
         const mainTextarea = document.getElementById("prompt");
 
         // Sync content back to main textarea
@@ -514,12 +514,37 @@ function setupFullscreenMode() {
           updateWordCount(); // Update word count in main view
         }
 
+        // Sync emotion selection back to main view if selected in fullscreen
+        const fullscreenActiveEmotion =
+          fullscreenMode.querySelector(".emotion.active");
+        if (
+          fullscreenActiveEmotion &&
+          fullscreenActiveEmotion.dataset.emotion
+        ) {
+          // Find the corresponding emotion in the main view and activate it
+          const mainEmotions = document.querySelectorAll(
+            ".journal-section .emotion"
+          );
+          mainEmotions.forEach((emotion) => {
+            if (
+              emotion.dataset.emotion ===
+              fullscreenActiveEmotion.dataset.emotion
+            ) {
+              // Remove active class from all emotions in main view
+              mainEmotions.forEach((e) => e.classList.remove("active"));
+              // Add active class to selected emotion
+              emotion.classList.add("active");
+              selectedEmotion = emotion.dataset.emotion;
+            }
+          });
+        }
+
         // Remove fullscreen mode
         fullscreenMode.remove();
       });
 
       // Setup textarea in fullscreen mode
-      const textarea = fullscreenMode.querySelector("#prompt");
+      const textarea = fullscreenMode.querySelector("textarea");
       textarea.id = "fullscreen-prompt"; // Change ID to avoid conflict
 
       // Sync content from main textarea
@@ -529,6 +554,34 @@ function setupFullscreenMode() {
       setTimeout(() => {
         textarea.focus();
       }, 100);
+
+      // Setup emotions in fullscreen mode
+      const fullscreenEmotions = fullscreenMode.querySelectorAll(".emotion");
+      fullscreenEmotions.forEach((emotion) => {
+        // First, remove old event listeners by cloning and replacing each emotion element
+        const newEmotion = emotion.cloneNode(true);
+        emotion.parentNode.replaceChild(newEmotion, emotion);
+
+        // Add new click event listeners to each emotion
+        newEmotion.addEventListener("click", () => {
+          // Remove active class from all emotions in fullscreen mode
+          fullscreenEmotions.forEach((e) => e.classList.remove("active"));
+          // Add active class to selected emotion
+          newEmotion.classList.add("active");
+          selectedEmotion = newEmotion.dataset.emotion;
+
+          // Add animation to selected emotion
+          newEmotion.classList.add("pulse");
+          setTimeout(() => {
+            newEmotion.classList.remove("pulse");
+          }, 500);
+        });
+
+        // Mark the currently selected emotion as active in fullscreen mode
+        if (newEmotion.dataset.emotion === selectedEmotion) {
+          newEmotion.classList.add("active");
+        }
+      });
 
       // Re-initialize prompts in fullscreen mode
       setupPrompts(fullscreenMode);
@@ -652,91 +705,96 @@ function incrementMeditationUsage() {
 
 // Setup speech-to-text functionality
 function setupSpeechToText() {
-  const speechBtn = document.querySelector('.speech-btn');
-  const textarea = document.getElementById('prompt');
-  
+  const speechBtn = document.querySelector(".speech-btn");
+  const textarea = document.getElementById("prompt");
+
   // Check if browser supports speech recognition
-  if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
-    speechBtn.style.display = 'none';
+  if (
+    !("webkitSpeechRecognition" in window) &&
+    !("SpeechRecognition" in window)
+  ) {
+    speechBtn.style.display = "none";
     return;
   }
-  
+
   // Initialize speech recognition
-  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  const SpeechRecognition =
+    window.SpeechRecognition || window.webkitSpeechRecognition;
   const recognition = new SpeechRecognition();
-  
+
   recognition.continuous = true;
   recognition.interimResults = true;
-  recognition.lang = 'en-US';
-  
+  recognition.lang = "en-US";
+
   let isRecording = false;
-  
-  speechBtn.addEventListener('click', () => {
+
+  speechBtn.addEventListener("click", () => {
     if (isRecording) {
       // Stop recording
       recognition.stop();
-      speechBtn.classList.remove('recording');
-      showNotification('Voice recording stopped');
+      speechBtn.classList.remove("recording");
+      showNotification("Voice recording stopped");
     } else {
       // Start recording
       recognition.start();
-      speechBtn.classList.add('recording');
-      showNotification('Listening... Speak now');
+      speechBtn.classList.add("recording");
+      showNotification("Listening... Speak now");
     }
-    
+
     isRecording = !isRecording;
   });
-  
+
   // Process speech results
   recognition.onresult = (event) => {
-    let interimTranscript = '';
-    let finalTranscript = '';
-    
+    let interimTranscript = "";
+    let finalTranscript = "";
+
     // Get current cursor position
     const cursorPos = textarea.selectionStart;
     const textBeforeCursor = textarea.value.substring(0, cursorPos);
     const textAfterCursor = textarea.value.substring(cursorPos);
-    
+
     // Process recognition results
     for (let i = event.resultIndex; i < event.results.length; i++) {
       const transcript = event.results[i][0].transcript;
-      
+
       if (event.results[i].isFinal) {
-        finalTranscript += transcript + ' ';
+        finalTranscript += transcript + " ";
       } else {
         interimTranscript += transcript;
       }
     }
-    
+
     // Insert recognized text at cursor position
     if (finalTranscript) {
       textarea.value = textBeforeCursor + finalTranscript + textAfterCursor;
-      textarea.selectionStart = textarea.selectionEnd = cursorPos + finalTranscript.length;
-      
+      textarea.selectionStart = textarea.selectionEnd =
+        cursorPos + finalTranscript.length;
+
       // Update word count
       updateWordCount();
     }
   };
-  
+
   // Error handling
   recognition.onerror = (event) => {
-    if (event.error === 'not-allowed') {
-      showNotification('Microphone access denied');
+    if (event.error === "not-allowed") {
+      showNotification("Microphone access denied");
     } else {
       showNotification(`Error: ${event.error}`);
     }
-    
+
     isRecording = false;
-    speechBtn.classList.remove('recording');
+    speechBtn.classList.remove("recording");
   };
-  
+
   // Handle when recognition ends
   recognition.onend = () => {
     if (isRecording) {
       // Auto restart if still in recording mode
       recognition.start();
     } else {
-      speechBtn.classList.remove('recording');
+      speechBtn.classList.remove("recording");
     }
   };
 }
@@ -1103,20 +1161,39 @@ async function askGemini() {
 
   output.textContent = "";
 
+  // Reset conversation history to prevent context buildup
+  conversationHistory = [];
+
   // Add emotion context if selected
   let promptWithEmotion = userInput;
   if (selectedEmotion) {
     promptWithEmotion = `I'm feeling ${selectedEmotion} today. ${userInput}`;
   }
 
+  // Calculate journal length to determine response length
+  const wordCount = promptWithEmotion.trim().split(/\s+/).length;
+  const isShortJournal = wordCount < 30;
+
+  // Create a strict prompt that demands extremely short responses
+  const promptText = `CRITICAL INSTRUCTION: You are a therapeutic companion. Your responses MUST be extremely brief.
+  
+  ${
+    isShortJournal
+      ? "RESPOND WITH EXACTLY ONE SENTENCE, MAXIMUM 15 WORDS TOTAL. NO EXCEPTIONS."
+      : "MAXIMUM 2 SENTENCES, NEVER MORE THAN 25 WORDS TOTAL. NO EXCEPTIONS."
+  }
+  
+  Your response should be warm but extremely concise. Use contractions. 
+  NO greetings, NO introductions, NO "I understand" phrases.
+  NEVER mention the word limits in your response.
+  Be insightful but brief.
+  
+  Journal entry: "${promptWithEmotion}"`;
+
   // Add the user's input to the conversation history
   conversationHistory.push({
     role: "user",
-    parts: [
-      {
-        text: `You are a compassionate and empathetic therapist. Your role is to help users reflect on their thoughts, provide emotional support, and guide them toward personal growth. Respond thoughtfully and kindly to the following journaling entry: "${promptWithEmotion}"`,
-      },
-    ],
+    parts: [{ text: promptText }],
   });
 
   try {
@@ -1130,6 +1207,10 @@ async function askGemini() {
         },
         body: JSON.stringify({
           contents: conversationHistory,
+          generationConfig: {
+            maxOutputTokens: 50,
+            temperature: 0.7,
+          },
         }),
       }
     );
@@ -1138,7 +1219,23 @@ async function askGemini() {
     console.log(data); // DEBUG: full response
 
     if (data.candidates && data.candidates[0]?.content?.parts?.[0]?.text) {
-      const reply = data.candidates[0].content.parts[0].text;
+      let reply = data.candidates[0].content.parts[0].text.trim();
+
+      // Additional safeguard: Truncate long responses
+      const replyWords = reply.split(/\s+/);
+      const maxWords = isShortJournal ? 15 : 25;
+
+      if (replyWords.length > maxWords) {
+        reply = replyWords.slice(0, maxWords).join(" ");
+        // Ensure proper ending punctuation
+        if (
+          !reply.endsWith(".") &&
+          !reply.endsWith("!") &&
+          !reply.endsWith("?")
+        ) {
+          reply += ".";
+        }
+      }
 
       // Add the AI's reply to the conversation history
       conversationHistory.push({

@@ -863,8 +863,8 @@ document.addEventListener("DOMContentLoaded", () => {
   // Setup fullscreen mode
   setupFullscreenMode();
 
-  // Setup journaling prompts in the main view
-  setupPrompts();
+  // Setup journaling prompts in the main view - use the enhanced function
+  setupJournalingPrompts(); // We'll use this for the main view instead of setupPrompts()
 
   // Setup meditation launcher
   setupMeditationLauncher();
@@ -1086,9 +1086,6 @@ document.addEventListener("DOMContentLoaded", () => {
     // Toggle filter dialog
     filterDialog.classList.toggle("show");
   });
-
-  // Setup journaling prompts - call the function directly
-  setupJournalingPrompts();
 });
 
 // Function to show notifications with smoother animation

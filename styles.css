@@ -197,8 +197,9 @@ header {
 .team-grid {
   display: grid;
   grid-template-areas: 
-    "card1 card2"
-    "card3 card4";
+    "card1 card2 card3"
+    ". card4 .";
+  grid-template-columns: 1fr 1fr 1fr;
   gap: 2rem;
   max-width: 800px;
   margin: 0 auto;

@@ -426,17 +426,46 @@ function loadDraft() {
 function setupJournalingPrompts() {
   const promptBtn = document.querySelector(".prompt-btn");
   const promptsContainer = document.querySelector(".prompts-container");
-  const closePrompts = document.querySelector(".close-prompts");
-  const promptItems = document.querySelectorAll(".prompt-item");
 
+  if (!promptBtn || !promptsContainer) return;
+
+  const closePrompts = promptsContainer.querySelector(".close-prompts");
+  const promptItems = promptsContainer.querySelectorAll(".prompt-item");
+
+  // Add glow effect when hovering over the inspiration button
+  promptBtn.addEventListener("mouseenter", () => {
+    promptBtn.style.boxShadow = "0 0 10px rgba(0, 212, 255, 0.4)";
+  });
+
+  promptBtn.addEventListener("mouseleave", () => {
+    promptBtn.style.boxShadow = "";
+  });
+
+  // Toggle prompt container visibility with animation
   promptBtn.addEventListener("click", () => {
+    // Add a subtle animation to the button itself
+    promptBtn.classList.add("pulse");
+    setTimeout(() => {
+      promptBtn.classList.remove("pulse");
+    }, 500);
+
+    // Toggle the prompts container
     promptsContainer.classList.toggle("active");
+
+    // If opening, ensure it has focus and is visible
+    if (promptsContainer.classList.contains("active")) {
+      showNotification("Choose a prompt for inspiration");
+    }
   });
 
-  closePrompts.addEventListener("click", () => {
-    promptsContainer.classList.remove("active");
-  });
+  // Close button functionality
+  if (closePrompts) {
+    closePrompts.addEventListener("click", () => {
+      promptsContainer.classList.remove("active");
+    });
+  }
 
+  // Setup each prompt item with enhanced feedback
   promptItems.forEach((item) => {
     item.addEventListener("click", () => {
       const promptText = item.dataset.prompt;

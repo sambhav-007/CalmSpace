@@ -978,3 +978,295 @@ button:disabled {
   opacity: 0.6;
   cursor: not-allowed;
 }
+
+.menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.menu-toggle:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.menu-toggle svg {
+  display: block;
+  width: 24px;
+  height: 24px;
+  stroke: white;
+}
+
+/* Media query for tablets (768px and below) */
+@media (max-width: 768px) {
+  /* Navigation adjustments */
+  nav {
+    padding: 15px 0;
+  }
+  
+  .nav-links {
+    gap: 20px;
+  }
+  
+  /* Hero section adjustments */
+  .hero {
+    flex-direction: column;
+    padding: 50px 0;
+    text-align: center;
+  }
+  
+  .hero-content {
+    width: 100%;
+    margin-bottom: 40px;
+  }
+  
+  .hero-title {
+    font-size: 36px;
+  }
+  
+  .hero-image {
+    width: 80%;
+  }
+  
+  .cta-buttons {
+    justify-content: center;
+  }
+  
+  /* Features section adjustments */
+  .features-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  /* FAQ section adjustments */
+  .faq-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  /* Footer adjustments */
+  .footer-top {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+}
+
+/* Media query for mobile phones (480px and below) */
+@media (max-width: 480px) {
+  /* Header/Navigation adjustments */
+  nav {
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .logo {
+    margin-bottom: 10px;
+  }
+  
+  .nav-links {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+  }
+  
+  .auth-buttons {
+    width: 100%;
+    justify-content: center;
+    margin-top: 10px;
+  }
+  
+  /* Hero section adjustments */
+  .hero-title {
+    font-size: 32px;
+  }
+  
+  .hero-subtitle {
+    font-size: 16px;
+  }
+  
+  .cta-buttons {
+    flex-direction: column;
+    width: 100%;
+    gap: 15px;
+  }
+  
+  .btn {
+    width: 100%;
+    text-align: center;
+  }
+  
+  /* Features section adjustments */
+  .features-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .section-title {
+    font-size: 28px;
+    margin-bottom: 40px;
+  }
+  
+  /* Pricing section adjustments */
+  .pricing-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .pricing-card {
+    padding: 30px 20px;
+  }
+  
+  /* Reviews adjustments */
+  .reviews-container {
+    padding: 30px 20px;
+  }
+  
+  .reviews-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  /* Contact form adjustments */
+  #contact-form, #contact-info {
+    padding: 25px 20px;
+  }
+  
+  /* Form element adjustments */
+  .purchase-form, .premium-details {
+    padding: 25px 20px;
+  }
+}
+
+/* Additional responsive fixes for specific elements */
+@media (max-width: 992px) {
+  /* Hamburger menu for medium screens */
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: 70px;
+    left: 0;
+    right: 0;
+    background: rgba(46, 29, 91, 0.95);
+    flex-direction: column;
+    padding: 20px;
+    border-radius: 0 0 15px 15px;
+    z-index: 100;
+  }
+  
+  .nav-links.active {
+    display: flex;
+  }
+  
+  .menu-toggle {
+    display: block;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+  }
+  
+  /* Hidden by default, shown in mobile view */
+  .menu-toggle {
+    display: none;
+  }
+  
+  @media (max-width: 768px) {
+    .menu-toggle {
+      display: block;
+    }
+  }
+}
+
+/* Ensure images and videos are responsive */
+img, video, svg {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Font size adjustments for better readability on small screens */
+@media (max-width: 480px) {
+  body {
+    font-size: 15px;
+  }
+  
+  .feature-title {
+    font-size: 20px;
+  }
+  
+  .pricing-tier {
+    font-size: 24px;
+  }
+  
+  .faq-question {
+    font-size: 15px;
+  }
+}
+
+/* Fix for the mood icons on small screens */
+@media (max-width: 480px) {
+  .mood-icons {
+    justify-content: center;
+  }
+  
+  .mood-icon {
+    width: 35px;
+    height: 35px;
+  }
+}
+
+/* Fix for button responsiveness */
+@media (max-width: 768px) {
+  .btn-auth {
+    padding: 8px 14px;
+    font-size: 13px;
+  }
+}
+
+/* Fix for equal height pricing cards on mobile */
+@media (max-width: 768px) {
+  .pricing-card {
+    height: auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .menu-toggle {
+    display: block;
+  }
+  
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: 70px;
+    left: 0;
+    right: 0;
+    background: rgba(46, 29, 91, 0.95);
+    backdrop-filter: blur(10px);
+    flex-direction: column;
+    padding: 20px;
+    border-radius: 0 0 15px 15px;
+    z-index: 100;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  }
+  
+  .nav-links.active {
+    display: flex;
+  }
+  
+  .nav-links a {
+    padding: 12px 0;
+    width: 100%;
+    text-align: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  .nav-links a:last-child {
+    border-bottom: none;
+  }
+  
+  nav {
+    position: relative;
+    justify-content: space-between;
+  }
+}

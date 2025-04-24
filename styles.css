@@ -1,4 +1,4 @@
-:root {
+  :root {
   --primary: #4a9eff;
   --secondary: #6b5fff;
   --accent: #8b5cf6;
@@ -51,6 +51,7 @@ header {
   color: white;
   padding: 0.2rem 0.6rem;
   border-radius: 8px;
+  margin-left: 1rem;
 }
 
 .nav-links {
@@ -229,6 +230,7 @@ header {
 .member-image {
   height: 300px;
   overflow: hidden;
+  border-radius: 30px;
 }
 
 .member-image img {
@@ -236,10 +238,16 @@ header {
   height: 100%;
   object-fit: cover;
   transition: transform 0.5s ease;
+  border-radius: 30px;
+  border: none;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-focus-ring-color: transparent;
 }
 
 .member-card:hover .member-image img {
   transform: scale(1.1);
+  border-radius: 20px;
 }
 
 .member-info {

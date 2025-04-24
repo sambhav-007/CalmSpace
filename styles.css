@@ -379,8 +379,8 @@ a, button {
 
 /* Toggle Button Styles */
 .toggle {
+  display: none;
   cursor: pointer;
-  display: flex;
   align-items: center;
   justify-content: center;
   width: 40px;
@@ -401,7 +401,8 @@ a, button {
 }
 
 /* Dark Mode Styles */
-body.dark {
+/* Removed dark mode styles as per user request */
+/* body.dark {
   background: linear-gradient(135deg, var(--dark) 0%, #3d2a7d 50%, #453291 100%);
   color: #e0e0e0;
 }
@@ -474,4 +475,4 @@ body.dark .linkedin-btn {
   color: white;
   border: 1px solid rgba(255,255,255,0.5);
   box-shadow: 0 4px 15px rgba(74, 158, 255, 0.3);
-}
+} */

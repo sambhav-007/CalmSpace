@@ -645,6 +645,22 @@ main {
   color: var(--accent);
 }
 
+/* Delete button styling */
+.delete-btn {
+  background: linear-gradient(120deg, #eb5757, #f2994a);
+  box-shadow: 0 0 15px rgba(235, 87, 87, 0.3);
+}
+
+.delete-btn:hover {
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 15px 25px rgba(235, 87, 87, 0.4);
+}
+
+.delete-btn:active {
+  transform: translateY(-1px) scale(0.98);
+  box-shadow: 0 5px 15px rgba(235, 87, 87, 0.4);
+}
+
 /* Speech-to-Text Button */
 .speech-btn {
   color: rgba(255, 255, 255, 0.7);

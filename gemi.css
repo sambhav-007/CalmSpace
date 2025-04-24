@@ -131,6 +131,50 @@ body.dark-mode {
   margin: 0 auto;
 }
 
+/* Fix for clickable elements */
+.floating-shapes {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none; /* Already set correctly, ensure it's working */
+  z-index: -1; /* Keep shapes behind content */
+  overflow: hidden;
+}
+
+/* Ensure all interactive elements have proper z-index and pointer-events */
+.navbar, .navbar-actions, .content-container, .journal-input,
+.response-section, .history-sidebar, .meditation-container,
+.modal, .notification, .filter-dialog, .prompts-container,
+.fullscreen-mode {
+  position: relative;
+  z-index: 1;
+  pointer-events: auto;
+}
+
+/* Higher z-index for overlays */
+.modal, .meditation-container.active, .notification, .filter-dialog,
+.fullscreen-mode {
+  z-index: 1000;
+}
+
+/* Ensure buttons receive pointer events */
+button, .icon-btn, .gradient-btn, .outline-btn, .emotion,
+.meditation-launcher, .theme-toggle, .prompt-btn,
+.fullscreen-btn, .speech-btn, [class*="btn"],
+.entry-item, .sound-option, .end-sound-option {
+  position: relative;
+  z-index: 5;
+  pointer-events: auto !important;
+  cursor: pointer !important;
+}
+
+/* Remove any potential transparent overlays blocking clicks */
+body::before {
+  content: none !important;
+}
+
 /* Navbar */
 .navbar {
   display: flex;

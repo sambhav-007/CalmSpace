@@ -1,3 +1,57 @@
+// Add global error handler at the top of the file to help debug issues
+window.addEventListener("error", function (event) {
+  console.error("Global error caught:", event.error);
+});
+
+// Add a function to fix button click issues
+function fixButtonClicks() {
+  console.log("Fixing button click issues...");
+
+  // Direct handling for all clickable elements
+  const clickableElements = document.querySelectorAll(
+    "button, .icon-btn, .gradient-btn, .outline-btn, .emotion, .meditation-launcher, .theme-toggle, .prompt-btn, .entry-item"
+  );
+
+  clickableElements.forEach((element) => {
+    // Ensure element is clickable
+    element.style.pointerEvents = "auto";
+    element.style.cursor = "pointer";
+
+    // Add a direct click handler to log and ensure clicks work
+    element.addEventListener("click", function (e) {
+      console.log("Element clicked:", this);
+    });
+  });
+}
+
+// Run after DOM is fully loaded
+document.addEventListener("DOMContentLoaded", function () {
+  // Try to fix button clicks
+  fixButtonClicks();
+
+  // Add a general document click handler to debug
+  document.addEventListener("click", function (event) {
+    console.log("Document click detected on:", event.target);
+  });
+
+  // Run again after a short delay
+  setTimeout(fixButtonClicks, 1000);
+});
+
+// Check for any CSS issues that might block clicks
+document.addEventListener("DOMContentLoaded", function () {
+  // Remove any full-page overlays that might block clicks
+  const possibleOverlays = document.querySelectorAll(
+    'div[style*="position: fixed"][style*="top: 0"][style*="left: 0"][style*="width: 100%"][style*="height: 100%"]'
+  );
+  possibleOverlays.forEach((overlay) => {
+    if (overlay.style.pointerEvents !== "none") {
+      overlay.style.pointerEvents = "none";
+      console.log("Fixed potential overlay blocking clicks:", overlay);
+    }
+  });
+});
+
 const API_KEY = "AIzaSyCh63Ww9HJy5itbB7Qm3niTrOa6PNNNyIA"; // ⚠️ Don't use this in production
 
 let conversationHistory = []; // To maintain conversation context
@@ -684,10 +738,10 @@ function setupMeditationLauncher() {
   meditationLauncher.addEventListener("click", () => {
     // Show loading notification
     showNotification("Opening meditation timer...");
-    
+
     // Make the container visible first
     meditationContainer.classList.add("active");
-    
+
     // Simple approach - directly check if meditationTimer exists and is initialized
     if (window.meditationTimer) {
       // Initialize if not already initialized

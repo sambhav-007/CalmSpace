@@ -345,3 +345,215 @@
     font-size: 13px;
     opacity: 0.8;
   }
+
+  .menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+  }
+  
+  .menu-toggle:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+  
+  .menu-toggle svg {
+    display: block;
+    width: 24px;
+    height: 24px;
+    stroke: white;
+  }
+
+  @media (max-width: 992px) {
+    .terms-hero h1 {
+      font-size: 36px;
+    }
+    
+    .terms-content {
+      padding: 30px;
+    }
+  }
+  
+  /* Tablet responsiveness (768px and below) */
+  @media (max-width: 768px) {
+    /* Menu toggle implementation */
+    .menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      color: white;
+      cursor: pointer;
+      padding: 5px;
+      border-radius: 5px;
+      transition: background-color 0.3s;
+    }
+    
+    .menu-toggle:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+    
+    .menu-toggle svg {
+      display: block;
+      width: 24px;
+      height: 24px;
+      stroke: white;
+    }
+    
+    .menu-toggle {
+      display: block;
+    }
+    
+    .nav-links {
+      display: none;
+      position: absolute;
+      top: 70px;
+      left: 0;
+      right: 0;
+      background: rgba(46, 29, 91, 0.95);
+      backdrop-filter: blur(10px);
+      flex-direction: column;
+      padding: 20px;
+      border-radius: 0 0 15px 15px;
+      z-index: 100;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+    
+    .nav-links.active {
+      display: flex;
+    }
+    
+    .nav-links a {
+      padding: 12px 0;
+      width: 100%;
+      text-align: center;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .nav-links a:last-child {
+      border-bottom: none;
+    }
+    
+    nav {
+      position: relative;
+      justify-content: space-between;
+    }
+    
+    /* Terms page specific adjustments */
+    .terms-hero {
+      padding: 40px 0 30px;
+    }
+    
+    .terms-hero h1 {
+      font-size: 32px;
+    }
+    
+    .terms-content {
+      padding: 25px;
+    }
+    
+    .terms-section h2 {
+      font-size: 22px;
+    }
+    
+    /* Footer adjustments */
+    .footer-top {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+  }
+  
+  /* Mobile phone responsiveness (480px and below) */
+  @media (max-width: 480px) {
+    /* Header/Navigation adjustments */
+    nav {
+      flex-direction: column;
+      gap: 15px;
+    }
+    
+    .logo {
+      margin-bottom: 10px;
+    }
+    
+    .auth-buttons {
+      width: 100%;
+      justify-content: center;
+      margin-top: 10px;
+    }
+    
+    /* Terms page specific adjustments */
+    .terms-hero h1 {
+      font-size: 28px;
+    }
+    
+    .terms-hero .last-updated {
+      font-size: 14px;
+    }
+    
+    .terms-content {
+      padding: 20px;
+      border-radius: 15px;
+    }
+    
+    .terms-section h2 {
+      font-size: 20px;
+      padding-bottom: 10px;
+      margin-bottom: 15px;
+    }
+    
+    .terms-section p {
+      font-size: 15px;
+      line-height: 1.6;
+    }
+    
+    .toc {
+      padding: 15px;
+    }
+    
+    .toc-title {
+      font-size: 16px;
+    }
+    
+    .contact-info {
+      padding: 20px;
+    }
+    
+    /* Footer adjustments */
+    .calm-footer {
+      margin-top: 60px;
+      padding-top: 40px;
+    }
+    
+    .footer-links {
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+    }
+    
+    .social-icons {
+      margin-top: 20px;
+    }
+  }
+  
+  /* Font size adjustments for better readability on small screens */
+  @media (max-width: 480px) {
+    body {
+      font-size: 15px;
+    }
+    
+    .terms-section li {
+      font-size: 15px;
+    }
+  }
+  
+  /* Fix for button responsiveness */
+  @media (max-width: 768px) {
+    .btn-auth {
+      padding: 8px 14px;
+      font-size: 13px;
+    }
+  }

@@ -155,12 +155,14 @@ header {
 }
 
 .feature-card-about {
-  background: rgba(74, 158, 255, 0.2);
-  border-radius: 12px;
-  padding: 1.5rem;
-  border: 1px solid rgba(74, 158, 255, 0.5);
-  box-shadow: 0 4px 15px rgba(74, 158, 255, 0.3);
-  transition: transform 0.3s ease;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: none;
+  max-width: 800px;
+  margin: 0 auto;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  color: white;
 }
 
 .feature-card-about:hover {

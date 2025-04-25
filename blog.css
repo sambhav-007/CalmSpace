@@ -131,3 +131,33 @@ body {
   font-size: 0.9rem;
   border-radius: 0 0 20px 20px;
 }
+
+/* Dark mode styles for blog posts */
+body.dark .post {
+  background: rgba(255, 255, 255, 0.1) !important;
+  box-shadow: 0 4px 15px rgba(255, 255, 255, 0.2) !important;
+}
+
+body.dark .post:hover {
+  box-shadow: 0 6px 25px rgba(255, 255, 255, 0.4) !important;
+}
+
+body.dark .post-title {
+  color: #d1d5db !important;
+}
+
+body.dark .post-date {
+  color: #9ca3af !important;
+}
+
+body.dark .post-excerpt {
+  color: #e5e7eb !important;
+}
+
+body.dark .read-more {
+  color: #93c5fd !important;
+}
+
+body.dark .read-more:hover {
+  color: #60a5fa !important;
+}

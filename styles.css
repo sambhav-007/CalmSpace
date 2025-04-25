@@ -51,13 +51,15 @@ header {
   color: white;
   padding: 0.2rem 0.6rem;
   border-radius: 8px;
-  margin-left: 1rem;
+  margin-left: 3rem;
 }
 
 .nav-links {
   display: flex;
   list-style: none;
   gap: 2rem;
+  margin-left: 0;
+  margin-right: 3rem;
 }
 
 .nav-links a {

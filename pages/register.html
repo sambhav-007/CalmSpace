@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Register Page | CalmSpace</title>
+    <link rel="stylesheet" href="../css/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      /* Glassmorphism box style */
+      .glass-box {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 20px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        backdrop-filter: blur(10px);
+        padding: 40px 30px;
+        max-width: 480px;
+        margin: 60px auto;
+      }
+      .glass-box h2 {
+        font-size: 2.5rem;
+        text-align: center;
+        margin-bottom: 30px;
+      }
+      /* Form element styles for register.html */
+      .form-group {
+        margin-bottom: 20px;
+        display: flex;
+        flex-direction: column;
+      }
+      label {
+        font-size: 14px;
+        margin-bottom: 6px;
+        color: #ddd;
+        font-weight: 600;
+      }
+      input[type="text"],
+      input[type="email"],
+      input[type="password"],
+      input[type="tel"],
+      select {
+        padding: 10px 12px;
+        font-size: 16px;
+        border-radius: 8px;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        background-color: rgba(255, 255, 255, 0.1);
+        color: #fff;
+        outline: none;
+        transition: border-color 0.3s ease;
+      }
+      input[type="text"]:focus,
+      input[type="email"]:focus,
+      input[type="password"]:focus,
+      input[type="tel"]:focus,
+      select:focus {
+        border-color: #4a9eff;
+        background-color: rgba(255, 255, 255, 0.15);
+      }
+      button.btn {
+        padding: 12px 0;
+        font-size: 16px;
+        font-weight: 700;
+        border-radius: 30px;
+        cursor: pointer;
+        border: none;
+        background: linear-gradient(135deg, #4a9eff 0%, #6b5fff 100%);
+        color: #fff;
+        transition: box-shadow 0.3s ease;
+      }
+      button.btn:hover {
+        box-shadow: 0 8px 20px rgba(74, 158, 255, 0.7);
+      }
+      .login-link {
+        text-align: center;
+        margin-top: 20px;
+        color: #ccc;
+        font-size: 14px;
+      }
+      .login-link a {
+        color: #4a9eff;
+        text-decoration: none;
+        font-weight: 600;
+      }
+      .login-link a:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <nav
+        class="container"
+        style="
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 20px 0;
+        "
+      >
+        <div
+          class="logo"
+          style="font-weight: bold; font-size: 24px; color: #4a9eff"
+        >
+          <i class="fas fa-brain"></i>&nbsp;CalmSpace
+        </div>
+        <div class="nav-links" style="display: flex; gap: 20px">
+          <a
+            href="../index.html"
+            style="color: #4a9eff; text-decoration: none; font-weight: 600"
+            >Home</a
+          >
+          <a
+            href="login.html"
+            style="color: #4a9eff; text-decoration: none; font-weight: 600"
+            >Login</a
+          >
+        </div>
+      </nav>
+    </header>
+    <div class="container">
+      <div class="glass-box">
+        <h2>Register</h2>
+        <form id="register-form" onsubmit="handleRegister(event)">
+          <div class="form-group">
+            <label for="name">Username:</label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              required
+              placeholder="Enter your username"
+            />
+          </div>
+          <div class="form-group">
+            <label for="email">Email:</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              required
+              placeholder="@gmail.com"
+            />
+          </div>
+          <div class="form-group">
+            <label for="phone">Phone Number:</label>
+            <input
+              type="text"
+              id="phone"
+              name="phone"
+              required
+              placeholder="+91-"
+            />
+          </div>
+          <div class="form-group">
+            <label for="password">Password:</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              required
+              placeholder="Enter your password"
+            />
+            <div id="password-strength-bar" class="password-strength-bar"></div>
+          </div>
+          <div class="form-group">
+            <label for="confirm-password">Confirm Password:</label>
+            <input
+              type="password"
+              id="confirm-password"
+              name="confirm-password"
+              required
+              placeholder="Confirm your password"
+            />
+          </div>
+          <div class="form-group">
+            <button type="submit" class="btn btn-primary">Register</button>
+          </div>
+          <p class="login-link">
+            Already registered?
+            <a href="login.html">Login here</a>
+          </p>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      // Check password strength
+      const passwordInput = document.getElementById("password");
+      const passwordStrengthBar = document.getElementById(
+        "password-strength-bar"
+      );
+
+      passwordInput.addEventListener("input", function () {
+        const password = passwordInput.value;
+        let strength = 0;
+
+        if (password.length >= 8) strength += 1;
+        if (/[A-Z]/.test(password)) strength += 1;
+        if (/[0-9]/.test(password)) strength += 1;
+        if (/[!@#$%^&*()_+]/.test(password)) strength += 1;
+
+        if (strength === 1) {
+          passwordStrengthBar.className =
+            "password-strength-bar password-strength-weak";
+        } else if (strength === 2) {
+          passwordStrengthBar.className =
+            "password-strength-bar password-strength-medium";
+        } else if (strength === 3 || strength === 4) {
+          passwordStrengthBar.className =
+            "password-strength-bar password-strength-strong";
+        } else {
+          passwordStrengthBar.className = "password-strength-bar";
+        }
+      });
+
+      // Form submission handler
+      function handleRegister(event) {
+        event.preventDefault();
+
+        const form = document.getElementById("register-form");
+        const username = form.name.value;
+        const email = form.email.value;
+        const phone = form.phone.value;
+        const password = form.password.value;
+        const confirmPassword = form["confirm-password"].value;
+
+        if (password !== confirmPassword) {
+          alert("Passwords do not match!");
+          return;
+        }
+
+        localStorage.setItem("username", username);
+        localStorage.setItem("password", password);
+
+        alert(
+          `Successfully registered!\nUsername: ${username}\nEmail: ${email}`
+        );
+
+        window.location.href = "../index.html";
+      }
+    </script>
+  </body>
+</html>

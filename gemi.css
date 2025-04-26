@@ -809,6 +809,29 @@ main {
   line-height: 1.7;
   font-size: 1rem;
   letter-spacing: 0.01em;
+  max-height: 350px; /* Set a fixed maximum height */
+  scrollbar-width: thin; /* Firefox */
+  scrollbar-color: rgba(255, 255, 255, 0.3) transparent; /* Firefox */
+}
+
+/* Custom scrollbar styling for Webkit browsers (Chrome, Safari, Edge) */
+.response-content::-webkit-scrollbar {
+  display: block; /* Override the hidden scrollbar */
+  width: 6px;
+}
+
+.response-content::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+}
+
+.response-content::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+}
+
+.response-content::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.5);
 }
 
 .response-footer {

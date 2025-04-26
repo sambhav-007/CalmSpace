@@ -220,11 +220,13 @@ header {
 
 .member-image {
   height: 0;
- width:100%;
+  width: 100%;
   overflow: hidden;
   border-radius: 30px;
   padding-bottom: 100%;
-  position:relative;
+  position: relative;
+  max-width: 350px;
+  margin: 0 auto;
 }
 
 .member-image img {

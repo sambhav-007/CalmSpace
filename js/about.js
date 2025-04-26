@@ -47,37 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
 const darkToggle = document.querySelector(".toggle");
 const icon = darkToggle.querySelector("i");
 
-// Check for saved theme in localStorage
-const savedTheme = localStorage.getItem("theme");
-if (savedTheme) {
-  document.body.classList.toggle("dark", savedTheme === "dark");
-  if (savedTheme === "dark") {
-    icon.classList.remove("fa-moon");
-    icon.classList.add("fa-sun");
-  } else {
-    icon.classList.remove("fa-sun");
-    icon.classList.add("fa-moon");
-  }
-}
 
-darkToggle.addEventListener("click", () => {
-  document.body.classList.toggle("dark");
-
-  // Add rotation animation for smooth transition
-  icon.style.transition =
-    "transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)";
-  icon.style.transform = "rotate(360deg)";
-
-  setTimeout(() => {
-    if (document.body.classList.contains("dark")) {
-      icon.classList.remove("fa-moon");
-      icon.classList.add("fa-sun");
-      localStorage.setItem("theme", "dark");
-    } else {
-      icon.classList.remove("fa-sun");
-      icon.classList.add("fa-moon");
-      localStorage.setItem("theme", "light");
-    }
     // Reset transform after icon change
     setTimeout(() => {
       icon.style.transition = "none";

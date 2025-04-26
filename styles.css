@@ -314,32 +314,7 @@ header {
   display: none;
 }
 
-/* Footer */
-footer {
-  text-align: center;
-  padding: 3rem 2rem;
-  background: linear-gradient(135deg, var(--dark), var(--primary));
-  color: white;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-}
 
-
-
-footer a::after {
-  content: '';
-  position: absolute;
-  bottom: -2px;
-  left: 0;
-  width: 100%;
-  height: 1px;
-  background: white;
-  transform: scaleX(0);
-  transition: transform 0.3s;
-}
-
-footer a:hover::after {
-  transform: scaleX(1);
-}
 
 a, button {
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
@@ -404,6 +379,38 @@ a, button {
   pointer-events: none;
 }
 
+
+
+/* Footer */
+.about-footer {
+  text-align: center;
+  padding: 2rem 1rem;
+  background: transparent;
+  color: white;
+  border-top: none;
+  margin-top: 2rem;
+}
+
+.footer-links {
+  margin-bottom: 1rem;
+}
+
+.footer-links a {
+  color: white;
+  text-decoration: none;
+  margin: 0 0.5rem;
+  font-size: 0.9rem;
+}
+
+.footer-links a:hover {
+  text-decoration: underline;
+}
+
+.about-footer p {
+  margin: 0;
+  font-size: 0.8rem;
+  opacity: 0.8;
+}
 /* Dark Mode Styles */
 /* Removed dark mode styles as per user request */
 /* body.dark {

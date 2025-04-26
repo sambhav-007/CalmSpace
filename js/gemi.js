@@ -977,19 +977,35 @@ function setupSpeechButton(speechBtn, textarea) {
   };
 }
 
-// Initialize elements and event handlers
-document.addEventListener("DOMContentLoaded", () => {
-  // Check for first time users
-  checkFirstTimeUser();
+  // Initialize elements and event handlers
+  document.addEventListener("DOMContentLoaded", () => {
+    // Check for first time users
+    checkFirstTimeUser();
 
-  // Load saved entries
-  loadSavedEntries();
+    // Load saved entries
+    loadSavedEntries();
 
-  // Load saved draft
-  loadDraft();
+    // Load saved draft
+    loadDraft();
 
-  // Render entries in the sidebar
-  renderEntries();
+    // Render entries in the sidebar
+    renderEntries();
+
+  const themeToggle = document.querySelector(".theme-toggle");
+
+  // Setup dark mode if set in localStorage
+  const darkModeFlag = localStorage.getItem("darkMode");
+  if (darkModeFlag === "true") {
+    document.body.classList.add("dark-mode");
+    if (themeToggle) {
+      const icon = themeToggle.querySelector("i");
+      if (icon) {
+        icon.classList.remove("fa-moon");
+        icon.classList.add("fa-sun");
+      }
+    }
+    localStorage.removeItem("darkMode");
+  }
 
   // Setup word counter and focus effects for textarea
   const textarea = document.getElementById("prompt");
@@ -1123,7 +1139,6 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // Theme toggle with enhanced animation
-  const themeToggle = document.querySelector(".theme-toggle");
   themeToggle.addEventListener("click", () => {
     document.body.classList.toggle("dark-mode");
     const icon = themeToggle.querySelector("i");

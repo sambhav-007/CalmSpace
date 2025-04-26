@@ -131,7 +131,7 @@ header {
 .team-section {
   padding: 4rem 2rem;
   /* background: white; */
-  max-width: 700px;
+  max-width: 1000px;
   margin: 0 auto;
   color: white;
   text-align: center;
@@ -186,9 +186,9 @@ header {
   grid-template-areas: 
     "card1 card2 card3"
     ". card4 .";
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 3rem ;
-  max-width: 1000px;
+  grid-template-columns: 1.3fr 1.3fr 1.3fr;
+  gap: 2.5rem ;
+  max-width: 1500px;
   margin: 0 auto;
 }
 
@@ -211,6 +211,8 @@ header {
   width: 100%;
   aspect-ratio: 1/1;
   border-radius: 30px;
+  max-width: 400px;
+  margin: 0 auto;
   
 }
 
@@ -234,6 +236,7 @@ header {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center top;
   transition: transform 0.5s ease;
   border-radius: 30px;
   border: none;
@@ -243,15 +246,16 @@ header {
   position: absolute;
   top:0;
   left:0;
+  
 }
 
 .member-card:hover .member-image img {
-  transform: scale(1.1);
+  transform: scale(1.15);
   border-radius: 20px;
 }
 
 .member-info {
-  padding: 1.2rem;
+  padding: 1.4rem;
   background: linear-gradient(transparent, rgba(74, 158, 255, 0.8));
   color: white;
   position: absolute;
@@ -270,17 +274,17 @@ header {
 .linkedin-btn {
   display: inline-flex;
   align-items: center;
-  gap: 0.3rem;
+  gap: 0.4rem;
   color: white;
   text-decoration: none;
-  padding: 0.3rem 0.8rem;
+  padding: 0.4rem 1rem;
   border: 1px solid rgba(255,255,255,0.5);
   border-radius: 50px;
-  margin-top: 0.5rem;
+  margin-top: 0.7rem;
   transition: all 0.3s ease;
   box-shadow: 0 4px 15px rgba(74, 158, 255, 0.3);
   background: linear-gradient(135deg, var(--primary), var(--secondary));
-  font-size: 0.9rem;
+  font-size: 1rem;
 }
 
 .linkedin-btn:hover {
@@ -329,15 +333,15 @@ header {
 }
 
 .member-info p {
-  font-size: 0.85rem;
-  margin: 0.2rem 0;
-  line-height: 1.4;
+  font-size: 1rem;
+  margin: 0.3rem 0;
+  line-height: 1.5;
 }
 
 /* Make the member name stand out more */
 .member-info h3 {
-  margin-bottom: 0.2rem;
-  font-size: 1.1rem;
+  margin-bottom: 0.3rem;
+  font-size: 1.3rem;
 }
 
 a, button {

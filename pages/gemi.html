@@ -4,8 +4,15 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <link rel="stylesheet" href="gemi.css" />
-    <link rel="stylesheet" href="meditation.css" />
+    <!-- Favicon -->
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧠</text></svg>"
+      type="image/svg+xml"
+    />
+
+    <link rel="stylesheet" href="../css/gemi.css" />
+    <link rel="stylesheet" href="../css/meditation.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
@@ -21,6 +28,7 @@
           <span>CalmSpace</span>
         </div>
         <div class="nav-links">
+          <a href="../index.html">Home</a>
           <a href="gemi.html" class="active">Journal</a>
         </div>
         <div class="navbar-actions">
@@ -71,11 +79,29 @@
           </div>
 
           <div class="journal-section">
-            <h1 class="gradient-text">Reflect & Grow</h1>
-            <p class="subtitle">
-              Express your thoughts freely and let AI guide your self-discovery
-              journey
-            </p>
+            <div
+              style="text-align: center; margin-bottom: 35px; padding: 20px 0"
+            >
+              <h1
+                class="gradient-text"
+                style="margin: 0 auto; display: inline-block; font-size: 3.2rem"
+              >
+                Reflect & Grow
+              </h1>
+              <p
+                class="subtitle"
+                style="
+                  margin: 15px auto 0;
+                  max-width: 90%;
+                  color: rgba(255, 255, 255, 0.85);
+                  font-size: 1.15rem;
+                  line-height: 1.6;
+                "
+              >
+                Express your thoughts freely and let AI guide your
+                self-discovery journey
+              </p>
+            </div>
 
             <div class="journal-input glass-morphism">
               <div class="journal-input-header">
@@ -319,7 +345,7 @@
     <div class="meditation-container" id="meditation-container"></div>
 
     <!-- JavaScript -->
-    <script src="meditation.js"></script>
-    <script src="gemi.js"></script>
+    <script src="../js/meditation.js"></script>
+    <script src="../js/gemi.js"></script>
   </body>
 </html>

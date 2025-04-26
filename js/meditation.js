@@ -135,15 +135,15 @@ class MeditationTimer {
     // Define local audio files
     const audioFiles = {
       // Ambient sounds
-      nature: "audio/nature-ambient.mp3",
-      rain: "audio/rain-ambient.mp3",
-      waves: "audio/waves-ambient.mp3",
-      whiteNoise: "audio/white-noise.mp3",
+      nature: "../assets/audio/nature-ambient.mp3",
+      rain: "../assets/audio/rain-ambient.mp3",
+      waves: "../assets/audio/waves-ambient.mp3",
+      whiteNoise: "../assets/audio/white-noise.mp3",
 
       // End sounds
-      bowl: "audio/singing-bowl.mp3",
-      bell: "audio/meditation-bell.mp3",
-      gong: "audio/meditation-gong.mp3",
+      bowl: "../assets/audio/singing-bowl.mp3",
+      bell: "../assets/audio/meditation-bell.mp3",
+      gong: "../assets/audio/meditation-gong.mp3",
     };
 
     // Fallback to online sources if local files fail

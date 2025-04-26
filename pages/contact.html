@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact Us</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <style>
+      :root {
+        --gradient-accent: linear-gradient(120deg, #00d4ff, #e100ff);
+        --transition-normal: 0.3s ease;
+        --spacing-sm: 0.5rem;
+      }
+
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: var(--spacing-sm);
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: white;
+      }
+
+      .logo i {
+        background: var(--gradient-accent);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        font-size: 1.8rem;
+        transition: transform var(--transition-normal);
+      }
+
+      /* Logo animation */
+      .logo:hover i {
+        transform: rotate(10deg) scale(1.1);
+      }
+    </style>
+    <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+  <div class="container">
+    <header>
+        <nav>
+          <div class="logo">
+            <i class="fas fa-brain"></i>&nbsp;CalmSpace
+          </div>
+          <button class="menu-toggle" aria-label="Toggle navigation menu">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <line x1="3" y1="12" x2="21" y2="12"></line>
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+          </button>
+          <div class="nav-links">
+            <a href="../index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="blog.html">Blog</a>
+            <a href="../index.html#pricing">Plans</a>
+            <a href="../index.html#faq">FAQs</a>
+          </div>
+          <div class="auth-buttons">
+            <a href="login.html" class="btn-auth login-btn">Login</a>
+            <a href="register.html" class="btn-auth register-btn"
+              >Register</a
+            >
+          </div>
+          <div class="toggle">
+            <i class="fas fa-moon"></i>
+          </div>
+        </nav>
+    </header>
+    <main>
+        <h1 style="text-align:center; margin-top: 40px; margin-bottom: 40px;">Contact Us</h1>
+        <section id="contact-form">
+            <h2>Send us a message</h2>
+            <form action="https://formsubmit.co/sambhav.sehgal.007@gmail.com" method="POST">
+                <label for="name">Name:</label><br />
+                <input type="text" id="name" name="name" required /><br /><br />
+                
+                <label for="email">Email:</label><br />
+                <input type="email" id="email" name="email" required /><br /><br />
+                
+                <label for="message">Message:</label><br />
+                <textarea id="message" name="message" rows="5" required></textarea><br /><br />
+                
+                <button type="submit">Submit</button>
+            </form>
+        </section>
+        <section id="contact-info">
+            <h2>Contact Information</h2>
+            <p>Address: 1234 Calm Street, Peace City, Country</p>
+            <p>Phone: +1 (555) 123-4567</p>
+            <p>Email: contact@calmspace.com</p>
+        </section>
+    </main>
+  </div>
+  <script src="../js/main.js"></script>
+</body>
+</html>

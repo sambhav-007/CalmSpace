@@ -1,4 +1,4 @@
-# 🌿 CalmSpace – Your AI Therapist 🌟
+#  🧠 CalmSpace – Your AI Therapist 🌟
 
 Welcome to **CalmSpace**, your personal AI-powered virtual therapist. CalmSpace is designed to promote mental wellness by offering empathetic conversations, engaging meditation tools, and a calming user experience.
 
@@ -51,9 +51,13 @@ CalmSpace offers a wide range of features to promote mental wellness and mindful
 ## 🎓 Credits
 
 CalmSpace was developed as part of the SCM course project by the LazyDevs team. 👩‍💻👨‍💻
+
 Sambhav Sehgal
+
 Shivin Azad
+
 Shivansh Chandel
+
 Kashvi Goyal
 
 ---

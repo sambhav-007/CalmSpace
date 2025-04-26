@@ -1,22 +1,55 @@
-  <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>About Us - CalmSpace</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About Us | CalmSpace</title>
+  <link rel="icon" href="../assets/favicon/favicon.ico" type="image/x-icon" />
+  <style>
+    :root {
+      --gradient-accent: linear-gradient(120deg, #00d4ff, #e100ff);
+      --transition-normal: 0.3s ease;
+      --spacing-sm: 0.5rem;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-sm);
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: white;
+    }
+
+    .logo i {
+      background: var(--gradient-accent);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      font-size: 1.8rem;
+      transition: transform var(--transition-normal);
+    }
+
+    /* Logo animation */
+    .logo:hover i {
+      transform: rotate(10deg) scale(1.1);
+    }
+  </style>
+  <link rel="stylesheet" href="../css/styles.css" />
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+  />
 </head>
 <body>
   <header>
     <nav class="navbar">
       
-      <div class="logo" style="color:#4a9eff; font-weight:bold; font-size:24px;">
+      <div class="logo">
         <i class="fas fa-brain"></i>&nbsp;CalmSpace
       </div>
       <ul class="nav-links">
-        <li><a href="index.html">Home</a></li>
+        <li><a href="../index.html">Home</a></li>
         <li><a href="about.html" class="active">About</a></li>
         <li><a href="contact.html">Contact</a></li>
       </ul>
@@ -64,7 +97,7 @@
     <div class="team-grid">
       <div class="member-card">
         <div class="member-image">
-          <img src="collaborator1.jpg" alt="Sambhav Sehgal">
+          <img src="../assets/images/collaborator1.jpg" alt="Sambhav Sehgal">
         </div>
         <div class="member-info">
           <h3>Sambhav Sehgal</h3>
@@ -77,7 +110,7 @@
       </div>
       <div class="member-card">
         <div class="member-image">
-          <img src="collaborator2.jpg" alt="Shivin Azad">
+          <img src="../assets/images/collaborator2.jpg" alt="Shivin Azad">
         </div>
         <div class="member-info">
           <h3>Shivin Azad</h3>
@@ -90,7 +123,7 @@
       </div>
       <div class="member-card">
         <div class="member-image">
-          <img src="collaborator3.jpg" alt="Shivansh Rajput">
+          <img src="../assets/images/collaborator3.jpg" alt="Shivansh Rajput">
         </div>
         <div class="member-info">
           <h3>Shivansh Rajput</h3>
@@ -103,7 +136,7 @@
       </div>
       <div class="member-card">
         <div class="member-image">
-          <img src="collaborator4.jpg" alt="Kashvi Goyal">
+          <img src="../assets/images/collaborator4.jpg" alt="Kashvi Goyal">
         </div>
         <div class="member-info">
           <h3>Kashvi Goyal</h3>
@@ -139,8 +172,8 @@
       <div class="footer-content">
     <div class="footer-links" style="margin-bottom: 1rem;">
       <a href="about.html">About</a>
-      <a href="index.html#features">Features</a>
-      <a href="index.html#pricing">Plans</a>
+      <a href="../index.html#features">Features</a>
+      <a href="../index.html#pricing">Plans</a>
       <a href="privacy.html">Privacy</a>
       <a href="terms&condition.html">Terms</a>
       <a href="contact.html">Contact</a>
@@ -151,7 +184,7 @@
 
   <div id="overlay" class="overlay"></div>
 
-  <script src="about.js"></script>
-  <script src="main.js"></script>
+  <script src="../js/about.js"></script>
+  <script src="../js/main.js"></script>
 </body>
 </html>

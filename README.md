@@ -1,36 +1,63 @@
-🧠 CalmSpace – Your AI Therapist
+# 🌿 CalmSpace – Your AI Therapist 🌟
 
-**CalmSpace** is a smart, AI-powered virtual therapist designed to promote mental wellness by offering empathetic conversations, emotional check-ins, and personalized wellness tips. This project is developed as part of a **Source Code Management (SCM)** course, emphasizing version control, collaboration, and code quality practices.
+Welcome to **CalmSpace**, your personal AI-powered virtual therapist. CalmSpace is designed to promote mental wellness by offering empathetic conversations, engaging meditation tools, and a calming user experience.
+
+---
+
+## ✨ Features
+
+CalmSpace offers a wide range of features to promote mental wellness and mindfulness:
+
+### 🧘‍♂️ Meditation Timer
+- **Ambient Sounds**: Choose from nature, rainfall, ocean waves, or white noise for a calming experience.
+- **Ending Sounds**: Signal the end of your meditation with a bell, singing bowl, or gong.
+- **Customizable Duration**: Set meditation sessions from 1 to 60 minutes.
+- **Volume Control**: Adjust sound levels to your preference.
+
+### 💬 AI-Powered Virtual Therapist
+- **Empathetic Conversations**: Engage in meaningful conversations tailored to your emotional needs.
+- **Personalized Wellness Tips**: Receive recommendations based on your mood and mental health goals.
+- **Daily Emotional Check-Ins**: Track your emotional progress over time.
+
+### 📊 Mood & Progress Tracking
+- **Analytics Dashboard**: Visualize emotional patterns and identify triggers.
+- **Insights & Reflection**: Review past conversations and see how your mental well-being has evolved.
+
+### 📱 Cross-Platform Accessibility
+- **Web and Mobile Apps**: Synchronize your account across devices for seamless access.
+- **Offline Mode**: Use guided meditations and quick check-ins without an internet connection.
+- **Push Notifications**: Stay consistent with reminders for emotional check-ins.
+
+### 🛠 Evidence-Based Therapeutic Techniques
+- **Cognitive Behavioral Therapy (CBT)**: Develop healthier thought patterns.
+- **Mindfulness-Based Stress Reduction (MBSR)**: Practice mindfulness to reduce stress.
+- **Acceptance and Commitment Therapy (ACT)**: Learn to accept and commit to positive actions.
+
+### 🔒 Secure and Private
+- **End-to-End Encryption**: Protect your conversations and data.
+- **GDPR and HIPAA Compliance**: Ensure your privacy and data security.
+- **Complete Anonymity**: Control your data with the ability to delete it anytime.
 
 ---
 
-## Features
+## 🛠 Development
 
-### Meditation Timer with Ambient Sounds
-
-CalmSpace includes a meditation timer with customizable ambient sounds to help you relax and focus:
-
-- **Ambient Sounds**: Choose from nature sounds, rainfall, ocean waves, or white noise to create the perfect meditation environment
-- **Ending Sounds**: Select a bell, singing bowl, or gong to gently signal the end of your meditation session
-- **Customizable Duration**: Set your preferred meditation length from 1-60 minutes
-- **Volume Control**: Adjust the sound volume to your comfort level
-
-#### Custom Sound Files
-
-You can customize the meditation experience by replacing the audio files in the `/audio` directory with your own:
-
-- **Ambient Sound Files**:
-
-  - `nature-ambient.mp3`: Nature soundscape
-  - `rain-ambient.mp3`: Rainfall sounds
-  - `waves-ambient.mp3`: Ocean waves
-  - `white-noise.mp3`: White noise
-
-- **Ending Sound Files**:
-  - `meditation-bell.mp3`: Bell sound
-  - `singing-bowl.mp3`: Tibetan singing bowl
-  - `meditation-gong.mp3`: Meditation gong
-
-**Note**: For best experience, ambient sounds should be 1-3 minutes long and set to loop, while ending sounds should be 3-10 seconds long.
+- 🖥 Built with **HTML**, **CSS**, and **JavaScript**.
+- 🎨 Designed with a modern, dark-themed UI.
+- 📱 Responsive design for both desktop and mobile devices.
 
 ---
+
+## 🎓 Credits
+
+CalmSpace was developed as part of the SCM course project by the LazyDevs team. 👩‍💻👨‍💻
+Sambhav Sehgal
+Shivin Azad
+Shivansh Chandel
+Kashvi Goyal
+
+---
+
+## 💖 Thank You!
+
+Thank you for exploring **CalmSpace**! We hope it helps you find moments of peace and mindfulness. 🌸

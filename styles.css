@@ -187,8 +187,8 @@ header {
     "card1 card2 card3"
     ". card4 .";
   grid-template-columns: 1fr 1fr 1fr;
-  gap: 2rem;
-  max-width: 800px;
+  gap: 3rem ;
+  max-width: 1000px;
   margin: 0 auto;
 }
 
@@ -208,6 +208,9 @@ header {
   transition: all 0.3s ease;
   cursor: pointer;
   position: relative;
+  width: 100%;
+  aspect-ratio: 1/1;
+  border-radius: 30px;
 }
 
 .member-card:hover {
@@ -216,10 +219,12 @@ header {
 }
 
 .member-image {
-  height: 300px;
- 
+  height: 0;
+ width:100%;
   overflow: hidden;
   border-radius: 30px;
+  padding-bottom: 100%;
+  position:relative;
 }
 
 .member-image img {
@@ -232,6 +237,9 @@ header {
   outline: none;
   -webkit-tap-highlight-color: transparent;
   -webkit-focus-ring-color: transparent;
+  position: absolute;
+  top:0;
+  left:0;
 }
 
 .member-card:hover .member-image img {

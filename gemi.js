@@ -633,6 +633,55 @@ function setupFullscreenMode() {
       // Sync content from main textarea
       textarea.value = document.getElementById("prompt").value;
 
+      // Setup word counter in fullscreen mode
+      const wordCounter = fullscreenMode.querySelector(".word-counter");
+      if (wordCounter) {
+        // Update word count initially
+        const text = textarea.value;
+        const count = text.trim() ? text.trim().split(/\s+/).length : 0;
+        wordCounter.textContent = `${count} words`;
+
+        // Add input event listener for word counting in fullscreen mode
+        textarea.addEventListener(
+          "input",
+          debounce(() => {
+            // Get word count
+            const text = textarea.value;
+            const wordCount = text.trim() ? text.trim().split(/\s+/).length : 0;
+
+            // Update word counter
+            wordCounter.textContent = `${wordCount} words`;
+
+            // Visual indication for word count limits
+            if (wordCount > 400) {
+              wordCounter.classList.add("limit-near");
+            } else {
+              wordCounter.classList.remove("limit-near");
+            }
+
+            if (wordCount > 500) {
+              wordCounter.classList.add("limit-reached");
+            } else {
+              wordCounter.classList.remove("limit-reached");
+            }
+
+            // Auto-save draft while typing
+            autoSaveDraft();
+          }, 300)
+        );
+      }
+
+      // Setup speech-to-text in fullscreen mode
+      const fullscreenSpeechBtn = fullscreenMode.querySelector(".speech-btn");
+      if (fullscreenSpeechBtn && window.speechRecognition) {
+        setupSpeechButton(fullscreenSpeechBtn, textarea);
+
+        // If we're already recording, show the recording state in fullscreen mode
+        if (window.isRecording) {
+          fullscreenSpeechBtn.classList.add("recording");
+        }
+      }
+
       // Focus the textarea
       setTimeout(() => {
         textarea.focus();
@@ -797,15 +846,14 @@ function incrementMeditationUsage() {
 
 // Setup speech-to-text functionality
 function setupSpeechToText() {
-  const speechBtn = document.querySelector(".speech-btn");
-  const textarea = document.getElementById("prompt");
-
   // Check if browser supports speech recognition
   if (
     !("webkitSpeechRecognition" in window) &&
     !("SpeechRecognition" in window)
   ) {
-    speechBtn.style.display = "none";
+    document.querySelectorAll(".speech-btn").forEach((btn) => {
+      btn.style.display = "none";
+    });
     return;
   }
 
@@ -818,33 +866,64 @@ function setupSpeechToText() {
   recognition.interimResults = true;
   recognition.lang = "en-US";
 
-  let isRecording = false;
+  // Store recognition instance globally so it can be accessed from fullscreen mode
+  window.speechRecognition = recognition;
+
+  // Keep track of recording state
+  window.isRecording = false;
+
+  // Setup speech recognition for the main view
+  setupSpeechButton(
+    document.querySelector(".speech-btn"),
+    document.getElementById("prompt")
+  );
+}
+
+// Helper function to set up speech button functionality
+function setupSpeechButton(speechBtn, textarea) {
+  if (!speechBtn || !textarea) return;
+
+  const recognition = window.speechRecognition;
+  if (!recognition) return;
 
   speechBtn.addEventListener("click", () => {
-    if (isRecording) {
+    if (window.isRecording) {
       // Stop recording
       recognition.stop();
-      speechBtn.classList.remove("recording");
+      // Remove recording class from all speech buttons
+      document.querySelectorAll(".speech-btn").forEach((btn) => {
+        btn.classList.remove("recording");
+      });
+      window.isRecording = false;
       showNotification("Voice recording stopped");
     } else {
       // Start recording
       recognition.start();
-      speechBtn.classList.add("recording");
+      // Add recording class to all speech buttons
+      document.querySelectorAll(".speech-btn").forEach((btn) => {
+        btn.classList.add("recording");
+      });
+      window.isRecording = true;
       showNotification("Listening... Speak now");
     }
-
-    isRecording = !isRecording;
   });
 
   // Process speech results
   recognition.onresult = (event) => {
+    // Determine which textarea is active - either main or fullscreen
+    const activeTextarea =
+      document.activeElement.tagName === "TEXTAREA"
+        ? document.activeElement
+        : document.querySelector(".fullscreen-mode textarea") ||
+          document.getElementById("prompt");
+
     let interimTranscript = "";
     let finalTranscript = "";
 
     // Get current cursor position
-    const cursorPos = textarea.selectionStart;
-    const textBeforeCursor = textarea.value.substring(0, cursorPos);
-    const textAfterCursor = textarea.value.substring(cursorPos);
+    const cursorPos = activeTextarea.selectionStart;
+    const textBeforeCursor = activeTextarea.value.substring(0, cursorPos);
+    const textAfterCursor = activeTextarea.value.substring(cursorPos);
 
     // Process recognition results
     for (let i = event.resultIndex; i < event.results.length; i++) {
@@ -859,11 +938,12 @@ function setupSpeechToText() {
 
     // Insert recognized text at cursor position
     if (finalTranscript) {
-      textarea.value = textBeforeCursor + finalTranscript + textAfterCursor;
-      textarea.selectionStart = textarea.selectionEnd =
+      activeTextarea.value =
+        textBeforeCursor + finalTranscript + textAfterCursor;
+      activeTextarea.selectionStart = activeTextarea.selectionEnd =
         cursorPos + finalTranscript.length;
 
-      // Update word count
+      // Update word count - works for both normal and fullscreen modes
       updateWordCount();
     }
   };
@@ -876,17 +956,23 @@ function setupSpeechToText() {
       showNotification(`Error: ${event.error}`);
     }
 
-    isRecording = false;
-    speechBtn.classList.remove("recording");
+    window.isRecording = false;
+    // Remove recording class from all speech buttons
+    document.querySelectorAll(".speech-btn").forEach((btn) => {
+      btn.classList.remove("recording");
+    });
   };
 
   // Handle when recognition ends
   recognition.onend = () => {
-    if (isRecording) {
+    if (window.isRecording) {
       // Auto restart if still in recording mode
       recognition.start();
     } else {
-      speechBtn.classList.remove("recording");
+      // Remove recording class from all speech buttons
+      document.querySelectorAll(".speech-btn").forEach((btn) => {
+        btn.classList.remove("recording");
+      });
     }
   };
 }
@@ -1259,23 +1345,46 @@ async function askGemini() {
     promptWithEmotion = `I'm feeling ${selectedEmotion} today. ${userInput}`;
   }
 
-  // Calculate journal length to determine response length
+  // Calculate journal length to determine appropriate response length
   const wordCount = promptWithEmotion.trim().split(/\s+/).length;
-  const isShortJournal = wordCount < 30;
 
-  // Create a strict prompt that demands extremely short responses
-  const promptText = `CRITICAL INSTRUCTION: You are a therapeutic companion. Your responses MUST be extremely brief.
-  
-  ${
-    isShortJournal
-      ? "RESPOND WITH EXACTLY ONE SENTENCE, MAXIMUM 15 WORDS TOTAL. NO EXCEPTIONS."
-      : "MAXIMUM 2 SENTENCES, NEVER MORE THAN 25 WORDS TOTAL. NO EXCEPTIONS."
+  // Dynamically adjust response length based on journal length
+  let responseLength;
+  let sentenceCount;
+
+  if (wordCount < 30) {
+    // Short journal entries get concise responses
+    responseLength = "70-120 words";
+    sentenceCount = "3-4 sentences";
+  } else if (wordCount < 100) {
+    // Medium journal entries get medium responses
+    responseLength = "120-180 words";
+    sentenceCount = "5-6 sentences";
+  } else if (wordCount < 250) {
+    // Longer journal entries get more substantial responses
+    responseLength = "180-250 words";
+    sentenceCount = "7-8 sentences";
+  } else {
+    // Very long journal entries get comprehensive responses
+    responseLength = "250-350 words";
+    sentenceCount = "9-12 sentences";
   }
+
+  // Create a therapeutic prompt that encourages thoughtful, empathetic responses
+  // with dynamic length based on the user's journal length
+  const promptText = `IMPORTANT INSTRUCTION: You are a skilled, empathetic therapist responding to a journal entry. 
   
-  Your response should be warm but extremely concise. Use contractions. 
-  NO greetings, NO introductions, NO "I understand" phrases.
-  NEVER mention the word limits in your response.
-  Be insightful but brief.
+  Provide a thoughtful, insightful response that sounds like it's coming from a real therapist.
+  
+  Your response should:
+  - Be warm, empathetic, and validating of the person's feelings
+  - Include ${sentenceCount} (about ${responseLength})
+  - Offer gentle perspective or insights based on what they've shared
+  - Use a conversational, supportive tone with some therapeutic language
+  - Avoid sounding robotic or formulaic
+  - Never start with phrases like "I understand" or "I hear you"
+  - Don't ask questions since this is a one-way reflection
+  - End with a gentle, affirming statement
   
   Journal entry: "${promptWithEmotion}"`;
 
@@ -1297,7 +1406,9 @@ async function askGemini() {
         body: JSON.stringify({
           contents: conversationHistory,
           generationConfig: {
-            maxOutputTokens: 50,
+            // Dynamically adjust the max tokens based on journal length
+            maxOutputTokens:
+              wordCount < 100 ? 250 : wordCount < 250 ? 350 : 500,
             temperature: 0.7,
           },
         }),
@@ -1309,22 +1420,6 @@ async function askGemini() {
 
     if (data.candidates && data.candidates[0]?.content?.parts?.[0]?.text) {
       let reply = data.candidates[0].content.parts[0].text.trim();
-
-      // Additional safeguard: Truncate long responses
-      const replyWords = reply.split(/\s+/);
-      const maxWords = isShortJournal ? 15 : 25;
-
-      if (replyWords.length > maxWords) {
-        reply = replyWords.slice(0, maxWords).join(" ");
-        // Ensure proper ending punctuation
-        if (
-          !reply.endsWith(".") &&
-          !reply.endsWith("!") &&
-          !reply.endsWith("?")
-        ) {
-          reply += ".";
-        }
-      }
 
       // Add the AI's reply to the conversation history
       conversationHistory.push({

@@ -1,0 +1,157 @@
+/* readme-preview.css - Styles for markdown preview of README.md in CalmSpace project */
+
+body {
+  background: linear-gradient(135deg, #2e1d5b 0%, #3d2a7d 50%, #453291 100%);
+  color: #e0e7ff;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding: 2rem 3rem;
+  line-height: 1.6;
+  min-height: 100vh;
+  margin: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #a5b4fc;
+  font-weight: 700;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  line-height: 1.25;
+}
+
+h1 {
+  font-size: 2.8rem;
+  border-bottom: 2px solid #6366f1;
+  padding-bottom: 0.3rem;
+}
+
+h2 {
+  font-size: 2.2rem;
+  border-bottom: 1.5px solid #818cf8;
+  padding-bottom: 0.25rem;
+}
+
+h3 {
+  font-size: 1.8rem;
+}
+
+p {
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+  color: #d1d5db;
+}
+
+a {
+  color: #818cf8;
+  text-decoration: none;
+  border-bottom: 1px solid #818cf8;
+  transition: color 0.3s ease, border-color 0.3s ease;
+}
+
+a:hover {
+  color: #a5b4fc;
+  border-color: #a5b4fc;
+}
+
+ul, ol {
+  margin-left: 2rem;
+  margin-bottom: 1rem;
+  color: #c7d2fe;
+}
+
+li {
+  margin-bottom: 0.5rem;
+}
+
+code, pre {
+  font-family: 'Courier New', Courier, monospace;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  padding: 0.2rem 0.4rem;
+  font-size: 0.95rem;
+  color: #facc15;
+}
+
+pre {
+  padding: 1rem;
+  overflow-x: auto;
+  margin-bottom: 1.5rem;
+}
+
+blockquote {
+  border-left: 4px solid #6366f1;
+  padding-left: 1rem;
+  color: #a5b4fc;
+  font-style: italic;
+  margin: 1.5rem 0;
+  background: rgba(99, 102, 241, 0.1);
+  border-radius: 6px;
+}
+
+hr {
+  border: none;
+  border-top: 1px solid #6366f1;
+  margin: 2rem 0;
+}
+
+strong {
+  color: #c7d2fe;
+  font-weight: 700;
+}
+
+em {
+  color: #a5b4fc;
+  font-style: italic;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1.5rem;
+}
+
+th, td {
+  border: 1px solid #6366f1;
+  padding: 0.5rem 1rem;
+  text-align: left;
+  color: #c7d2fe;
+}
+
+th {
+  background-color: rgba(99, 102, 241, 0.3);
+}
+
+img {
+  max-width: 100%;
+  border-radius: 8px;
+  margin: 1rem 0;
+}
+
+/* Scrollbar for code blocks */
+pre::-webkit-scrollbar {
+  height: 8px;
+}
+
+pre::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+pre::-webkit-scrollbar-thumb {
+  background-color: #818cf8;
+  border-radius: 4px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  body {
+    padding: 1rem 1.5rem;
+  }
+  h1 {
+    font-size: 2rem;
+  }
+  h2 {
+    font-size: 1.6rem;
+  }
+  h3 {
+    font-size: 1.3rem;
+  }
+}

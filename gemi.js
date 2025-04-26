@@ -633,6 +633,55 @@ function setupFullscreenMode() {
       // Sync content from main textarea
       textarea.value = document.getElementById("prompt").value;
 
+      // Setup word counter in fullscreen mode
+      const wordCounter = fullscreenMode.querySelector(".word-counter");
+      if (wordCounter) {
+        // Update word count initially
+        const text = textarea.value;
+        const count = text.trim() ? text.trim().split(/\s+/).length : 0;
+        wordCounter.textContent = `${count} words`;
+
+        // Add input event listener for word counting in fullscreen mode
+        textarea.addEventListener(
+          "input",
+          debounce(() => {
+            // Get word count
+            const text = textarea.value;
+            const wordCount = text.trim() ? text.trim().split(/\s+/).length : 0;
+
+            // Update word counter
+            wordCounter.textContent = `${wordCount} words`;
+
+            // Visual indication for word count limits
+            if (wordCount > 400) {
+              wordCounter.classList.add("limit-near");
+            } else {
+              wordCounter.classList.remove("limit-near");
+            }
+
+            if (wordCount > 500) {
+              wordCounter.classList.add("limit-reached");
+            } else {
+              wordCounter.classList.remove("limit-reached");
+            }
+
+            // Auto-save draft while typing
+            autoSaveDraft();
+          }, 300)
+        );
+      }
+
+      // Setup speech-to-text in fullscreen mode
+      const fullscreenSpeechBtn = fullscreenMode.querySelector(".speech-btn");
+      if (fullscreenSpeechBtn && window.speechRecognition) {
+        setupSpeechButton(fullscreenSpeechBtn, textarea);
+
+        // If we're already recording, show the recording state in fullscreen mode
+        if (window.isRecording) {
+          fullscreenSpeechBtn.classList.add("recording");
+        }
+      }
+
       // Focus the textarea
       setTimeout(() => {
         textarea.focus();
@@ -797,15 +846,14 @@ function incrementMeditationUsage() {
 
 // Setup speech-to-text functionality
 function setupSpeechToText() {
-  const speechBtn = document.querySelector(".speech-btn");
-  const textarea = document.getElementById("prompt");
-
   // Check if browser supports speech recognition
   if (
     !("webkitSpeechRecognition" in window) &&
     !("SpeechRecognition" in window)
   ) {
-    speechBtn.style.display = "none";
+    document.querySelectorAll(".speech-btn").forEach((btn) => {
+      btn.style.display = "none";
+    });
     return;
   }
 
@@ -818,33 +866,64 @@ function setupSpeechToText() {
   recognition.interimResults = true;
   recognition.lang = "en-US";
 
-  let isRecording = false;
+  // Store recognition instance globally so it can be accessed from fullscreen mode
+  window.speechRecognition = recognition;
+
+  // Keep track of recording state
+  window.isRecording = false;
+
+  // Setup speech recognition for the main view
+  setupSpeechButton(
+    document.querySelector(".speech-btn"),
+    document.getElementById("prompt")
+  );
+}
+
+// Helper function to set up speech button functionality
+function setupSpeechButton(speechBtn, textarea) {
+  if (!speechBtn || !textarea) return;
+
+  const recognition = window.speechRecognition;
+  if (!recognition) return;
 
   speechBtn.addEventListener("click", () => {
-    if (isRecording) {
+    if (window.isRecording) {
       // Stop recording
       recognition.stop();
-      speechBtn.classList.remove("recording");
+      // Remove recording class from all speech buttons
+      document.querySelectorAll(".speech-btn").forEach((btn) => {
+        btn.classList.remove("recording");
+      });
+      window.isRecording = false;
       showNotification("Voice recording stopped");
     } else {
       // Start recording
       recognition.start();
-      speechBtn.classList.add("recording");
+      // Add recording class to all speech buttons
+      document.querySelectorAll(".speech-btn").forEach((btn) => {
+        btn.classList.add("recording");
+      });
+      window.isRecording = true;
       showNotification("Listening... Speak now");
     }
-
-    isRecording = !isRecording;
   });
 
   // Process speech results
   recognition.onresult = (event) => {
+    // Determine which textarea is active - either main or fullscreen
+    const activeTextarea =
+      document.activeElement.tagName === "TEXTAREA"
+        ? document.activeElement
+        : document.querySelector(".fullscreen-mode textarea") ||
+          document.getElementById("prompt");
+
     let interimTranscript = "";
     let finalTranscript = "";
 
     // Get current cursor position
-    const cursorPos = textarea.selectionStart;
-    const textBeforeCursor = textarea.value.substring(0, cursorPos);
-    const textAfterCursor = textarea.value.substring(cursorPos);
+    const cursorPos = activeTextarea.selectionStart;
+    const textBeforeCursor = activeTextarea.value.substring(0, cursorPos);
+    const textAfterCursor = activeTextarea.value.substring(cursorPos);
 
     // Process recognition results
     for (let i = event.resultIndex; i < event.results.length; i++) {
@@ -859,11 +938,12 @@ function setupSpeechToText() {
 
     // Insert recognized text at cursor position
     if (finalTranscript) {
-      textarea.value = textBeforeCursor + finalTranscript + textAfterCursor;
-      textarea.selectionStart = textarea.selectionEnd =
+      activeTextarea.value =
+        textBeforeCursor + finalTranscript + textAfterCursor;
+      activeTextarea.selectionStart = activeTextarea.selectionEnd =
         cursorPos + finalTranscript.length;
 
-      // Update word count
+      // Update word count - works for both normal and fullscreen modes
       updateWordCount();
     }
   };
@@ -876,17 +956,23 @@ function setupSpeechToText() {
       showNotification(`Error: ${event.error}`);
     }
 
-    isRecording = false;
-    speechBtn.classList.remove("recording");
+    window.isRecording = false;
+    // Remove recording class from all speech buttons
+    document.querySelectorAll(".speech-btn").forEach((btn) => {
+      btn.classList.remove("recording");
+    });
   };
 
   // Handle when recognition ends
   recognition.onend = () => {
-    if (isRecording) {
+    if (window.isRecording) {
       // Auto restart if still in recording mode
       recognition.start();
     } else {
-      speechBtn.classList.remove("recording");
+      // Remove recording class from all speech buttons
+      document.querySelectorAll(".speech-btn").forEach((btn) => {
+        btn.classList.remove("recording");
+      });
     }
   };
 }

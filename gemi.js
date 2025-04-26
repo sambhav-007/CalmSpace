@@ -1259,23 +1259,46 @@ async function askGemini() {
     promptWithEmotion = `I'm feeling ${selectedEmotion} today. ${userInput}`;
   }
 
-  // Calculate journal length to determine response length
+  // Calculate journal length to determine appropriate response length
   const wordCount = promptWithEmotion.trim().split(/\s+/).length;
-  const isShortJournal = wordCount < 30;
 
-  // Create a strict prompt that demands extremely short responses
-  const promptText = `CRITICAL INSTRUCTION: You are a therapeutic companion. Your responses MUST be extremely brief.
-  
-  ${
-    isShortJournal
-      ? "RESPOND WITH EXACTLY ONE SENTENCE, MAXIMUM 15 WORDS TOTAL. NO EXCEPTIONS."
-      : "MAXIMUM 2 SENTENCES, NEVER MORE THAN 25 WORDS TOTAL. NO EXCEPTIONS."
+  // Dynamically adjust response length based on journal length
+  let responseLength;
+  let sentenceCount;
+
+  if (wordCount < 30) {
+    // Short journal entries get concise responses
+    responseLength = "70-120 words";
+    sentenceCount = "3-4 sentences";
+  } else if (wordCount < 100) {
+    // Medium journal entries get medium responses
+    responseLength = "120-180 words";
+    sentenceCount = "5-6 sentences";
+  } else if (wordCount < 250) {
+    // Longer journal entries get more substantial responses
+    responseLength = "180-250 words";
+    sentenceCount = "7-8 sentences";
+  } else {
+    // Very long journal entries get comprehensive responses
+    responseLength = "250-350 words";
+    sentenceCount = "9-12 sentences";
   }
+
+  // Create a therapeutic prompt that encourages thoughtful, empathetic responses
+  // with dynamic length based on the user's journal length
+  const promptText = `IMPORTANT INSTRUCTION: You are a skilled, empathetic therapist responding to a journal entry. 
   
-  Your response should be warm but extremely concise. Use contractions. 
-  NO greetings, NO introductions, NO "I understand" phrases.
-  NEVER mention the word limits in your response.
-  Be insightful but brief.
+  Provide a thoughtful, insightful response that sounds like it's coming from a real therapist.
+  
+  Your response should:
+  - Be warm, empathetic, and validating of the person's feelings
+  - Include ${sentenceCount} (about ${responseLength})
+  - Offer gentle perspective or insights based on what they've shared
+  - Use a conversational, supportive tone with some therapeutic language
+  - Avoid sounding robotic or formulaic
+  - Never start with phrases like "I understand" or "I hear you"
+  - Don't ask questions since this is a one-way reflection
+  - End with a gentle, affirming statement
   
   Journal entry: "${promptWithEmotion}"`;
 
@@ -1297,7 +1320,9 @@ async function askGemini() {
         body: JSON.stringify({
           contents: conversationHistory,
           generationConfig: {
-            maxOutputTokens: 50,
+            // Dynamically adjust the max tokens based on journal length
+            maxOutputTokens:
+              wordCount < 100 ? 250 : wordCount < 250 ? 350 : 500,
             temperature: 0.7,
           },
         }),
@@ -1309,22 +1334,6 @@ async function askGemini() {
 
     if (data.candidates && data.candidates[0]?.content?.parts?.[0]?.text) {
       let reply = data.candidates[0].content.parts[0].text.trim();
-
-      // Additional safeguard: Truncate long responses
-      const replyWords = reply.split(/\s+/);
-      const maxWords = isShortJournal ? 15 : 25;
-
-      if (replyWords.length > maxWords) {
-        reply = replyWords.slice(0, maxWords).join(" ");
-        // Ensure proper ending punctuation
-        if (
-          !reply.endsWith(".") &&
-          !reply.endsWith("!") &&
-          !reply.endsWith("?")
-        ) {
-          reply += ".";
-        }
-      }
 
       // Add the AI's reply to the conversation history
       conversationHistory.push({

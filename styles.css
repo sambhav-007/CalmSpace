@@ -383,7 +383,7 @@ a, button {
 
 /* Footer */
 .about-footer {
-  text-align: center;
+  
   padding: 2rem 1rem;
   background: transparent;
   color: white;
@@ -393,13 +393,15 @@ a, button {
 
 .footer-links {
   margin-bottom: 1rem;
+  text-align: left;
 }
 
 .footer-links a {
   color: white;
   text-decoration: none;
-  margin: 0 0.5rem;
+  margin-right: 1.5rem;
   font-size: 0.9rem;
+  display: inline-block;
 }
 
 .footer-links a:hover {
@@ -410,80 +412,24 @@ a, button {
   margin: 0;
   font-size: 0.8rem;
   opacity: 0.8;
-}
-/* Dark Mode Styles */
-/* Removed dark mode styles as per user request */
-/* body.dark {
-  background: linear-gradient(135deg, var(--dark) 0%, #3d2a7d 50%, #453291 100%);
-  color: #e0e0e0;
+  text-align: left;
 }
 
-body.dark header {
-  background: #1e1e1e;
+
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+.footer-divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.2);
+  margin-bottom: 1.5rem;
 }
 
-body.dark .navbar {
-  border-bottom: 1px solid rgba(224, 224, 224, 0.1);
-  backdrop-filter: blur(10px);
+.copyright {
+  margin: 0;
+  font-size: 0.8rem;
+  opacity: 0.8;
+  text-align: center;
 }
-
-body.dark .nav-links a {
-  color: #e0e0e0;
-}
-
-body.dark .nav-links a.active {
-  color: #8b5cf6;
-  border-bottom: 2px solid #8b5cf6;
-}
-
-body.dark .toggle {
-  border-color: #8b5cf6;
-  color: #8b5cf6;
-}
-
-body.dark .toggle:hover {
-  background-color: rgba(139, 92, 246, 0.2);
-}
-
-body.dark .member-card {
-  background: rgba(74, 158, 255, 0.2);
-  border: 1px solid rgba(74, 158, 255, 0.5);
-  box-shadow: 0 4px 15px rgba(74, 158, 255, 0.3);
-  color: #e0e0e0;
-}
-
-body.dark .feature-card-about {
-  background: rgba(74, 158, 255, 0.2);
-  border: 1px solid rgba(74, 158, 255, 0.5);
-  box-shadow: 0 4px 15px rgba(74, 158, 255, 0.3);
-  color: #e0e0e0;
-}
-
-body.dark .team-section {
-  color: #e0e0e0;
-}
-
-body.dark .features-grid-about {
-  color: #e0e0e0;
-}
-
-body.dark .features-about {
-  color: #e0e0e0;
-}
-
-body.dark .section-title {
-  background: linear-gradient(135deg, #4a9eff 0%, #6b5fff 100%);
-  color: white;
-}
-
-body.dark .member-info {
-  background: linear-gradient(transparent, rgba(74, 158, 255, 0.7));
-  color: white;
-}
-
-body.dark .linkedin-btn {
-  background: linear-gradient(135deg, var(--primary), var(--secondary));
-  color: white;
-  border: 1px solid rgba(255,255,255,0.5);
-  box-shadow: 0 4px 15px rgba(74, 158, 255, 0.3);
-} */

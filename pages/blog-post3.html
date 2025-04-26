@@ -5,6 +5,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Meditation Practices to Calm Your Mind - Full Post</title>
     <link rel="icon" href="../assets/favicon/favicon.ico" type="image/x-icon" />
+    <style>
+      :root {
+        --gradient-accent: linear-gradient(120deg, #00d4ff, #e100ff);
+        --transition-normal: 0.3s ease;
+        --spacing-sm: 0.5rem;
+      }
+
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: var(--spacing-sm);
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: white;
+      }
+
+      .logo i {
+        background: var(--gradient-accent);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        font-size: 1.8rem;
+        transition: transform var(--transition-normal);
+      }
+
+      /* Logo animation */
+      .logo:hover i {
+        transform: rotate(10deg) scale(1.1);
+      }
+    </style>
     <link rel="stylesheet" href="../css/blog.css" />
     <link rel="stylesheet" href="../css/style.css" />
     <link
@@ -16,10 +46,7 @@
     <header>
       <div class="container">
         <nav>
-          <div
-            class="logo"
-            style="color: #4a9eff; font-weight: bold; font-size: 24px"
-          >
+          <div class="logo">
             <i class="fas fa-brain"></i>&nbsp;CalmSpace
           </div>
           <div class="nav-links">

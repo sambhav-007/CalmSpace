@@ -144,9 +144,17 @@ body.dark-mode {
 }
 
 /* Ensure all interactive elements have proper z-index and pointer-events */
-.navbar, .navbar-actions, .content-container, .journal-input,
-.response-section, .history-sidebar, .meditation-container,
-.modal, .notification, .filter-dialog, .prompts-container,
+.navbar,
+.navbar-actions,
+.content-container,
+.journal-input,
+.response-section,
+.history-sidebar,
+.meditation-container,
+.modal,
+.notification,
+.filter-dialog,
+.prompts-container,
 .fullscreen-mode {
   position: relative;
   z-index: 1;
@@ -154,16 +162,29 @@ body.dark-mode {
 }
 
 /* Higher z-index for overlays */
-.modal, .meditation-container.active, .notification, .filter-dialog,
+.modal,
+.meditation-container.active,
+.notification,
+.filter-dialog,
 .fullscreen-mode {
   z-index: 1000;
 }
 
 /* Ensure buttons receive pointer events */
-button, .icon-btn, .gradient-btn, .outline-btn, .emotion,
-.meditation-launcher, .theme-toggle, .prompt-btn,
-.fullscreen-btn, .speech-btn, [class*="btn"],
-.entry-item, .sound-option, .end-sound-option {
+button,
+.icon-btn,
+.gradient-btn,
+.outline-btn,
+.emotion,
+.meditation-launcher,
+.theme-toggle,
+.prompt-btn,
+.fullscreen-btn,
+.speech-btn,
+[class*="btn"],
+.entry-item,
+.sound-option,
+.end-sound-option {
   position: relative;
   z-index: 5;
   pointer-events: auto !important;
@@ -767,6 +788,7 @@ main {
   flex-direction: column;
   height: 100%;
   overflow: hidden;
+  position: relative; /* Add positioning context */
 }
 
 .response-header {
@@ -804,12 +826,15 @@ main {
 .response-content {
   flex: 1;
   padding: var(--spacing-xl);
+  padding-bottom: calc(
+    var(--spacing-lg) + 60px
+  ); /* Add extra padding at the bottom to prevent content hiding behind footer */
   overflow-y: auto;
   color: #ffffff; /* Pure white text for better visibility in dark mode */
   line-height: 1.7;
   font-size: 1rem;
   letter-spacing: 0.01em;
-  max-height: 350px; /* Set a fixed maximum height */
+  max-height: 350px; /* Keep the fixed maximum height for scrolling */
   scrollbar-width: thin; /* Firefox */
   scrollbar-color: rgba(255, 255, 255, 0.3) transparent; /* Firefox */
 }
@@ -840,6 +865,12 @@ main {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: absolute; /* Position absolutely */
+  bottom: 0; /* At the bottom */
+  left: 0;
+  right: 0;
+  background: var(--glass-bg-light); /* Match background with container */
+  backdrop-filter: blur(8px); /* Keep the glass effect */
 }
 
 /* Mood Analysis */

@@ -1,4 +1,37 @@
 document.addEventListener('DOMContentLoaded', () => {
+  // Add underline elements to footer links
+  const footerLinks = document.querySelectorAll('.footer-links a');
+  
+  footerLinks.forEach(link => {
+    // Create the underline element
+    const underline = document.createElement('span');
+    underline.classList.add('footer-link-underline');
+    link.appendChild(underline);
+    
+    // Add hover events
+    link.addEventListener('mouseenter', () => {
+      underline.style.width = '100%';
+      underline.style.opacity = '1';
+    });
+    
+    link.addEventListener('mouseleave', () => {
+      // Don't hide the underline if this is the active link
+      if (!link.classList.contains('active')) {
+        underline.style.width = '0';
+        underline.style.opacity = '0';
+      }
+    });
+  });
+  
+  // Set active link underline visible immediately
+  document.querySelectorAll('.footer-links a.active').forEach(activeLink => {
+    const activeUnderline = activeLink.querySelector('.footer-link-underline');
+    if (activeUnderline) {
+      activeUnderline.style.width = '100%';
+      activeUnderline.style.opacity = '1';
+    }
+  });
+  document.addEventListener('DOMContentLoaded', () => {
   // Overlay Effect for Member Cards
   const cards = document.querySelectorAll('.member-card');
   const overlay = document.getElementById('overlay');
@@ -60,4 +93,4 @@ const icon = darkToggle.querySelector("i");
     }, 500);
   }, 250);
 });
-});
+

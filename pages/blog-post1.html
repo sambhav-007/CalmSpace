@@ -10,6 +10,12 @@
         --gradient-accent: linear-gradient(120deg, #00d4ff, #e100ff);
         --transition-normal: 0.3s ease;
         --spacing-sm: 0.5rem;
+        --primary-color: #4a9eff;
+        --secondary-color: #3a7bd5;
+        --text-color: #333;
+        --light-bg: #f9f9f9;
+        --border-radius: 8px;
+        --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
       }
 
       .logo {
@@ -33,6 +39,99 @@
       /* Logo animation */
       .logo:hover i {
         transform: rotate(10deg) scale(1.1);
+      }
+      
+      /* Improved blog container */
+      .blog-container {
+        max-width: 800px;
+        margin: 2rem auto;
+        padding: 0 1.5rem;
+      }
+      
+      /* Post styling */
+      .post-full {
+        background: transparent;
+        padding: 2.5rem;
+        border-radius: var(--border-radius);
+        box-shadow: var(--box-shadow);
+        line-height: 1.7;
+        color: #ffffff;
+      }
+      
+      .post-full h1 {
+        font-size: 2.5rem;
+        color: var(--primary-color);
+        font-weight: 700;
+        margin-bottom: 1rem;
+        line-height: 1.3;
+      }
+      
+      .post-full h2 {
+        font-size: 1.8rem;
+        color: var(--secondary-color);
+        font-weight: 600;
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+        position: relative;
+        padding-bottom: 0.5rem;
+      }
+      
+      .post-full h2:after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 60px;
+        height: 3px;
+        background: var(--gradient-accent);
+        border-radius: 3px;
+      }
+      
+      .post-date {
+        display: block;
+        font-size: 0.9rem;
+        color: #666;
+        margin-bottom: 2rem;
+        font-style: italic;
+      }
+      
+      .post-full p {
+        font-size: 1.1rem;
+        margin-bottom: 1.5rem;
+      }
+      
+      /* Blockquote styling */
+      .post-full blockquote {
+        border-left: 4px solid var(--primary-color);
+        padding: 1rem 1.5rem;
+        margin: 2rem 0;
+        background: var(--light-bg);
+        font-style: italic;
+        color: #555;
+      }
+      
+      /* Image styling */
+      .post-full img {
+        max-width: 100%;
+        height: auto;
+        border-radius: var(--border-radius);
+        margin: 1.5rem 0;
+        box-shadow: var(--box-shadow);
+      }
+      
+      /* Responsive adjustments */
+      @media (max-width: 768px) {
+        .post-full {
+          padding: 1.5rem;
+        }
+        
+        .post-full h1 {
+          font-size: 2rem;
+        }
+        
+        .post-full h2 {
+          font-size: 1.5rem;
+        }
       }
     </style>
     <link rel="stylesheet" href="../css/blog.css" />
@@ -69,76 +168,50 @@
 
     <main class="blog-container">
       <article class="post-full">
-        <h1
-          style="
-            font-size: 2.5em;
-            color: #4a9eff;
-            font-weight: 700;
-            margin-bottom: 0.5em;
-          "
-        >
-          Welcome to CalmSpace Blog
-        </h1>
+        <h1>Welcome to CalmSpace Blog</h1>
         <time datetime="2024-06-01" class="post-date">June 1, 2024</time>
-        <p style="font-size: 1.2em; line-height: 1.6">
-          Discover tips and insights on mental wellness, mindfulness, and how
-          CalmSpace can support your journey.
-        </p>
-        <p style="font-size: 1.2em; line-height: 1.6">
-          This is the full content of the first blog post. You can expand this
-          section with more detailed information, images, and other media to
-          engage your readers.
-        </p>
+        
+        <img src="https://images.unsplash.com/photo-1499750310107-5fef28a66643?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Mindfulness meditation">
+        
+        <p>Discover tips and insights on mental wellness, mindfulness, and how CalmSpace can support your journey.</p>
+        
+        <blockquote>
+          "Mental health is not a destination, but a process. It's about how you drive, not where you're going." — Noam Shpancer
+        </blockquote>
+        
+        <p>This is the full content of the first blog post. You can expand this section with more detailed information, images, and other media to engage your readers.</p>
 
-        <h2
-          style="
-            font-size: 1.8em;
-            color: #3a7bd5;
-            font-weight: 600;
-            margin-top: 1.5em;
-            margin-bottom: 0.5em;
-          "
-        >
-          The Importance of Mental Wellness
-        </h2>
-        <p style="font-size: 1.2em; line-height: 1.6">
-          Mental wellness is a crucial aspect of overall health that often goes
-          overlooked. Taking care of your mental health can improve your quality
-          of life, enhance your relationships, and increase your productivity.
-          At CalmSpace, we believe that nurturing your mind is just as important
-          as caring for your body.
-        </p>
+        <h2>The Importance of Mental Wellness</h2>
+        <p>Mental wellness is a crucial aspect of overall health that often goes overlooked. Taking care of your mental health can improve your quality of life, enhance your relationships, and increase your productivity. At CalmSpace, we believe that nurturing your mind is just as important as caring for your body.</p>
+        
+        <img src="https://images.unsplash.com/photo-1491841550275-ad7854e35ca6?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Person meditating in nature">
+        
+        <p>Consider these key benefits of prioritizing mental wellness:</p>
+        <ul>
+          <li>Reduced stress and anxiety levels</li>
+          <li>Improved focus and concentration</li>
+          <li>Better sleep quality</li>
+          <li>Enhanced emotional resilience</li>
+          <li>Stronger interpersonal relationships</li>
+        </ul>
 
-        <h2
-          style="
-            font-size: 1.8em;
-            color: #3a7bd5;
-            font-weight: 600;
-            margin-top: 1.5em;
-            margin-bottom: 0.5em;
-          "
-        >
-          Mindfulness Techniques to Try Today
-        </h2>
-        <p style="font-size: 1.2em; line-height: 1.6">
-          Mindfulness is the practice of being fully present in the moment,
-          aware of your thoughts and feelings without judgment. Simple
-          techniques such as deep breathing, meditation, and mindful walking can
-          help reduce stress and improve emotional regulation. Incorporating
-          these practices into your daily routine can lead to lasting positive
-          changes.
-        </p>
+        <h2>Mindfulness Techniques to Try Today</h2>
+        <p>Mindfulness is the practice of being fully present in the moment, aware of your thoughts and feelings without judgment. Simple techniques such as deep breathing, meditation, and mindful walking can help reduce stress and improve emotional regulation. Incorporating these practices into your daily routine can lead to lasting positive changes.</p>
+        
+        <div style="background: var(--light-bg); padding: 1.5rem; border-radius: var(--border-radius); margin: 2rem 0;">
+          <h3 style="margin-top: 0; color: var(--secondary-color);">Quick Mindfulness Exercise</h3>
+          <p style="color: black;"><strong>5-5-5 Breathing Technique:</strong></p>
+          <ol style="color: black;">
+            <li>Inhale deeply for 5 seconds</li>
+            <li>Hold your breath for 5 seconds</li>
+            <li>Exhale slowly for 5 seconds</li>
+          </ol>
+          <p style="color: black;">Repeat this cycle 3-5 times whenever you feel stressed or overwhelmed.</p>
+        </div>
 
-        <p style="font-size: 1.2em; line-height: 1.6">
-          We encourage you to explore CalmSpace's resources, including guided
-          meditations, expert articles, and community support, to help you on
-          your path to mental wellness.
-        </p>
+        <p>We encourage you to explore CalmSpace's resources, including guided meditations, expert articles, and community support, to help you on your path to mental wellness.</p>
 
-        <p style="font-size: 1.2em; line-height: 1.6">
-          For more insightful articles, visit our blog homepage and stay
-          connected with the CalmSpace community.
-        </p>
+        <p>For more insightful articles, visit our blog homepage and stay connected with the CalmSpace community.</p>
       </article>
     </main>
 

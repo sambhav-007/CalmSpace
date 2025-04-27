@@ -428,8 +428,8 @@ a, button {
   position: relative;
   padding-bottom: 5px;
   transition: color 0.3s ease;
- 
- 
+  font-size: 0.85rem;
+  color: rgba(173, 163, 163, 0.6);
 }
 .footer-link-underline {
   position: absolute;
@@ -446,12 +446,12 @@ a, button {
   color: #4a9eff !important;
 }
 
-/* .about-footer p {
+.about-footer p {
   margin: 0;
   font-size: 0.8rem;
   opacity: 0.8;
   text-align: center;
-} */
+}
 .footer-links a.active .footer-link-underline {
   width: 100%;
   opacity: 1;

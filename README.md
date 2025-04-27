@@ -1,4 +1,4 @@
-# <img src="https://raw.githubusercontent.com/sambhav-007/CalmSpace/main/assets/favicon/favicon.ico" width="30"> CalmSpace – Your AI-Powered Mental Wellness Companion
+# 🧠 CalmSpace – Your AI-Powered Mental Wellness Companion
 
 <div align="center">
 
@@ -8,11 +8,9 @@
 ![Maintained](https://img.shields.io/badge/Maintained%3F-yes-green.svg)
 
 <p>
-<strong>CalmSpace</strong> is an AI-powered mental wellness platform that combines mindful journaling, mood tracking, and guided meditation to help users find inner peace, gain self-insight, and improve their emotional wellbeing.
+<strong>CalmSpace</strong> is an AI-powered mental wellness platform that combines mindful journaling, mood tracking, and guided meditation to help users find inner peace, gain self-insight, and improve their emotional well-being.
 </p>
-
-<img src="![image](https://github.com/user-attachments/assets/b3ad588d-a2bf-4bc9-adc4-c6f49d7ce1c4)
-" alt="CalmSpace Screenshot" width="600">
+![image](https://github.com/user-attachments/assets/7c006c47-c8c2-4384-b8bd-9a222660649a)
 
 </div>
 

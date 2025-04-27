@@ -10,9 +10,10 @@
 <p>
 <strong>CalmSpace</strong> is an AI-powered mental wellness platform that combines mindful journaling, mood tracking, and guided meditation to help users find inner peace, gain self-insight, and improve their emotional well-being.
 </p>
-![image](https://github.com/user-attachments/assets/7c006c47-c8c2-4384-b8bd-9a222660649a)
-
 </div>
+
+![image](https://github.com/user-attachments/assets/05291ac9-1a54-4bfc-80f6-2f8706750142)
+
 
 ## 🚀 Demo
 

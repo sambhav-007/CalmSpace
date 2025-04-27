@@ -33,16 +33,23 @@
   .logo {
     display: flex;
     align-items: center;
-    font-size: 24px;
-    font-weight: bold;
+    gap: 0.5rem;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: white;
   }
   
-  .logo-icon {
-    width: 30px;
-    height: 30px;
-    background: linear-gradient(135deg, #4a9eff 0%, #6b5fff 100%);
-    border-radius: 50%;
-    margin-right: 10px;
+  .logo i {
+    background: linear-gradient(120deg, #00d4ff, #e100ff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    font-size: 1.8rem;
+    transition: 0.3s ease;
+  }
+  
+  .logo:hover i {
+    transform: rotate(10deg) scale(1.1);
   }
   
   .nav-links {

@@ -23,11 +23,6 @@ CalmSpace offers a wide range of features to promote mental wellness and mindful
 - **Analytics Dashboard**: Visualize emotional patterns and identify triggers.
 - **Insights & Reflection**: Review past conversations and see how your mental well-being has evolved.
 
-### 📱 Cross-Platform Accessibility
-- **Web and Mobile Apps**: Synchronize your account across devices for seamless access.
-- **Offline Mode**: Use guided meditations and quick check-ins without an internet connection.
-- **Push Notifications**: Stay consistent with reminders for emotional check-ins.
-
 ### 🛠 Evidence-Based Therapeutic Techniques
 - **Cognitive Behavioral Therapy (CBT)**: Develop healthier thought patterns.
 - **Mindfulness-Based Stress Reduction (MBSR)**: Practice mindfulness to reduce stress.

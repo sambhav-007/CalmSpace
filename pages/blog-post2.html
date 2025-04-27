@@ -10,6 +10,12 @@
         --gradient-accent: linear-gradient(120deg, #00d4ff, #e100ff);
         --transition-normal: 0.3s ease;
         --spacing-sm: 0.5rem;
+        --primary-color: #4a9eff;
+        --secondary-color: #3a7bd5;
+        --text-color: #333;
+        --light-bg: #f9f9f9;
+        --border-radius: 8px;
+        --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
       }
 
       .logo {
@@ -33,6 +39,99 @@
       /* Logo animation */
       .logo:hover i {
         transform: rotate(10deg) scale(1.1);
+      }
+      
+      /* Improved blog container */
+      .blog-container {
+        max-width: 800px;
+        margin: 2rem auto;
+        padding: 0 1.5rem;
+      }
+      
+      /* Post styling */
+      .post-full {
+        background: transparent;
+        padding: 2.5rem;
+        border-radius: var(--border-radius);
+        box-shadow: var(--box-shadow);
+        line-height: 1.7;
+        color: #ffffff;
+      }
+      
+      .post-full h1 {
+        font-size: 2.5rem;
+        color: var(--primary-color);
+        font-weight: 700;
+        margin-bottom: 1rem;
+        line-height: 1.3;
+      }
+      
+      .post-full h2 {
+        font-size: 1.8rem;
+        color: var(--secondary-color);
+        font-weight: 600;
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+        position: relative;
+        padding-bottom: 0.5rem;
+      }
+      
+      .post-full h2:after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 60px;
+        height: 3px;
+        background: var(--gradient-accent);
+        border-radius: 3px;
+      }
+      
+      .post-date {
+        display: block;
+        font-size: 0.9rem;
+        color: #666;
+        margin-bottom: 2rem;
+        font-style: italic;
+      }
+      
+      .post-full p {
+        font-size: 1.1rem;
+        margin-bottom: 1.5rem;
+      }
+      
+      /* Blockquote styling */
+      .post-full blockquote {
+        border-left: 4px solid var(--primary-color);
+        padding: 1rem 1.5rem;
+        margin: 2rem 0;
+        background: var(--light-bg);
+        font-style: italic;
+        color: #555;
+      }
+      
+      /* Image styling */
+      .post-full img {
+        max-width: 100%;
+        height: auto;
+        border-radius: var(--border-radius);
+        margin: 1.5rem 0;
+        box-shadow: var(--box-shadow);
+      }
+      
+      /* Responsive adjustments */
+      @media (max-width: 768px) {
+        .post-full {
+          padding: 1.5rem;
+        }
+        
+        .post-full h1 {
+          font-size: 2rem;
+        }
+        
+        .post-full h2 {
+          font-size: 1.5rem;
+        }
       }
     </style>
     <link rel="stylesheet" href="../css/blog.css" />
@@ -69,72 +168,27 @@
 
     <main class="blog-container">
       <article class="post-full">
-        <h1
-          style="
-            font-size: 2.5em;
-            color: #4a9eff;
-            font-weight: 700;
-            margin-bottom: 0.5em;
-          "
-        >
-          How to Use Journaling for Emotional Growth
-        </h1>
+        <h1>How to Use Journaling for Emotional Growth</h1>
         <time datetime="2024-06-05" class="post-date">June 5, 2024</time>
-        <p style="font-size: 1.2em; line-height: 1.6">
-          Learn effective journaling techniques to reflect on your emotions and
-          promote personal growth.
-        </p>
-        <p style="font-size: 1.2em; line-height: 1.6">
-          This is the full content of the second blog post. You can expand this
-          section with more detailed information, images, and other media to
-          engage your readers.
-        </p>
+        <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Journaling for emotional growth" />
+        <p>Learn effective journaling techniques to reflect on your emotions and promote personal growth.</p>
+        <p>This is the full content of the second blog post. You can expand this section with more detailed information, images, and other media to engage your readers.</p>
 
-        <h2
-          style="
-            font-size: 1.8em;
-            color: #3a7bd5;
-            font-weight: 600;
-            margin-top: 1.5em;
-            margin-bottom: 0.5em;
-          "
-        >
-          Benefits of Journaling for Emotional Health
-        </h2>
-        <p style="font-size: 1.2em; line-height: 1.6">
-          Journaling is a powerful tool for emotional growth. It helps you
-          process your feelings, identify patterns, and gain clarity on your
-          thoughts. Regular journaling can reduce stress, improve mood, and
-          enhance self-awareness.
-        </p>
+        <blockquote>
+          "Journaling is like whispering to one’s self and listening at the same time." — Mina Murray
+        </blockquote>
 
-        <h2
-          style="
-            font-size: 1.8em;
-            color: #3a7bd5;
-            font-weight: 600;
-            margin-top: 1.5em;
-            margin-bottom: 0.5em;
-          "
-        >
-          Techniques to Get Started
-        </h2>
-        <p style="font-size: 1.2em; line-height: 1.6">
-          Start with simple prompts like "What am I feeling today?" or "What am
-          I grateful for?" Set aside a few minutes daily to write freely without
-          judgment. Experiment with different styles such as bullet journaling,
-          gratitude lists, or reflective essays to find what works best for you.
-        </p>
+        <h2>Benefits of Journaling for Emotional Health</h2>
+        <p>Journaling is a powerful tool for emotional growth. It helps you process your feelings, identify patterns, and gain clarity on your thoughts. Regular journaling can reduce stress, improve mood, and enhance self-awareness.</p>
 
-        <p style="font-size: 1.2em; line-height: 1.6">
-          Explore CalmSpace's resources for guided journaling exercises, expert
-          advice, and community support to nurture your emotional well-being.
-        </p>
+        <img src="https://images.unsplash.com/photo-1515377905703-c4788e51af15?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Writing in a journal" />
 
-        <p style="font-size: 1.2em; line-height: 1.6">
-          For more insightful articles, visit our blog homepage and stay
-          connected with the CalmSpace community.
-        </p>
+        <h2>Techniques to Get Started</h2>
+        <p>Start with simple prompts like "What am I feeling today?" or "What am I grateful for?" Set aside a few minutes daily to write freely without judgment. Experiment with different styles such as bullet journaling, gratitude lists, or reflective essays to find what works best for you.</p>
+
+        <p>Explore CalmSpace's resources for guided journaling exercises, expert advice, and community support to nurture your emotional well-being.</p>
+
+        <p>For more insightful articles, visit our blog homepage and stay connected with the CalmSpace community.</p>
       </article>
     </main>
 
